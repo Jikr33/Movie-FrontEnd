@@ -5,16 +5,9 @@ import App from "./App";
 // import { Redirect, Switch } from "react";
 // import Home from "./home";
 // import Result from "./result";
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+ReactDOM.render(
     <React.StrictMode>
         <App />
-    </React.StrictMode>
-    // <Router>
-    //     {/* <Switch> */}
-    //     <Route exact path="/" component={App} />
-    //     <Route path="/result" component={Result} />
-    //     <App />
-    //     {/* </Switch> */}
-    // </Router>
+    </React.StrictMode>,
+    document.getElementById("root")
 );
