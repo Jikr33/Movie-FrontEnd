@@ -38,7 +38,7 @@ app.use(paths.memes, require("./routes/memes"));
 app.use(paths.movies, require("./routes/movies"));
 // Catch all requests that don't match any route
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+    res.sendFile(path.join(__dirname, "./index.html"));
 });
 
 const server = app.listen(port, () => {
