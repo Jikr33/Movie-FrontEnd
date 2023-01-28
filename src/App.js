@@ -12,17 +12,17 @@ function App() {
             <Routes>
                 <Route path="/" component={Home} element={<Home />}></Route>
                 <Route
-                    path="/result"
+                    path="result"
                     component={Result}
                     element={<Result />}
                 ></Route>
                 <Route
-                    path="/movie"
+                    path="movie"
                     component={Movie}
                     element={<Movie />}
                 ></Route>
                 <Route
-                    path="/memes"
+                    path="memes"
                     component={Memes}
                     element={<Memes />}
                 ></Route>
