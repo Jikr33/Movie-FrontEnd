@@ -6,12 +6,6 @@ const path = require("path");
 const app = express();
 require("dotenv").config({ path: "./config/config.env" });
 
-
-// back4app connection
-var Parse = require('parse/node');
-Parse.initialize("CGVWTvI6zCseeNIGLMryeOTgAcwnSrC8A70BSqc1","AYvCFzw5C9ZNJxK33wShtJ3n8KGE7b6SeLT3MQ1Q"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
-Parse.serverURL = 'https://parseapi.back4app.com/'
-
 // mongoDB oruulna
 const connectDB = require("./config/db");
 connectDB();
