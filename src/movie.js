@@ -12,7 +12,7 @@ function Movie() {
     const [newDetails, setNewDetails] = useState({});
     const search = async () => {
         await axios
-            .get(`http://localhost:8000/api/v1/movies/get/${id}`)
+            .get(`https://movie-backend-8isc.onrender.com/api/v1/movies/get/${id}`)
             .then((response) => {
                 console.log("RESPONSE IRSEN SHUUUUU!!!!", response.data.result);
                 setDetails(response.data.result);

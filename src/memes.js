@@ -16,7 +16,7 @@ function Memes() {
     const [currentImage, setCurrentImage] = useState(memes[counter]);
     const search = async () => {
         await axios
-            .get(`http://localhost:8000/api/v1/memes`)
+            .get(`https://movie-backend-8isc.onrender.com/api/v1/memes`)
             .then((response) => {
                 var cat = response.data.category;
                 var res = [];
