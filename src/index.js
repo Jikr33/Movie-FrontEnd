@@ -7,9 +7,12 @@ import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 // import Home from "./home";
 // import Result from "./result";
 if (process.env.NODE_ENV === 'production') disableReactDevTools()
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+
     <React.StrictMode>
         <App />
     </React.StrictMode>,
     document.getElementById("root")
 );
+
