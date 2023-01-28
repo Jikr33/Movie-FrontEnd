@@ -43,21 +43,30 @@ function Home({ navigation, props }) {
                     onChange={(e) => setValue(e)}
                 />
                 {valid ? (
-                    <Link className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl" to="/result">Search</Link>
+                    <Link
+                        className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl"
+                        to="/result"
+                    >
+                        Search
+                    </Link>
                 ) : (
-                    <Link className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl" to="" onClick={() => invalidInput()}>
+                    <Link
+                        className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl"
+                        to=""
+                        onClick={() => invalidInput()}
+                    >
                         Search
                     </Link>
                 )}
                 <Link
                     className="p-2 m-2 bg-yellow-500 text-white text-center w-80 text-xl"
-                    to={"/memes"}
+                    to={"memes"}
                 >
                     Entertain me with memes
                 </Link>
                 <Link
                     className="p-2 m-2 bg-yellow-500 text-white text-center w-80 text-xl"
-                    to={"/memes"}
+                    to={"memes"}
                 >
                     Favorite Movies
                 </Link>
