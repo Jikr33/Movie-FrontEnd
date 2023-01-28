@@ -8,7 +8,7 @@ import Memes from "./memes";
 
 function App() {
     return (
-        <Router>
+        // <Router>
             <Routes>
                 <Route path="/" component={Home} element={<Home />}></Route>
                 <Route
@@ -28,7 +28,7 @@ function App() {
                 ></Route>
                 {/* <Route path='/guide' element={<Guide/>}></Route> */}
             </Routes>
-        </Router>
+        // </Router>
     );
 }
 
