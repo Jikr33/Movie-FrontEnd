@@ -7,20 +7,6 @@ import { Redirect, Switch } from "react";
 import Memes from "./memes";
 
 function App() {
-    // let Component;
-    // switch (window.location.pathname) {
-    //     case "/":
-    //         Component = Home;
-    //         break;
-    //     case "/result":
-    //         Component = Result;
-    //         break;
-    //     case "/movie":
-    //         Component = Movie;
-    //         break;
-    //     default:
-    //         break;
-    // }
     return (
         <Router>
             <Routes>

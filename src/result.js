@@ -7,7 +7,9 @@ function Result() {
     const [movies, setMovies] = useState({});
     const search = async () => {
         await axios
-            .get(`https://movie-backend-8isc.onrender.com/api/v1/movies/${name}`)
+            .get(
+                `https://movie-backend-8isc.onrender.com/api/v1/movies/${name}`
+            )
             .then((response) => {
                 // sorting the result
                 var res = response.data.movies.search;
