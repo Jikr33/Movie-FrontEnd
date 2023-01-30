@@ -2,11 +2,20 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Result from "./result";
 import { Link, redirect } from "react-router-dom";
+import Modal from "react-modal";
+import CryptoJS from "crypto-js";
+import { SupabaseRegister } from "./supabaseRegister";
+import { SupabaseLogin } from "./supabaseLogin";
 
 function Home({ navigation, props }) {
     localStorage.setItem("name", "");
     const [name, setName] = useState("");
     const [valid, setValid] = useState(false);
+    const [modalState, setModalState] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPass, setConfirmPass] = useState("");
+    const [button, setButton] = useState("Log In");
     useEffect(() => {
         localStorage.setItem("name", name);
         console.log("set local - ", localStorage.getItem("name"));
@@ -25,6 +34,81 @@ function Home({ navigation, props }) {
         input.style.borderBottomWidth = "5px";
         input.style.animation = "shake";
         input.style.animationDuration = "1.5s";
+    };
+    const register = () => {
+        var confirm = document.getElementById("confirmPass");
+        var loginContent = document.getElementById("loginContent");
+        var backToLogin = document.getElementById("backToLogin");
+        var forgotInputs = document.querySelectorAll(".forgotInputs");
+        var minHeight = document.getElementById("minHeightSet");
+        backToLogin.style.display = "block";
+        confirm.style.display = "block";
+        loginContent.style.height = "75%";
+        minHeight.style.minHeight = "350px";
+        setButton("Register");
+        forgotInputs.forEach((x) => {
+            x.style.display = "none";
+        });
+    };
+    const toLogin = () => {
+        var confirm = document.getElementById("confirmPass");
+        var loginContent = document.getElementById("loginContent");
+        var backToLogin = document.getElementById("backToLogin");
+        var forgotInputs = document.querySelectorAll(".forgotInputs");
+        backToLogin.style.display = "none";
+        confirm.style.display = "none";
+        loginContent.style.height = "65%";
+        setButton("Log In");
+        forgotInputs.forEach((x) => {
+            x.style.display = "block";
+        });
+    };
+    // if modal is closed, button will be Log in
+    useEffect(() => {
+        setButton("Log In");
+    }, [modalState]);
+    function hashPassword(pass) {
+        // Define a key and a iv (initialization vector)
+        let key = CryptoJS.enc.Utf8.parse("0123456789abcdef");
+        let iv = CryptoJS.enc.Utf8.parse("abcdefghijklmnop");
+        // Encrypt the password using AES
+        let encrypted = CryptoJS.AES.encrypt(
+            CryptoJS.enc.Utf8.parse(pass),
+            key,
+            {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7,
+            }
+        );
+        // Return the encrypted password as a hexadecimal string
+        return encrypted.ciphertext.toString(CryptoJS.enc.Hex);
+    }
+
+    const loginHandler = async (e) => {
+        var v = e.target.value;
+        if (v === "Register") {
+            console.log(username, password, confirmPass);
+            if (confirmPass === password) {
+                var hashedPass = hashPassword(password);
+                console.log(hashedPass);
+                var success = await SupabaseRegister(username, hashedPass);
+                if (success) {
+                    console.log("Successfully registered.");
+                    toLogin();
+                } else {
+                    console.log("Did not register. error...");
+                }
+            }
+        } else if (v === "Log In") {
+            var hashedPassLogin = hashPassword(password);
+            var successLogin = await SupabaseLogin(username, hashedPassLogin);
+            if (successLogin) {
+                console.log("Successfully logged in");
+            } else {
+                console.log("did not log in");
+            }
+        }
     };
     return (
         <div
@@ -70,9 +154,131 @@ function Home({ navigation, props }) {
                 >
                     Favorite Movies
                 </Link>
+                <button
+                    className="p-2 m-2 bg-green-500 text-white text-center w-80 text-xl"
+                    onClick={() => setModalState(true)}
+                >
+                    Log In
+                </button>
             </div>
+            <Modal
+                id="loginContent"
+                style={customStyles}
+                isOpen={modalState}
+                onRequestClose={() => setModalState(false)}
+                contentLabel="Example Modal"
+                ariaHideApp={false}
+                shouldCloseOnOverlayClick={true}
+            >
+                <div style={customStyles.container} id="loginCont">
+                    <div id="loginIcon"></div>
+                    <div style={customStyles.login} id="minHeightSet">
+                        <input
+                            style={customStyles.inputs}
+                            type="text"
+                            placeholder="username"
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <input
+                            style={customStyles.inputs}
+                            type="password"
+                            id="password"
+                            placeholder="enter password"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <input
+                            id="confirmPass"
+                            style={customStyles.inputs}
+                            type="password"
+                            placeholder="confirm password"
+                            onChange={(e) => setConfirmPass(e.target.value)}
+                        />
+
+                        <div style={customStyles.forgotInput}>
+                            <button className="forgotInputs">
+                                forgot password
+                            </button>
+                            <button
+                                className="forgotInputs"
+                                onClick={() => register()}
+                            >
+                                register now
+                            </button>
+                            <button id="backToLogin" onClick={() => toLogin()}>
+                                back to login
+                            </button>
+                        </div>
+
+                        <input
+                            id="loginButton"
+                            style={customStyles.loginButton}
+                            type="button"
+                            value={button}
+                            onClick={(e) => loginHandler(e)}
+                        />
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }
+const customStyles = {
+    content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        width: "30%",
+        height: "65%",
+        backgroundColor: "rgba(255, 215, 122, 0.79)",
+        minHeight: "450px",
+    },
+    container: {
+        width: "100%",
+        height: "100%",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+    },
+    inputs: {
+        color: "white",
+        width: "90%",
+        height: "3rem",
+        minHeight: "1.5rem",
+        margin: "1rem",
+        // backgroundColor: '#FBAB7E',
+        backgroundImage: "linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)",
+        paddingLeft: "1rem",
+        borderRadius: "1rem",
+        outline: "none",
+    },
+    loginButton: {
+        width: "60%",
+        height: "3rem",
+        position: "absolute",
+        bottom: "0",
+        backgroundColor: "green",
+        color: "white",
+    },
+    login: {
+        width: "100%",
+        height: "100%",
+        minHeight: "280px",
+        display: "flex",
+        flexDirection: "column",
+        // justifyContent: 'space-evenly',
+        alignItems: "center",
+    },
+    forgotInput: {
+        width: "80%",
+        height: "1rem",
+        display: "flex",
+        justifyContent: "space-evenly",
+    },
+};
 
 export default Home;

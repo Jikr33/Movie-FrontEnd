@@ -350,10 +350,6 @@
     ". ."; */
 }
 
-#grid>img {
-  height: 100%;
-  width: 100%;
-}
 
 #exitModal {
   position: absolute;
@@ -375,4 +371,31 @@
   background-position: center;
   background-size: contain;
   background-image: url('../exit.gif');
+}
+
+#loginIcon {
+  width: 200px;
+  height: 200px;
+  background-image: url('../loginIcon.gif');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+}
+
+#loginCont {
+  min-height: 300px;
+}
+
+#loginContent {
+  min-height: 600px;
+
+}
+
+#confirmPass {
+  display: none;
+}
+
+#backToLogin {
+  display: none;
 }

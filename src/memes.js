@@ -75,7 +75,7 @@ function Memes() {
         const saved = await Supabase();
         var tempSaved = [];
         saved.map((x) => {
-            tempSaved.push([x["id"], x["link"]]);
+            tempSaved.push([x["created_at"].slice(0, 19), x["link"]]);
         });
         setSaved(tempSaved);
         console.log(tempSaved);
@@ -114,11 +114,13 @@ function Memes() {
                         <button
                             class="buttonClass2"
                             onClick={() => {
-                                setCounter(counter - 1)
-                                var alert = document.getElementById('memeSaved')
+                                setCounter(counter - 1);
+                                var alert =
+                                    document.getElementById("memeSaved");
                                 alert.style.display = "none";
                                 alert.style.backgroundColor = "#86fba590";
-                                alert.innerHTML = "Successfully saved this meme...";
+                                alert.innerHTML =
+                                    "Successfully saved this meme...";
                             }}
                         >
                             Last
@@ -126,11 +128,13 @@ function Memes() {
                         <button
                             class="buttonClass2"
                             onClick={() => {
-                                setCounter(counter + 1)
-                                var alert = document.getElementById('memeSaved')
+                                setCounter(counter + 1);
+                                var alert =
+                                    document.getElementById("memeSaved");
                                 alert.style.display = "none";
                                 alert.style.backgroundColor = "#86fba590";
-                                alert.innerHTML = "Successfully saved this meme...";
+                                alert.innerHTML =
+                                    "Successfully saved this meme...";
                             }}
                         >
                             Next
@@ -147,19 +151,33 @@ function Memes() {
                 ariaHideApp={false}
                 shouldCloseOnOverlayClick={true}
             >
-            <div style={customStyles.container}>
+                <div style={customStyles.container}>
+                    <div
+                        id="exitIcon"
+                        onClick={() => setModalState(false)}
+                    ></div>
 
-                <div id="exitIcon" onClick={() => setModalState(false)}></div>
-                
-                <h1 id="exitModal">
-                    these are memes that was found on the side of the road.
-                </h1>
-                <div id="grid">
-                    {saved.map((x) => {
-                        return <img src={x[1]} key={x[0]} alt={x[0]}></img>;
-                    })}
+                    <h1 id="exitModal">
+                        these are memes that was found on the side of the road.
+                    </h1>
+                    <div id="grid">
+                        {saved.map((x) => {
+                            return (
+                                <div style={customStyles.imageDiv}>
+                                    <img
+                                        style={customStyles.image}
+                                        src={x[1]}
+                                        key={x[0]}
+                                        alt={x[0]}
+                                    ></img>
+                                    <h1 style={customStyles.date}>
+                                        Saved at: {x[0]}
+                                    </h1>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
-            </div>
             </Modal>
         </div>
     );
@@ -174,11 +192,27 @@ const customStyles = {
         transform: "translate(-50%, -50%)",
     },
     container: {
-        width:'100%',
-        height:'fit-content',
-        position:'relative',
-
-    }
+        width: "100%",
+        height: "fit-content",
+        position: "relative",
+    },
+    imageDiv: {
+        width: "100%",
+        height: "fit-content",
+        position: "relative",
+    },
+    image: {
+        width: "100%",
+        // height: "100%",
+        height: "28rem",
+    },
+    date: {
+        width: "100%",
+        height: "2rem",
+        // position: "absolute",
+        // bottom: "0px",
+        backgroundColor: "white",
+    },
 };
 
 export default Memes;
