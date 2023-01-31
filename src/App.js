@@ -9,25 +9,17 @@ import Memes from "./memes";
 function App() {
     return (
         // <Router>
-            <Routes>
-                <Route path="/" component={Home} element={<Home />}></Route>
-                <Route
-                    path="result"
-                    component={Result}
-                    element={<Result />}
-                ></Route>
-                <Route
-                    path="movie"
-                    component={Movie}
-                    element={<Movie />}
-                ></Route>
-                <Route
-                    path="memes"
-                    component={Memes}
-                    element={<Memes />}
-                ></Route>
-                {/* <Route path='/guide' element={<Guide/>}></Route> */}
-            </Routes>
+        <Routes>
+            <Route path="/" component={Home} element={<Home />}></Route>
+            <Route
+                path="result"
+                component={Result}
+                element={<Result />}
+            ></Route>
+            <Route path="movie" component={Movie} element={<Movie />}></Route>
+            <Route path="memes" component={Memes} element={<Memes />}></Route>
+            {/* <Route path='/guide' element={<Guide/>}></Route> */}
+        </Routes>
         // </Router>
     );
 }

@@ -11,7 +11,10 @@ const supabaseUrl = "https://kzylnwqboabfxifjsevi.supabase.co";
 
 export async function Supabase(userID) {
     const supabase = createClient(supabaseUrl, SUPABASE_KEY);
-    let { data: memes, error } = await supabase.from("memes").select("*").eq('user_id', userID);
+    let { data: memes, error } = await supabase
+        .from("memes")
+        .select("*")
+        .eq("user_id", userID);
     console.log(memes);
-    return memes
+    return memes;
 }

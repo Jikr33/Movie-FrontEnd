@@ -5,7 +5,6 @@ import { Supabase } from "./supabase";
 import { SupabaseInsert } from "./supabaseInsert";
 import Modal from "react-modal";
 
-
 function Memes() {
     //  const location = useLocation();
     //  const { id } = location.state;
@@ -16,12 +15,14 @@ function Memes() {
     const [currentImage, setCurrentImage] = useState(memes[counter]);
     const [saved, setSaved] = useState([]);
     const userId = localStorage.getItem("userId");
-    
+
     useEffect(() => {
-        userId ? console.log(userId, "user has signed in") : console.log(userId, "user has not signed in!!!")
+        userId
+            ? console.log(userId, "user has signed in")
+            : console.log(userId, "user has not signed in!!!");
         Supabase(userId);
         search();
-    }, [])
+    }, []);
 
     const search = async () => {
         await axios
@@ -35,7 +36,7 @@ function Memes() {
                 // setMemes(res)
                 setMemes(memes.concat(res));
                 console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
-                return res
+                return res;
             })
             .catch((error) => {
                 console.log("Гарсан алдаа______", error);

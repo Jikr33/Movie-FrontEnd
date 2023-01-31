@@ -339,12 +339,12 @@
   width: 60rem;
   height: 80%;
   /* From https://css.glass */
-background: rgba(214, 255, 179, 0.56);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(10.5px);
--webkit-backdrop-filter: blur(10.5px);
-border: 1px solid rgba(214, 255, 179, 0.04);
+  background: rgba(214, 255, 179, 0.56);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.5px);
+  -webkit-backdrop-filter: blur(10.5px);
+  border: 1px solid rgba(214, 255, 179, 0.04);
 }
 
 #grid {
