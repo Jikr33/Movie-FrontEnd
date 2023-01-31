@@ -6,8 +6,9 @@ import Modal from "react-modal";
 import CryptoJS from "crypto-js";
 import { SupabaseRegister } from "./supabaseRegister";
 import { SupabaseLogin } from "./supabaseLogin";
+import { SupabaseUser } from "./supabaseUser";
 
-function Home({ navigation, props }) {
+function Home() {
     localStorage.setItem("name", "");
     const [name, setName] = useState("");
     const [valid, setValid] = useState(false);
@@ -16,6 +17,14 @@ function Home({ navigation, props }) {
     const [password, setPassword] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
     const [button, setButton] = useState("Log In");
+    const userID = localStorage.getItem('userId')
+    useEffect(() => {
+        if (userID) {
+            const loginButtonDiv = document.getElementById("login");
+            loginButtonDiv.style.display = "none";
+            console.log("User has already logged in - ", userID);
+        }
+    }, []);
     useEffect(() => {
         localStorage.setItem("name", name);
         console.log("set local - ", localStorage.getItem("name"));
@@ -52,9 +61,12 @@ function Home({ navigation, props }) {
     };
     const toLogin = () => {
         var confirm = document.getElementById("confirmPass");
+        var pass = document.getElementById("password");
         var loginContent = document.getElementById("loginContent");
         var backToLogin = document.getElementById("backToLogin");
         var forgotInputs = document.querySelectorAll(".forgotInputs");
+        confirm.style.border = "none";
+        pass.style.border = "none";
         backToLogin.style.display = "none";
         confirm.style.display = "none";
         loginContent.style.height = "65%";
@@ -88,25 +100,45 @@ function Home({ navigation, props }) {
     const loginHandler = async (e) => {
         var v = e.target.value;
         if (v === "Register") {
+            var confirm = document.getElementById("confirmPass");
+            var pass = document.getElementById("password");
+            var user = document.getElementById("username");
             console.log(username, password, confirmPass);
-            if (confirmPass === password) {
-                var hashedPass = hashPassword(password);
-                console.log(hashedPass);
-                var success = await SupabaseRegister(username, hashedPass);
-                if (success) {
-                    console.log("Successfully registered.");
-                    toLogin();
+            if (!username) {
+                user.style.borderColor = "red";
+                user.style.borderWidth = "1px";
+            } else {
+                if (confirmPass === password) {
+                    var hashedPass = hashPassword(password);
+                    console.log(hashedPass);
+                    var success = await SupabaseRegister(username, hashedPass);
+                    if (success) {
+                        console.log("Successfully registered.");
+                        toLogin();
+                    } else {
+                        toLogin();
+                        alert("User Already Registered");
+                        console.log("Did not register. error...");
+                    }
                 } else {
-                    console.log("Did not register. error...");
+                    confirm.style.borderWidth = "1px";
+                    pass.style.borderWidth = "1px";
+                    confirm.style.borderColor = "red";
+                    pass.style.borderColor = "red";
                 }
             }
         } else if (v === "Log In") {
             var hashedPassLogin = hashPassword(password);
             var successLogin = await SupabaseLogin(username, hashedPassLogin);
             if (successLogin) {
+                const loginButtonDiv = document.getElementById('login')
+                loginButtonDiv.style.display = 'none'
                 console.log("Successfully logged in");
+                const uid = await SupabaseUser(username);
+                setModalState(false);
+                localStorage.setItem("userId", uid);
             } else {
-                console.log("did not log in");
+                console.log("Password incorrect");
             }
         }
     };
@@ -129,7 +161,7 @@ function Home({ navigation, props }) {
                 {valid ? (
                     <Link
                         className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl"
-                        to="/result"
+                        to="result"
                     >
                         Search
                     </Link>
@@ -155,6 +187,7 @@ function Home({ navigation, props }) {
                     Favorite Movies
                 </Link>
                 <button
+                    id="login"
                     className="p-2 m-2 bg-green-500 text-white text-center w-80 text-xl"
                     onClick={() => setModalState(true)}
                 >
@@ -174,6 +207,7 @@ function Home({ navigation, props }) {
                     <div id="loginIcon"></div>
                     <div style={customStyles.login} id="minHeightSet">
                         <input
+                            id="username"
                             style={customStyles.inputs}
                             type="text"
                             placeholder="username"

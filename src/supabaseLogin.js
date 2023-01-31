@@ -17,7 +17,7 @@ export async function SupabaseLogin(user, hash) {
 
     if (!error) {
         var pass = users[0].password;
-        console.log(hash == users[0].password);
+        console.log(hash === users[0].password);
         if (pass === hash) {
             return true;
         } else {

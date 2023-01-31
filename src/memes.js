@@ -5,6 +5,7 @@ import { Supabase } from "./supabase";
 import { SupabaseInsert } from "./supabaseInsert";
 import Modal from "react-modal";
 
+
 function Memes() {
     //  const location = useLocation();
     //  const { id } = location.state;
@@ -14,6 +15,14 @@ function Memes() {
     const [counter, setCounter] = useState(1);
     const [currentImage, setCurrentImage] = useState(memes[counter]);
     const [saved, setSaved] = useState([]);
+    const userId = localStorage.getItem("userId");
+    
+    useEffect(() => {
+        userId ? console.log(userId, "user has signed in") : console.log(userId, "user has not signed in!!!")
+        Supabase(userId);
+        search();
+    }, [])
+
     const search = async () => {
         await axios
             .get(`https://movie-backend-8isc.onrender.com/api/v1/memes`)
@@ -26,18 +35,16 @@ function Memes() {
                 // setMemes(res)
                 setMemes(memes.concat(res));
                 console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
+                return res
             })
             .catch((error) => {
                 console.log("Гарсан алдаа______", error);
             });
     };
-    useEffect(() => {
-        search();
-    }, []);
-    // const addCurrentMeme = async () => {
-    //     var data = currentImage;
-    //     await SupabaseInsert(data)
-    // }
+    // useEffect(() => {
+    //     search();
+    // }, []);
+
     useEffect(() => {
         if (counter !== 0 && counter === memes.length) {
             search();
@@ -52,7 +59,7 @@ function Memes() {
     const saveMeme = async (x) => {
         const alert = document.getElementById("memeSaved");
         const Meme = document.getElementById("meme");
-        const saved = await SupabaseInsert(x);
+        const saved = await SupabaseInsert(userId, x);
         console.log(saved);
         if (saved) {
             alert.style.display = "flex";
@@ -72,7 +79,7 @@ function Memes() {
     };
     const savedMemes = async () => {
         setModalState(true);
-        const saved = await Supabase();
+        const saved = await Supabase(userId);
         var tempSaved = [];
         saved.map((x) => {
             tempSaved.push([x["created_at"].slice(0, 19), x["link"]]);
@@ -80,10 +87,6 @@ function Memes() {
         setSaved(tempSaved);
         console.log(tempSaved);
     };
-
-    useEffect(() => {
-        Supabase();
-    }, []);
     return (
         <div id="contMemes">
             <div id="memes">
@@ -190,6 +193,7 @@ const customStyles = {
         bottom: "auto",
         marginRight: "-50%",
         transform: "translate(-50%, -50%)",
+        // backgroundColor: ""
     },
     container: {
         width: "100%",

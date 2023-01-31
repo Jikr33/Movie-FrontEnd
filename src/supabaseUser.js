@@ -9,9 +9,18 @@ const SUPABASE_KEY =
 const supabaseUrl = "https://kzylnwqboabfxifjsevi.supabase.co";
 // const supabaseKey = process.env.SUPABASE_KEY;
 
-export async function Supabase(userID) {
+export async function SupabaseUser(username) {
     const supabase = createClient(supabaseUrl, SUPABASE_KEY);
-    let { data: memes, error } = await supabase.from("memes").select("*").eq('user_id', userID);
-    console.log(memes);
-    return memes
+    let { data: user, error } = await supabase
+        .from("users")
+        .select("id")
+        .eq("username", username);
+    if (!error) {
+        console.log(user[0].id);
+        var res = user[0].id
+        return res
+    } else {
+        console.log(error, "cant get user id.");
+        return false;
+    }
 }
