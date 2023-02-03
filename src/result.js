@@ -4,21 +4,23 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 function Result() {
     var name = localStorage.getItem("name");
+    var uname = encodeURIComponent(name);
+    // name = name.replace( ' ', '%20')
     const [movies, setMovies] = useState({});
     const search = async () => {
         await axios
             .get(
-                `https://movie-backend-8isc.onrender.com/api/v1/movies/${name}`
+                `https://movie-backend-8isc.onrender.com/api/v1/movies/${uname}`
             )
             .then((response) => {
+                var res = response.data.movies.Search;
                 // sorting the result
-                var res = response.data.movies.search;
                 res.sort((a, b) => {
-                    return b.year - a.year;
+                    return parseInt(b.Year) - parseInt(a.Year);
                 });
                 console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
                 setMovies(res);
-                console.log(movies);
+                // console.log(movies);
             })
             .catch((error) => {
                 console.log("Гарсан алдаа______", error);
@@ -34,6 +36,13 @@ function Result() {
     useEffect(() => {
         search();
     }, []);
+
+    const poster = (x) => {
+        if (x === "N/A") {
+            return "../notfoundposter.jpg";
+        }
+        return x;
+    };
     return (
         <div
             id="contResult"
@@ -43,17 +52,24 @@ function Result() {
             <div id="itemsResult" className="scrollbar">
                 {movies.length > 0 && (
                     <ul>
-                        {movies.map((user) => {
-                            if (user.year) {
+                        {movies.map((x) => {
+                            if (x.Year) {
                                 return (
                                     <Link
                                         to={"/movie"}
-                                        state={{ id: user.id }}
+                                        state={{ id: x.imdbID }}
                                         className="items"
-                                        key={user.id}
+                                        key={x.imdbID}
                                     >
-                                        <h1 className="item">{user.title}</h1>
-                                        <div className="item">{user.year}</div>
+                                        <div className="resultPosters">
+                                            <img
+                                                src={poster(x.Poster)}
+                                                className="resultPoster"
+                                                alt=""
+                                            />
+                                            <h1 className="item">{x.Title}</h1>
+                                        </div>
+                                        <div className="item">{x.Year}</div>
                                     </Link>
                                 );
                             }
