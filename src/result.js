@@ -4,8 +4,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 function Result() {
     var name = localStorage.getItem("name");
+
     var uname = encodeURIComponent(name);
-    // name = name.replace( ' ', '%20')
     const [movies, setMovies] = useState({});
     const search = async () => {
         await axios
@@ -39,7 +39,7 @@ function Result() {
 
     const poster = (x) => {
         if (x === "N/A") {
-            return "../notfoundposter.jpg";
+            return "../notfoundposter.jpeg";
         }
         return x;
     };

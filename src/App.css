@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '~mdb-ui-kit/css/mdb.min.css';
 
 .App {
   text-align: center;
@@ -141,11 +142,13 @@
   margin-bottom: 2rem;
 
 }
+
 .resultPoster {
   width: 7rem;
   height: 100%;
 
 }
+
 #itemsResult>ul {
   position: absolute;
   top: 0;
@@ -483,4 +486,13 @@
 .movieFlexDiv {
   display: flex;
 
+}
+
+
+
+
+
+.carousel {
+  width: 70%;
+  height: 80%;
 }

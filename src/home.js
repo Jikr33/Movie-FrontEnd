@@ -7,6 +7,7 @@ import CryptoJS from "crypto-js";
 import { SupabaseRegister } from "./supabaseRegister";
 import { SupabaseLogin } from "./supabaseLogin";
 import { SupabaseUser } from "./supabaseUser";
+import { SupabaseForgotPass } from "./supabaseForgotPass";
 
 function Home() {
     localStorage.setItem("name", "");
@@ -17,7 +18,7 @@ function Home() {
     const [password, setPassword] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
     const [button, setButton] = useState("Log In");
-    const userID = localStorage.getItem('userId')
+    const userID = localStorage.getItem("userId");
     useEffect(() => {
         if (userID) {
             const loginButtonDiv = document.getElementById("login");
@@ -55,6 +56,21 @@ function Home() {
         loginContent.style.height = "75%";
         minHeight.style.minHeight = "350px";
         setButton("Register");
+        forgotInputs.forEach((x) => {
+            x.style.display = "none";
+        });
+    };
+    const forgotPass = () => {
+        var confirm = document.getElementById("confirmPass");
+        var loginContent = document.getElementById("loginContent");
+        var backToLogin = document.getElementById("backToLogin");
+        var forgotInputs = document.querySelectorAll(".forgotInputs");
+        var minHeight = document.getElementById("minHeightSet");
+        backToLogin.style.display = "block";
+        confirm.style.display = "block";
+        loginContent.style.height = "75%";
+        minHeight.style.minHeight = "350px";
+        setButton("Confirm New Password");
         forgotInputs.forEach((x) => {
             x.style.display = "none";
         });
@@ -131,14 +147,50 @@ function Home() {
             var hashedPassLogin = hashPassword(password);
             var successLogin = await SupabaseLogin(username, hashedPassLogin);
             if (successLogin) {
-                const loginButtonDiv = document.getElementById('login')
-                loginButtonDiv.style.display = 'none'
+                const loginButtonDiv = document.getElementById("login");
+                loginButtonDiv.style.display = "none";
                 console.log("Successfully logged in");
                 const uid = await SupabaseUser(username);
                 setModalState(false);
                 localStorage.setItem("userId", uid);
             } else {
                 console.log("Password incorrect");
+            }
+        } else if (v === "Confirm New Password") {
+            confirm = document.getElementById("confirmPass");
+            pass = document.getElementById("password");
+            user = document.getElementById("username");
+            console.log(username, password, confirmPass);
+            if (username) {
+                console.log("username ok");
+                if (password === confirmPass) {
+                    console.log("password ok");
+                    var changeTo = hashPassword(password);
+                    var passChanged = await SupabaseForgotPass(
+                        username,
+                        changeTo
+                    );
+                    if (passChanged) {
+                        console.log(passChanged);
+                        alert(
+                            "Your password was successfully changed... " +
+                                username
+                        );
+                        toLogin();
+                    } else {
+                        user.style.borderColor = "red";
+                        user.style.borderWidth = "2px";
+                        alert('User does not exist...')
+                    }
+                } else {
+                    confirm.style.borderWidth = "2px";
+                    pass.style.borderWidth = "2px";
+                    confirm.style.borderColor = "red";
+                    pass.style.borderColor = "red";
+                }
+            } else {
+                user.style.borderColor = "red";
+                user.style.borderWidth = "2px";
             }
         }
     };
@@ -229,7 +281,10 @@ function Home() {
                         />
 
                         <div style={customStyles.forgotInput}>
-                            <button className="forgotInputs">
+                            <button
+                                className="forgotInputs"
+                                onClick={() => forgotPass()}
+                            >
                                 forgot password
                             </button>
                             <button
