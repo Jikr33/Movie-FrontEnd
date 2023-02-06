@@ -159,12 +159,10 @@ function Movie() {
                     {posterUrls.map((x, i) => {
                         var g = i > 0 ? "" : "active";
                         return (
-                            <div
-                                class={`carousel-item ${g}`}
-                            >
+                            <div class={`carousel-item ${g}`}>
                                 <img
                                     src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${x}`}
-                                    class="d-block w-100"
+                                    class="d-block w-100 h-100"
                                     alt={`${i}`}
                                 />
                             </div>
