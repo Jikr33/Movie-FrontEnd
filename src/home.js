@@ -212,14 +212,14 @@ function Home() {
                 />
                 {valid ? (
                     <Link
-                        className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl"
+                        className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl shadow-5"
                         to="result"
                     >
                         Search
                     </Link>
                 ) : (
                     <Link
-                        className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl"
+                        className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl shadow-5"
                         to=""
                         onClick={() => invalidInput()}
                     >
@@ -227,20 +227,20 @@ function Home() {
                     </Link>
                 )}
                 <Link
-                    className="p-2 m-2 bg-yellow-500 text-white text-center w-80 text-xl"
+                    className="p-2 m-2 bg-yellow-500 text-white text-center w-80 text-xl shadow-5"
                     to={"memes"}
                 >
                     Entertain me with memes
                 </Link>
                 <Link
-                    className="p-2 m-2 bg-yellow-500 text-white text-center w-80 text-xl"
+                    className="p-2 m-2 bg-yellow-500 text-white text-center w-80 text-xl shadow-5"
                     to={"memes"}
                 >
                     Favorite Movies
                 </Link>
                 <button
                     id="login"
-                    className="p-2 m-2 bg-green-500 text-white text-center w-80 text-xl"
+                    className="p-2 m-2 bg-green-500 text-white text-center w-80 text-xl shadow-5"
                     onClick={() => setModalState(true)}
                 >
                     Log In
