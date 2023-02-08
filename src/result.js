@@ -20,7 +20,6 @@ function Result() {
                 });
                 console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
                 setMovies(res);
-                // console.log(movies);
             })
             .catch((error) => {
                 console.log("Гарсан алдаа______", error);
@@ -48,7 +47,7 @@ function Result() {
             id="contResult"
             className="relative bg-cover bg-center bg-no-repeat bg-orange-200 h-screen w-screen"
         >
-            <div id="resultTitle">Search results for {name}</div>
+            <div id="resultTitle">Search results for "{name}"</div>
             <div id="itemsResult" className="scrollbar">
                 {movies.length > 0 && (
                     <ul>

@@ -3,6 +3,10 @@ import { React, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import * as mdb from "mdb-ui-kit"; // lib
 import { Input } from "mdb-ui-kit"; // module
+import { MDBBadge } from "mdb-react-ui-kit";
+import { SupabaseSaveMovie } from "./supabaseSaveMovie";
+import { SupabaseGetAllSaved } from "./supabaseGetAllSaved";
+import { SupabaseUnsaveMovie } from "./supabaseUnsaveMovie";
 
 function Movie() {
     // var id = props.location.state
@@ -10,6 +14,7 @@ function Movie() {
     const location = useLocation();
     const { id } = location.state;
     console.log(id);
+    const userID = localStorage.getItem("userId");
     const [details, setDetails] = useState({});
 
     const [backupPoster, setBackupPoster] = useState("");
@@ -85,7 +90,7 @@ function Movie() {
                 newDetails = response.data;
                 // setDetails(newDetails);
                 setDetails(response.data);
-                setBackupPoster(newDetails.Poster);
+                setPosterUrls([newDetails.Poster]);
                 setTitle(newDetails.Title);
                 setReleased(newDetails.Released);
                 setRating(newDetails.Rated);
@@ -120,6 +125,7 @@ function Movie() {
                 `https://api.themoviedb.org/3/movie/${id}/images?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&include_image_language=en`
             )
             .then(function (response) {
+                setPosterUrls([]);
                 console.log(response.data.posters);
                 let posters = response.data.posters;
                 let newPosterUrls = [];
@@ -132,8 +138,6 @@ function Movie() {
                 setPosterUrls(newPosterUrls);
             })
             .catch(function (err) {
-                var s = [backupPoster];
-                setPosterUrls(s);
                 console.log("problem with poster", err);
             });
     };
@@ -167,7 +171,7 @@ function Movie() {
         });
     };
     const nextPoster = (x) => {
-        if (posterCounter + x >= posterUrls.length) {
+        if (posterCounter + x > posterUrls.length) {
             setPosterCounter(1);
         } else if (posterCounter + x <= 0) {
             setPosterCounter(posterUrls.length);
@@ -175,7 +179,46 @@ function Movie() {
             setPosterCounter(posterCounter + x);
         }
     };
+    useEffect(() => {
+        let isSaved = localStorage.getItem(id);
+        console.log(isSaved);
+        const saved = document.querySelector(".ms-2");
+        const saved2 = document.querySelector("#saved");
+        if (isSaved === "true") {
+            saved.style.display = "none";
+            saved2.style.display = "block";
+        } else {
+            saved.style.display = "block";
+            saved2.style.display = "none";
+        }
+    });
 
+    const saveMovie = async () => {
+        console.log("saved this movie", id, "user", userID);
+        const saved = document.querySelector(".ms-2");
+        const saved2 = document.querySelector("#saved");
+
+        localStorage.setItem(id, true);
+        const savedThis = await SupabaseSaveMovie(userID, id);
+        if (savedThis) {
+            localStorage.setItem(id, true);
+            saved.style.display = "none";
+            saved2.style.display = "block";
+            alert("This movie was saved to your favourites list... +", id);
+        } else {
+            alert(`${id} this movie was already saved...!`);
+        }
+    };
+    const unsaveMovie = async () => {
+        const ss = await SupabaseUnsaveMovie(userID, id);
+        localStorage.setItem(id, false);
+        const saved = document.querySelector(".ms-2");
+        const saved2 = document.querySelector("#saved");
+        saved.style.display = "block";
+        saved2.style.display = "none";
+        console.log(ss);
+        alert("This movie was removed from your favourites list... -", id);
+    };
     return (
         <div id="movieCont">
             <div id="moviePoster">
@@ -190,7 +233,7 @@ function Movie() {
                     class="carousel slide carousel-fade"
                     data-mdb-ride="carousel"
                     data-mdb-interval="1000000"
-                    onClick={() => show()}
+                    // onClick={() => show()}
                 >
                     {posterUrls.map((x, i) => {
                         var g = i > 0 ? "" : "active";
@@ -209,6 +252,12 @@ function Movie() {
                         <h1>
                             {posterCounter}/{posterUrls.length}
                         </h1>
+                        <MDBBadge className="ms-2" onClick={() => saveMovie()}>
+                            Save This Movie
+                        </MDBBadge>
+                        <MDBBadge id="saved" onClick={() => unsaveMovie()}>
+                            Remove from favourites
+                        </MDBBadge>
                     </div>
 
                     <button
@@ -241,46 +290,72 @@ function Movie() {
             </div>
             <div id="movieDetails">
                 <div id="movieDetail">
-                    <h1 id="movieTitle">
-                        {title}
-                        <div id="movieRating">
-                            <h1>{rating}</h1> |<h1>{time}</h1> |
-                            <h1>{released}</h1>
-                        </div>
-                    </h1>
-                    <div>
-                        <div className="movieFlexDiv">{plot}</div>
-
-                        <div className="movieFlexDiv">
-                            <h1>Directed by: {directors}</h1>
-                        </div>
-                        <div className="movieFlexDiv">
-                            <h1>Written by: {writers}</h1>
-                        </div>
-                        <div className="movieFlexDiv">
-                            <h1>Rated: {rating}</h1>
-                        </div>
-                        <div className="movieFlexDiv">
-                            <h1>Running time: {time}</h1>
-                        </div>
-                        <div className="movieFlexDiv">
-                            <h1>Release date: {released}</h1>
-                        </div>
-                        <div className="movieFlexDiv">
-                            <h1>Gross Box Office: {boxOffice}</h1>
-                        </div>
-
-                        <div className="movieFlexDiv">
-                            <h1>Awards and Nominations: {awards}</h1>
-                        </div>
-                        <div className="movieFlexDiv">
-                            <h1>Genre: {genres}</h1>
-                        </div>
-                        <div className="movieFlexDiv">
-                            <h1>Actors: {actors}</h1>
+                    <div id="movieTitles">
+                        <a
+                            href={`https://www.imdb.com/title/${id}`}
+                            target="_"
+                            id="movieImdb"
+                        >
+                            {imdb}
+                        </a>
+                        <div id="movieTitle">
+                            {title}
+                            <div id="movieRating">
+                                <h1>{rating}</h1> |<h1>{time}</h1> |
+                                <h1>{released}</h1>
+                            </div>
                         </div>
                     </div>
-                    <div id="movieImdb">{imdb}</div>
+                    <div id="movieDetailes">
+                        <div className="movieFlexDiv plot">{plot}</div>
+
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Directed by: <span>{directors}</span>
+                            </h1>
+                        </div>
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Written by: <span>{writers}</span>
+                            </h1>
+                        </div>
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Rated: <span>{rating}</span>
+                            </h1>
+                        </div>
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Running time: <span>{time}</span>
+                            </h1>
+                        </div>
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Release date: <span>{released}</span>
+                            </h1>
+                        </div>
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Gross Box Office: <span>{boxOffice}</span>
+                            </h1>
+                        </div>
+
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Awards and Nominations: <span>{awards}</span>
+                            </h1>
+                        </div>
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Genre: <span>{genres}</span>
+                            </h1>
+                        </div>
+                        <div className="movieFlexDiv">
+                            <h1>
+                                Actors: <span>{actors}</span>
+                            </h1>
+                        </div>
+                    </div>
                 </div>
             </div>
             {/* <div

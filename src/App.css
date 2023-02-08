@@ -453,6 +453,20 @@
   height: 80%;
 }
 
+.ms-2 {
+  background-color: #01a791 !important;
+  font-size: 1.1rem;
+  z-index: 2;
+  display: none;
+}
+
+#saved {
+  background-color: #44c7677a;
+  font-size: 1rem;
+  display: none;
+  z-index: 2;
+}
+
 #movieDetails {
   display: flex;
   justify-content: center;
@@ -470,22 +484,31 @@
   position: relative;
 }
 
-#movieTitle {
+#movieTitles {
   font-size: 3rem;
   position: absolute;
-  right: 3rem;
+  /* right: 3rem; */
   top: 0;
-  width: fit-content;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+}
+
+#movieTitle {
+  font-size: 3rem;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
   align-items: flex-end;
+  flex-direction: column;
   font-weight: 800;
 }
 
 #movieRating {
   display: flex;
-  width: 17rem;
+  width: 20rem;
   justify-content: space-between;
   font-size: 1.3rem;
   font-weight: 200;
@@ -493,17 +516,40 @@
 
 .movieFlexDiv {
   display: flex;
-
+  margin-top: 1rem;
+  font-family: "ProximaNova", "HelveticaNeue", "Helvetica Neue", "Roboto", "Droid Sans", sans-serif;
+  font-weight: bold;
+  color: rgb(76, 76, 76);
 }
 
+.plot {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 200;
+  color: rgb(0, 0, 0);
+}
+
+span {
+  font-family: "ProximaNova", "HelveticaNeue", "Helvetica Neue", "Roboto", "Droid Sans", sans-serif;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  margin-left: 0.4rem;
+}
 
 
 #posterCounter {
   width: 100%;
+  height: fit-content;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: absolute;
-  bottom: 0;
+  bottom: -2rem;
   z-index: 1;
+}
+
+#posterCounter>h1 {
+  font-weight: 400 !important;
 }
 
 .carousel {
@@ -517,7 +563,7 @@
 
 #movieImdb {
   background-image: url('../index.png');
-  background-position:left;
+  background-position: left;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
@@ -527,4 +573,14 @@
   height: 4rem;
   font-size: 1.7rem;
   font-weight: 500;
+  text-decoration: none;
+  color: black;
+}
+
+#movieImdb:hover {
+  color: rgb(255, 196, 0);
+}
+
+#movieDetailes {
+  margin-top: 2rem;
 }
