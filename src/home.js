@@ -178,19 +178,17 @@ function Home() {
                         );
                         toLogin();
                     } else {
-                        user.style.borderColor = "red";
-                        user.style.borderWidth = "2px";
-                        alert('User does not exist...')
+                        user.style.border = "2px red solid";
+                        pass.style.border = "none";
+                        confirm.style.border = "none";
+                        alert("User does not exist...");
                     }
                 } else {
-                    confirm.style.borderWidth = "2px";
-                    pass.style.borderWidth = "2px";
-                    confirm.style.borderColor = "red";
-                    pass.style.borderColor = "red";
+                    confirm.style.border = "3px red solid";
+                    pass.style.border = "3px red solid";
                 }
             } else {
-                user.style.borderColor = "red";
-                user.style.borderWidth = "2px";
+                user.style.border = "2px red solid";
             }
         }
     };

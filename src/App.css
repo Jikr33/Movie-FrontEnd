@@ -285,11 +285,6 @@
   justify-content: space-around;
 }
 
-#memeLink {
-  /* padding-top: 2%; */
-}
-
-
 .buttonClass {
   text-align: center;
   font-size: 19px;
@@ -308,12 +303,15 @@
 }
 
 .buttonClass:hover {
-  background: rgba(49, 126, 10, 1)
+  background: rgba(49, 126, 10, 1);
+  color: rgba(248, 247, 247, 1);
 }
 
 #memeSaved {
   height: 80%;
   width: 100%;
+  min-height: 25rem;
+  min-width: 25rem;
   display: none;
   align-items: center;
   justify-content: center;
