@@ -194,6 +194,10 @@ function Movie() {
     });
 
     const saveMovie = async () => {
+        if (!userID) {
+            alert("You must login to use this feature...");
+            return false;
+        }
         console.log("saved this movie", id, "user", userID);
         const saved = document.querySelector(".ms-2");
         const saved2 = document.querySelector("#saved");

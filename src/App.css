@@ -392,7 +392,9 @@
   width: 50px;
   background-position: center;
   background-size: contain;
-  background-image: url('../exit.gif');
+  background-image: url('../exit.png');
+  background-color: transparent;
+  cursor: pointer;
 }
 
 #loginIcon {
@@ -456,6 +458,7 @@
   font-size: 1.1rem;
   z-index: 2;
   display: none;
+  cursor: pointer;
 }
 
 #saved {
@@ -463,6 +466,7 @@
   font-size: 1rem;
   display: none;
   z-index: 2;
+  cursor: pointer;
 }
 
 #movieDetails {

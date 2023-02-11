@@ -58,23 +58,27 @@ function Memes() {
     }, [counter, memes]);
 
     const saveMeme = async (x) => {
-        const alert = document.getElementById("memeSaved");
+        if (!userId) {
+            alert("You must login to use this feature...");
+            return false;
+        }
+        const alerts = document.getElementById("memeSaved");
         const Meme = document.getElementById("meme");
         const saved = await SupabaseInsert(userId, x);
         console.log(saved);
         if (saved) {
-            alert.style.display = "flex";
+            alerts.style.display = "flex";
             setTimeout(() => {
-                alert.style.display = "none";
+                alerts.style.display = "none";
             }, 2000);
         } else {
-            alert.style.display = "flex";
-            alert.style.backgroundColor = "#dc143c90";
-            alert.innerHTML = "This meme can not be saved...";
+            alerts.style.display = "flex";
+            alerts.style.backgroundColor = "#dc143c90";
+            alerts.innerHTML = "This meme can not be saved...";
             setTimeout(() => {
-                alert.style.display = "none";
-                alert.style.backgroundColor = "#86fba590";
-                alert.innerHTML = "Successfully saved this meme...";
+                alerts.style.display = "none";
+                alerts.style.backgroundColor = "#86fba590";
+                alerts.innerHTML = "Successfully saved this meme...";
             }, 2000);
         }
     };

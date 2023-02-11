@@ -207,17 +207,18 @@ function Home() {
                     id="searchInput"
                     className="outline-0 border border-b-2 rounded-lg max-h-15 w-full h-2/3 pl-3"
                     onChange={(e) => setValue(e)}
+                    placeholder="Movie title..."
                 />
                 {valid ? (
                     <Link
-                        className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl shadow-5"
+                        className="text-center p-2 m-2 bg-yellow-500 text-white w-80 text-xl shadow-5"
                         to="result"
                     >
                         Search
                     </Link>
                 ) : (
                     <Link
-                        className="text-center p-2 m-4 bg-yellow-500 text-white w-80 text-xl shadow-5"
+                        className="text-center p-2 m-2 bg-yellow-500 text-white w-80 text-xl shadow-5"
                         to=""
                         onClick={() => invalidInput()}
                     >
@@ -241,7 +242,7 @@ function Home() {
                     className="p-2 m-2 bg-green-500 text-white text-center w-80 text-xl shadow-5"
                     onClick={() => setModalState(true)}
                 >
-                    Log In
+                    Log In or Register
                 </button>
             </div>
             <Modal
