@@ -197,7 +197,7 @@ function Home() {
             id="homeContainer"
             className="bg-cover bg-center bg-no-repeat bg-orange-200"
         >
-            <h1 className="capitalize text-amber-900 font-mono font-bold text-3xl h-14 w-2/5 text-center pt-2 rounded-full ">
+            <h1 className="capitalize text-amber-900 font-mono font-bold text-3xl h-max w-2/5 text-center pt-2 rounded-full ">
                 Search for Movies. i got you
             </h1>
             <div id="search" className="rounded-md">

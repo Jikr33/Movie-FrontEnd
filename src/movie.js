@@ -7,6 +7,7 @@ import { MDBBadge } from "mdb-react-ui-kit";
 import { SupabaseSaveMovie } from "./supabaseSaveMovie";
 import { SupabaseGetAllSaved } from "./supabaseGetAllSaved";
 import { SupabaseUnsaveMovie } from "./supabaseUnsaveMovie";
+import { Link } from "react-router-dom";
 
 function Movie() {
     // var id = props.location.state
@@ -179,19 +180,19 @@ function Movie() {
             setPosterCounter(posterCounter + x);
         }
     };
-    useEffect(() => {
-        let isSaved = localStorage.getItem(id);
-        console.log(isSaved);
-        const saved = document.querySelector(".ms-2");
-        const saved2 = document.querySelector("#saved");
-        if (isSaved === "true") {
-            saved.style.display = "none";
-            saved2.style.display = "block";
-        } else {
-            saved.style.display = "block";
-            saved2.style.display = "none";
-        }
-    });
+    // useEffect(() => {
+    //     let isSaved = localStorage.getItem(id);
+    //     console.log(isSaved);
+    //     const saved = document.querySelector(".ms-2");
+    //     const saved2 = document.querySelector("#saved");
+    //     if (isSaved === "true") {
+    //         saved.style.display = "none";
+    //         saved2.style.display = "block";
+    //     } else {
+    //         saved.style.display = "block";
+    //         saved2.style.display = "none";
+    //     }
+    // });
 
     const saveMovie = async () => {
         if (!userID) {
@@ -199,16 +200,16 @@ function Movie() {
             return false;
         }
         console.log("saved this movie", id, "user", userID);
-        const saved = document.querySelector(".ms-2");
-        const saved2 = document.querySelector("#saved");
+        const saved = document.querySelector("#saved");
+        const unsaved = document.querySelector("#unsaved");
 
         localStorage.setItem(id, true);
         const savedThis = await SupabaseSaveMovie(userID, id);
         if (savedThis) {
             localStorage.setItem(id, true);
-            saved.style.display = "none";
-            saved2.style.display = "block";
-            alert("This movie was saved to your favourites list... +", id);
+            unsaved.style.display = "none";
+            saved.style.display = "block";
+            // alert("This movie was saved to your favourites list... +", id);
         } else {
             alert(`${id} this movie was already saved...!`);
         }
@@ -216,12 +217,12 @@ function Movie() {
     const unsaveMovie = async () => {
         const ss = await SupabaseUnsaveMovie(userID, id);
         localStorage.setItem(id, false);
-        const saved = document.querySelector(".ms-2");
-        const saved2 = document.querySelector("#saved");
-        saved.style.display = "block";
-        saved2.style.display = "none";
+        const saved = document.querySelector("#saved");
+        const unsaved = document.querySelector("#unsaved");
+        unsaved.style.display = "block";
+        saved.style.display = "none";
         console.log(ss);
-        alert("This movie was removed from your favourites list... -", id);
+        // alert("This movie was removed from your favourites list... -", id);
     };
     return (
         <div id="movieCont">
@@ -239,6 +240,8 @@ function Movie() {
                     data-mdb-interval="1000000"
                     // onClick={() => show()}
                 >
+                    <div id="unsaved" onClick={() => saveMovie()}></div>
+                    <div id="saved" onClick={() => unsaveMovie()}></div>
                     {posterUrls.map((x, i) => {
                         var g = i > 0 ? "" : "active";
                         return (
@@ -256,12 +259,9 @@ function Movie() {
                         <h1>
                             {posterCounter}/{posterUrls.length}
                         </h1>
-                        <MDBBadge className="ms-2" onClick={() => saveMovie()}>
-                            Save This Movie
-                        </MDBBadge>
-                        <MDBBadge id="saved" onClick={() => unsaveMovie()}>
-                            Remove from favourites
-                        </MDBBadge>
+                        <Link id="movieToHome" to={"/"}>
+                            Go back to home
+                        </Link>
                     </div>
 
                     <button
@@ -358,6 +358,16 @@ function Movie() {
                             <h1>
                                 Actors: <span>{actors}</span>
                             </h1>
+                        </div>
+
+                        <div id="links">
+                            <a
+                                id="trailer"
+                                href={`https://www.youtube.com/results?search_query=${title}`}
+                                target="_"
+                            >
+                                <h1>Watch trailer</h1>
+                            </a>
                         </div>
                     </div>
                 </div>
