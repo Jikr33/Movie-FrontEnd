@@ -5,6 +5,7 @@ import Movie from "./movie";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Redirect, Switch } from "react";
 import Memes from "./memes";
+import Favorite from "./favorite";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
             ></Route>
             <Route path="movie" component={Movie} element={<Movie />}></Route>
             <Route path="memes" component={Memes} element={<Memes />}></Route>
+            <Route path="favorites" element={<Favorite />}></Route>
             {/* <Route path='/guide' element={<Guide/>}></Route> */}
         </Routes>
         // </Router>

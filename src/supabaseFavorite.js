@@ -9,15 +9,28 @@ const SUPABASE_KEY =
 const supabaseUrl = "https://kzylnwqboabfxifjsevi.supabase.co";
 // const supabaseKey = process.env.SUPABASE_KEY;
 
-export async function Supabase(userID) {
+export async function SupabaseFavorite(userID) {
     const supabase = createClient(supabaseUrl, SUPABASE_KEY);
     if (!userID) {
         return false;
     }
-    let { data: memes, error } = await supabase
-        .from("memes")
-        .select("*")
+    let { data: favorites, error } = await supabase
+        .from("Favorite movies")
+        .select("movie_id")
         .eq("user_id", userID);
-    console.log(memes);
-    return memes;
+    if (!error) {
+        // console.log(favorites);
+        if (favorites.length === 0) {
+            return false;
+        } else {
+            var res = [];
+            favorites.map((x) => {
+                res.push(x["movie_id"]);
+            });
+            return res;
+        }
+    } else {
+        console.log(error, "cant get user favorites");
+        return false;
+    }
 }

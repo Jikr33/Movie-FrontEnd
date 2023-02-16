@@ -233,7 +233,7 @@ function Home() {
                 </Link>
                 <Link
                     className="p-2 m-2 bg-yellow-500 text-white text-center w-80 text-xl shadow-5"
-                    to={"memes"}
+                    to={"favorites"}
                 >
                     Favorite Movies
                 </Link>
