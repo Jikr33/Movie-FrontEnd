@@ -13,8 +13,26 @@ function Movie() {
     // var id = props.location.state
     // console.log(data)
     const location = useLocation();
-    const { id } = location.state;
-    console.log(id);
+    const [id, setID] = useState(location.state.id);
+    //
+    // ^tt\d{8}$/gi
+    if (!/^tt[0-9]{6,8}$/gi.test(location.state.id)) {
+        console.log("id not goood", id);
+        async function regexx(s) {
+            await axios
+                .get(
+                    `https://api.themoviedb.org/3/movie/${s}?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US`
+                )
+                .then((response) => {
+                    setID(response.data["imdb_id"]);
+                    console.log(response.data["imdb_id"]);
+                })
+                .catch((err) => {
+                    console.log(err, "its for regexx");
+                });
+        }
+        regexx(location.state.id);
+    }
     const userID = localStorage.getItem("userId");
     const [details, setDetails] = useState({});
 
@@ -118,7 +136,7 @@ function Movie() {
                 setCasts(r);
             })
             .catch(function (error) {
-                console.error(error);
+                console.error(error, id);
             });
 
         await axios
@@ -145,7 +163,7 @@ function Movie() {
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [id]);
 
     const show = () => {
         var e = [

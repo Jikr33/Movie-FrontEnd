@@ -1,9 +1,11 @@
 import axios from "axios";
 import { React, useEffect, useState } from "react";
-import { Supabase } from "./supabase";
 import { SupabaseFavorite } from "./supabaseFavorite";
+import { SupabaseUsername } from "./supabaseUsername";
+
 function Favorite() {
     const userId = localStorage.getItem("userId");
+    var [username, setUsername] = useState("");
     // const userName = localStorage.getItem("userId");
     const [faves, setFaves] = useState([]);
 
@@ -12,8 +14,15 @@ function Favorite() {
             ? console.log(userId, "user has signed in")
             : console.log(userId, "user has not signed in!!!");
         // Supabase(userId);
-        setFaves(fetch());
+        fetch();
+        console.log(username);
+        fetchName();
     }, []);
+
+    const fetchName = async () => {
+        var s = await SupabaseUsername(userId);
+        setUsername(s.toUpperCase());
+    };
 
     var uselessDatas = [
         "Year",
@@ -36,12 +45,12 @@ function Favorite() {
         "Director",
         "Genre",
     ];
-
-    const fetch = async () => {
-        const s = await SupabaseFavorite(userId);
-
-        var res = [];
-        s.map(async (id) => {
+    const fetchAll = async (s) => {
+        if (s.length <= 0) {
+            return false;
+        }
+        var respo = [];
+        s.forEach(async (id) => {
             const options = {
                 method: "GET",
                 url: "https://movie-database-alternative.p.rapidapi.com/",
@@ -53,31 +62,40 @@ function Favorite() {
                         "movie-database-alternative.p.rapidapi.com",
                 },
             };
+
             await axios
                 .request(options)
                 .then(function (response) {
-                    res.push(response.data);
-                    console.log(res);
+                    console.log("this is fetchall", response.data);
+                    respo.push(response.data);
                 })
                 .catch(function (error) {
-                    console.error(
-                        "problem with requesting favorite movies details",
-                        error
-                    );
+                    console.error("fetchall err", error);
                 });
         });
-        console.log(res, faves);
-        return res;
+        setFaves(respo);
+    };
+
+    const fetch = async () => {
+        const s = await SupabaseFavorite(userId);
+        return await fetchAll(s);
     };
     return (
         <div id="contFavorites">
             <div id="contFavorite">
-                <h1>Suld's watchlist</h1>
+                <h1>{username}'s watchlist</h1>
                 <div id="favorite">
-                    {faves.map((x) => {
-                        <div>{x.Title}</div>;
+                    {faves.map((s) => {
+                        return <h1>{s.Title}</h1>;
                     })}
                 </div>
+                <button
+                    onClick={() => {
+                        console.log(faves);
+                    }}
+                >
+                    ss
+                </button>
             </div>
         </div>
     );
