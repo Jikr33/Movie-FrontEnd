@@ -4,11 +4,11 @@ import Result from "./result";
 import { Link, redirect } from "react-router-dom";
 import Modal from "react-modal";
 import CryptoJS from "crypto-js";
-import { SupabaseRegister } from "./supabaseRegister";
-import { SupabaseLogin } from "./supabaseLogin";
-import { SupabaseUser } from "./supabaseUser";
-import { SupabaseForgotPass } from "./supabaseForgotPass";
-import { tmdb } from "./tmdbFetch";
+import { SupabaseRegister } from "./supas/supabaseRegister";
+import { SupabaseLogin } from "./supas/supabaseLogin";
+import { SupabaseUser } from "./supas/supabaseUser";
+import { SupabaseForgotPass } from "./supas/supabaseForgotPass";
+import { tmdb } from "./supas/tmdbFetch";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";

@@ -4,10 +4,12 @@ import { useLocation } from "react-router-dom";
 import * as mdb from "mdb-ui-kit"; // lib
 import { Input } from "mdb-ui-kit"; // module
 import { MDBBadge } from "mdb-react-ui-kit";
-import { SupabaseSaveMovie } from "./supabaseSaveMovie";
-import { SupabaseGetAllSaved } from "./supabaseGetAllSaved";
-import { SupabaseUnsaveMovie } from "./supabaseUnsaveMovie";
+import { SupabaseSaveMovie } from "./supas/supabaseSaveMovie";
+import { SupabaseGetAllSaved } from "./supas/supabaseGetAllSaved";
+import { SupabaseUnsaveMovie } from "./supas/supabaseUnsaveMovie";
 import { Link } from "react-router-dom";
+import { SupabaseFavorite } from "./supas/supabaseFavorite";
+import RatingStars from "./RatingStars";
 
 function Movie() {
     // var id = props.location.state
@@ -55,6 +57,10 @@ function Movie() {
     const [boxOffice, setBoxOffice] = useState(0);
 
     const [posterCounter, setPosterCounter] = useState(1);
+
+    const [searchTitle, setSearchTitle] = useState("");
+
+    const [myRating, setMyRating] = useState(0);
 
     const options = {
         method: "GET",
@@ -111,6 +117,7 @@ function Movie() {
                 setDetails(response.data);
                 setPosterUrls([newDetails.Poster]);
                 setTitle(newDetails.Title);
+                setSearchTitle(newDetails.Title.replace(" ", "+"));
                 setReleased(newDetails.Released);
                 setRating(newDetails.Rated);
                 setGenres(newDetails.Genre);
@@ -163,6 +170,7 @@ function Movie() {
 
     useEffect(() => {
         fetch();
+        isSaved();
     }, [id]);
 
     const show = () => {
@@ -212,6 +220,24 @@ function Movie() {
     //     }
     // });
 
+    const isSaved = async () => {
+        const saveds = await SupabaseFavorite(userID);
+        const saved = document.querySelector("#saved");
+        const unsaved = document.querySelector("#unsaved");
+        // console.log(saveds);
+        Object.keys(saveds).forEach((x) => {
+            // console.log(x);
+            if (x === id) {
+                console.log(saveds, id);
+                localStorage.setItem(id, true);
+                unsaved.style.display = "none";
+                saved.style.display = "block";
+                if (saveds[x] !== false) {
+                    setMyRating(saveds[x]);
+                }
+            }
+        });
+    };
     const saveMovie = async () => {
         if (!userID) {
             alert("You must login to use this feature...");
@@ -277,9 +303,15 @@ function Movie() {
                         <h1>
                             {posterCounter}/{posterUrls.length}
                         </h1>
-                        <Link id="movieToHome" to={"/"}>
-                            Go back to home
-                        </Link>
+
+                        <div className="w-2/4 flex justify-between">
+                            <Link id="movieToFavorites" to={"/favorites"}>
+                                Watchlist
+                            </Link>
+                            <Link id="movieToHome" to={"/"}>
+                                Go back to home
+                            </Link>
+                        </div>
                     </div>
 
                     <button
@@ -377,16 +409,30 @@ function Movie() {
                                 Actors: <span>{actors}</span>
                             </h1>
                         </div>
-
-                        <div id="links">
-                            <a
-                                id="trailer"
-                                href={`https://www.youtube.com/results?search_query=${title}`}
-                                target="_"
-                            >
-                                <h1>Watch trailer</h1>
-                            </a>
+                        <div className="flex w-full h-1/6 items-center w-full px-2">
+                            <h1>Rate this movie : </h1>
+                            <RatingStars
+                                userId={userID}
+                                id={id}
+                                rating={myRating}
+                            ></RatingStars>
                         </div>
+                    </div>
+                    <div id="links">
+                        <a
+                            id="trailer"
+                            href={`https://www.youtube.com/results?search_query=${title}`}
+                            target="_"
+                        >
+                            <h1>Watch trailer</h1>
+                        </a>
+                        <a
+                            id="watchLink"
+                            href={`https://www1.123movies.co/search/?s=${searchTitle}`}
+                            target="_"
+                        >
+                            <h1>Watch here</h1>
+                        </a>
                     </div>
                 </div>
             </div>
