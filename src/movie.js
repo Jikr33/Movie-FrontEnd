@@ -166,12 +166,8 @@ function Movie() {
             .catch(function (err) {
                 console.log("problem with poster", err);
             });
+        const savedd = await isSaved();
     };
-
-    useEffect(() => {
-        fetch();
-        isSaved();
-    }, [id]);
 
     const show = () => {
         var e = [
@@ -219,7 +215,6 @@ function Movie() {
     //         saved2.style.display = "none";
     //     }
     // });
-
     const isSaved = async () => {
         const saveds = await SupabaseFavorite(userID);
         const saved = document.querySelector("#saved");
@@ -238,6 +233,14 @@ function Movie() {
             }
         });
     };
+
+    useEffect(() => {
+        fetch();
+        // // isSaved();
+
+        // isSaved();
+        console.log("used effecto");
+    }, []);
     const saveMovie = async () => {
         if (!userID) {
             alert("You must login to use this feature...");

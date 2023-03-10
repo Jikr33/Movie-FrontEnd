@@ -216,7 +216,7 @@ function Favorite() {
             Response: "True",
         },
     ]);
-
+    
     useEffect(() => {
         userId
             ? console.log(userId, "user has signed in")
@@ -279,68 +279,82 @@ function Favorite() {
         const s = await SupabaseFavorite(userId);
 
         setRatings(s);
+        return s;
         // console.log(s);
-        var d = await fetchAll(s);
-        setFaves(d);
+        // var d = await fetchAll(s);
+        // setFaves(d);
     };
+
     return (
         <div id="contFavorites">
             <div id="contFavorite">
-                <h1 className="h-12 w-full flex items-center justify-center bg-yellow-400/80 text-black tracking-widest font-bold">
-                    {username}'s watchlist
-                </h1>
+                <span className="relative h-12 w-full flex items-center justify-center bg-yellow-400/80 text-black tracking-widest font-bold">
+                    <Link to={"/"} className="absolute left-2">
+                        {"< HOME"}
+                    </Link>
+                    <h1>{username}'s watchlist</h1>
+                </span>
+
                 <div id="favorite">
-                    {faves &&
-                        faves.length > 0 &&
-                        faves.map((item, i) => (
-                            <div className="favoriteItem" key={item.imdbID}>
-                                <img src={item.Poster} alt="." />
-                                <div className="favoriteItemDetails">
-                                    <span className="favoriteItemTitle">
-                                        <h1 className="text-xl font-medium flex w-4/5 h-full items-center justify-between">
-                                            <Link
-                                                className="hover:text-yellow-400"
-                                                to={"/movie"}
-                                                state={{ id: item.imdbID }}
+                    {faves && 
+                        faves.length > 0 && 
+                        faves.map((item, i) => {
+                            return (
+                                <div className="favoriteItem" key={item.imdbID}>
+                                    <img src={item.Poster} alt="." />
+                                    <div className="favoriteItemDetails">
+                                        <span className="favoriteItemTitle">
+                                            <h1 className="text-xl font-medium flex w-4/5 h-full items-center justify-between">
+                                                <Link
+                                                    className="hover:text-yellow-400"
+                                                    to={"/movie"}
+                                                    state={{ id: item.imdbID }}
+                                                >
+                                                    {item.Title} (
+                                                    {item.Released})
+                                                </Link>
+                                            </h1>
+                                            <a
+                                                className="text-xl hover:text-yellow-300"
+                                                href={`https://www.imdb.com/title/${item.imdbID}/`}
                                             >
-                                                {item.Title} ({item.Released})
-                                            </Link>
-                                        </h1>
-                                        <a
-                                            className="text-xl hover:text-yellow-300"
-                                            href={`https://www.imdb.com/title/${item.imdbID}/`}
-                                        >
-                                            {item.imdbRating}/10
-                                        </a>
-                                    </span>
-                                    <span className="w-full text-sm">
-                                        {item.Rated} | {item.Genre} |{" "}
-                                        {item.Runtime}
-                                    </span>
-                                    <div className="favoriteItemDetail w-full px-2 mt-3">
-                                        <h1 className="font-normal text-m line-clamp-3">
-                                            {item.Plot}
-                                        </h1>
-                                        <span className="flex flex-col justify-evenly w-full ml-0 mt-1 text-sm h-16">
-                                            <h1>Director: {item.Director}</h1>
-                                            <h1>Writer: {item.Writer}</h1>
-                                            <h1>Actors: {item.Actors}</h1>
+                                                {item.imdbRating}/10
+                                            </a>
                                         </span>
-                                    </div>
-                                    <div className="flex w-full h-1/6 items-center w-full px-2">
-                                        <h1>Rate this movie : </h1>
-                                        <RatingStars
-                                            userId={userId}
-                                            id={item.imdbID}
-                                            rating={ratings[item.imdbID]}
-                                        ></RatingStars>
+                                        <span className="w-full text-sm">
+                                            {item.Rated} | {item.Genre} |{" "}
+                                            {item.Runtime}
+                                        </span>
+                                        <div className="favoriteItemDetail w-full px-2 mt-3">
+                                            <h1 className="font-normal text-m line-clamp-3">
+                                                {item.Plot}
+                                            </h1>
+                                            <span className="flex flex-col justify-evenly w-full ml-0 mt-1 text-sm h-16">
+                                                <h1>
+                                                    Director: {item.Director}
+                                                </h1>
+                                                <h1>Writer: {item.Writer}</h1>
+                                                <h1>Actors: {item.Actors}</h1>
+                                            </span>
+                                        </div>
+                                        <div className="flex w-full h-1/6 items-center w-full px-2">
+                                            <h1>Rate this movie : </h1>
+                                            <RatingStars
+                                                userId={userId}
+                                                id={item.imdbID}
+                                                rating={ratings[item.imdbID]}
+                                            ></RatingStars>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                 </div>
                 <button
-                    onClick={() => {
+                    onClick={async () => {
+                        const s = await fetchAll(ratings);
+                        var d = document.getElementById("favorite");
+                        setFaves(s);
                         console.log(faves);
                     }}
                 >
