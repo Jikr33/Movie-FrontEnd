@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function tmdb(x) {
+export async function tmdb(x, setFeat) {
     // top rated, upcoming, theatres, popular
     if (x === "theatres") {
         await axios
@@ -9,10 +9,12 @@ export async function tmdb(x) {
             )
             .then((response) => {
                 console.log(response.data.results);
+                setFeat(response.data.results);
                 return response.data.results;
             })
             .catch((err) => {
                 console.log("error of tmdb fetching theatres", err);
+                return err;
             });
     } else if (x === "popular") {
         await axios
@@ -21,6 +23,7 @@ export async function tmdb(x) {
             )
             .then((response) => {
                 console.log(response.data.results);
+                setFeat(response.data.results);
                 return response.data.results;
             })
             .catch((err) => {
@@ -33,6 +36,7 @@ export async function tmdb(x) {
             )
             .then((response) => {
                 console.log(response.data.results);
+                setFeat(response.data.results);
                 return response.data.results;
             })
             .catch((err) => {
@@ -45,6 +49,7 @@ export async function tmdb(x) {
             )
             .then((response) => {
                 console.log(response.data.results);
+                setFeat(response.data.results);
                 return response.data.results;
             })
             .catch((err) => {
