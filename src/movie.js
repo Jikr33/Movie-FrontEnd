@@ -240,7 +240,7 @@ function Movie() {
 
         // isSaved();
         console.log("used effecto");
-    }, []);
+    }, [id]);
     const saveMovie = async () => {
         if (!userID) {
             alert("You must login to use this feature...");
