@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import React from "react";
 
 const SUPABASE_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6eWxud3Fib2FiZnhpZmpzZXZpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3NDYzNjI0MiwiZXhwIjoxOTkwMjEyMjQyfQ.9YzPtaUZzqkGKve6PI5MtH_otfv1jh521NugK9dqyis";
@@ -20,9 +19,10 @@ export async function SupabaseGetAllSaved(userID, id) {
         ids.map((s) => {
             console.log(s.movie_id);
             let d = s.movie_id;
-            if (d == id) {
+            if (d === id) {
                 re = true;
             }
+            return true
         });
         return re;
     } else {

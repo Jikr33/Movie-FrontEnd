@@ -16,13 +16,15 @@ function Memes() {
     const [saved, setSaved] = useState([]);
     const userId = localStorage.getItem("userId");
 
+    const [mustLoginModal, setMustLoginModal] = useState(false);
+
     useEffect(() => {
         userId
             ? console.log(userId, "user has signed in")
             : console.log(userId, "user has not signed in!!!");
         Supabase(userId);
         search();
-    }, []);
+    }, [userId]);
 
     const search = async () => {
         await axios
@@ -53,13 +55,13 @@ function Memes() {
         } else {
             setCurrentImage(memes[counter]);
         }
-
-        // console.log(memes);
+        console.log(memes);
     }, [counter, memes]);
 
     const saveMeme = async (x) => {
         if (!userId) {
-            alert("You must login to use this feature...");
+            // alert("You must login to use this feature...");
+            setMustLoginModal(true);
             return false;
         }
         const alerts = document.getElementById("memeSaved");
@@ -83,6 +85,11 @@ function Memes() {
         }
     };
     const savedMemes = async () => {
+        if (!userId) {
+            // alert("You must login to use this feature...");
+            setMustLoginModal(true);
+            return false;
+        }
         setModalState(true);
         const saved = await Supabase(userId);
         var tempSaved = [];
@@ -184,6 +191,38 @@ function Memes() {
                                 </div>
                             );
                         })}
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+                id="mustLoginModal"
+                isOpen={mustLoginModal}
+                onRequestClose={() => setMustLoginModal(false)}
+                ariaHideApp={false}
+                shouldCloseOnOverlayClick={true}
+            >
+                <div id="mustLoginCont">
+                    <h4 className="py-2 text-xl font-extrabold">
+                        You must login to use this feature!
+                    </h4>
+                    <div id="mustLoginButtons">
+                        <Link
+                            id="mustLoginButton"
+                            onClick={() => {
+                                setMustLoginModal(false);
+                            }}
+                            className="bg-green-500"
+                            to={"/"}
+                        >
+                            Login Now
+                        </Link>
+                        <input
+                            id="mustLoginButton"
+                            type="button"
+                            value="Close"
+                            onClick={() => setMustLoginModal(false)}
+                            className="bg-red-600"
+                        />
                     </div>
                 </div>
             </Modal>

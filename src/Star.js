@@ -2,13 +2,18 @@ import React from "react";
 import { supabaseRate } from "./supas/supabaseRate";
 const Star = (props) => {
     const changeGrade = async (e) => {
-        props.changeGrade(e.target.value);
-        const s = await supabaseRate(
-            props.userId,
-            props.id,
-            parseInt(e.target.value)
-        );
-        console.log(e.target.value);
+        if (!props.userId) {
+            console.log(props.userId, "user wasnt logged in!@@@");
+            props.setMustLoginModal(true);
+        } else {
+            props.changeGrade(e.target.value);
+            const s = await supabaseRate(
+                props.userId,
+                props.id,
+                parseInt(e.target.value)
+            );
+            console.log(e.target.value);
+        }
     };
 
     return (

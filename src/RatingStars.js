@@ -14,6 +14,7 @@ function RatingStars(props) {
 
     useEffect(() => {
         if (props.rating) {
+            console.log('set gradeindex now')
             setGradeIndex(props.rating);
         }
     }, [props.rating]);
@@ -30,6 +31,7 @@ function RatingStars(props) {
                     changeGrade={changeGradeIndex}
                     userId={props.userId}
                     id={props.id}
+                    setMustLoginModal={props.setMustLoginModal}
                 />
             ))}
         </div>

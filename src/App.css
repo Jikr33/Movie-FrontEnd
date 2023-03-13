@@ -258,6 +258,7 @@
    position: absolute;
    top: 1rem;
    right: 0;
+   display: flex;
 }
 
 .homeMenuLinks {
@@ -919,7 +920,7 @@ span {
 }
 
 
-#mustLoginCont{
+#mustLoginCont {
    width: 100%;
    height: 100%;
    display: flex;
@@ -935,12 +936,17 @@ span {
    left: 35% !important;
    top: 40% !important;
 }
+
 #mustLoginButton {
    width: 35%;
    height: 3rem;
    color: white;
    font-weight: 500;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
+
 #mustLoginButtons {
    display: flex;
    justify-content: space-evenly;
@@ -948,4 +954,52 @@ span {
    width: 100%;
    height: 4rem;
    background-color: transparent;
+}
+
+@media (max-width: 440px) {
+   #homeSearch {
+      width: 100%;
+      height: 45%;
+      align-items: center;
+      text-align: center;
+      min-height: 240px;
+   }
+
+   #homeTopTitle {
+      width: 90%;
+      padding: 0;
+   }
+
+   #homeBottomTitle {
+      width: 90%;
+      padding: 0;
+   }
+
+   #homeMenu {
+      top: 0;
+   }
+
+   .homeMenuLinks {
+      padding: 0.3rem;
+      font-size: 0.7rem;
+   }
+
+   #homeFeatured {
+      width: 100%;
+   }
+
+   #homeFeatures {
+      width: 100%;
+      margin: 0;
+   }
+
+   #homeFeatures>span {
+      width: 95%;
+      font-size: 0.643rem;
+   }
+
+   .homePostersInfo {
+      margin-top: 0.5rem;
+      height: 3rem;
+   }
 }

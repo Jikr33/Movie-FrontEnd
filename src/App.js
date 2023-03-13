@@ -3,9 +3,10 @@ import Home from "./home";
 import Result from "./result";
 import Movie from "./movie";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Redirect, Switch } from "react";
+// import { Redirect, Switch } from "react";
 import Memes from "./memes";
 import Favorite from "./favorite";
+// require('dotenv').config()
 
 function App() {
     return (

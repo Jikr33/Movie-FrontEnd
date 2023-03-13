@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import React from "react";
 
 const SUPABASE_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6eWxud3Fib2FiZnhpZmpzZXZpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3NDYzNjI0MiwiZXhwIjoxOTkwMjEyMjQyfQ.9YzPtaUZzqkGKve6PI5MtH_otfv1jh521NugK9dqyis";
@@ -16,11 +15,24 @@ export async function SupabaseLogin(user, hash) {
         .eq("username", user);
 
     if (!error) {
-        var pass = users[0].password;
-        console.log(hash === users[0].password);
-        if (pass === hash) {
-            return true;
+        var pass;
+        if (users[0]) {
+            pass = users[0].password;
+        }
+        if (pass) {
+            console.log(hash === users[0].password);
+            if (pass === hash) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
+            console.log(
+                "User did not found. Whoooo theeee HEeeeeeell AAAARe Yooooouuuuuu",
+                pass,
+                users
+            );
+            alert("User did not found.");
             return false;
         }
     } else {

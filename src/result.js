@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 function Result() {
-    var name = localStorage.getItem("name");
+    var [name, setName] = useState(localStorage.getItem("name"));
 
     var uname = encodeURIComponent(name);
     const [movies, setMovies] = useState({});
@@ -34,7 +34,7 @@ function Result() {
     }, [movies]);
     useEffect(() => {
         search();
-    }, []);
+    }, [name]);
 
     const poster = (x) => {
         if (x === "N/A") {

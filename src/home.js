@@ -29,18 +29,13 @@ function Home() {
     const [password, setPassword] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
     const [button, setButton] = useState("Log In");
-    const userID = localStorage.getItem("userId");
+    const [userID, setUserID] = useState(localStorage.getItem("userId"));
     const [features, setFeatures] = useState([]);
     const [current, setCurrent] = useState("");
 
     const [mustLoginModal, setMustLoginModal] = useState(false);
 
     useEffect(() => {
-        if (userID) {
-            const loginButtonDiv = document.getElementById("login");
-            loginButtonDiv.style.display = "none";
-            console.log("User has already logged in - ", userID);
-        }
         if (current === "") {
             setCurrent("popular");
             let t = document.getElementById("popular");
@@ -49,6 +44,22 @@ function Home() {
             setList("popular");
         }
     }, []);
+
+    useEffect(() => {
+        if (userID) {
+            const loginButtonDiv = document.getElementById("login");
+            const logoutButtonDiv = document.getElementById("logout");
+            loginButtonDiv.style.display = "none";
+            console.log("User has already logged in - ", userID);
+            logoutButtonDiv.style.display = "block";
+        } else {
+            const loginButtonDiv = document.getElementById("login");
+            loginButtonDiv.style.display = "block";
+            const logoutButtonDiv = document.getElementById("logout");
+            console.log("User has already logged out - ", userID);
+            logoutButtonDiv.style.display = "none";
+        }
+    }, [userID]);
     useEffect(() => {
         localStorage.setItem("name", name);
         console.log("set local - ", localStorage.getItem("name"));
@@ -65,7 +76,6 @@ function Home() {
 
     const invalidInput = () => {
         var input = document.getElementById("searchInput");
-
         console.warn("Movie name must be valid...");
         input.style.borderColor = "red";
         input.style.borderBottomWidth = "5px";
@@ -118,7 +128,6 @@ function Home() {
             x.style.display = "block";
         });
     };
-
     function hashPassword(pass) {
         // Define a key and a iv (initialization vector)
         let key = CryptoJS.enc.Utf8.parse("0123456789abcdef");
@@ -142,7 +151,6 @@ function Home() {
         console.log(x);
         const g = await tmdb(x, setFeatures);
         if (x === "theatres") {
-            // setCurrent(features);
             let f = document.getElementById(current);
             if (f) {
                 f.style.backgroundColor = "transparent";
@@ -153,7 +161,6 @@ function Home() {
             t.style.color = "white";
             setCurrent("theatres");
         } else if (x === "popular") {
-            // setCurrent(features);
             let f = document.getElementById(current);
             if (f) {
                 f.style.backgroundColor = "transparent";
@@ -164,7 +171,6 @@ function Home() {
             t.style.color = "white";
             setCurrent("popular");
         } else if (x === "top rated") {
-            // setCurrent(topRated);
             let f = document.getElementById(current);
             if (f) {
                 f.style.backgroundColor = "transparent";
@@ -176,7 +182,6 @@ function Home() {
             setCurrent("toprated");
             console.log(t);
         } else if (x === "upcoming") {
-            // setCurrent(upcoming);
             let f = document.getElementById(current);
             if (f) {
                 f.style.backgroundColor = "transparent";
@@ -226,10 +231,13 @@ function Home() {
             if (successLogin) {
                 const loginButtonDiv = document.getElementById("login");
                 loginButtonDiv.style.display = "none";
+                const logoutButtonDiv = document.getElementById("logout");
+                logoutButtonDiv.style.display = "block";
                 console.log("Successfully logged in");
                 const uid = await SupabaseUser(username);
                 setModalState(false);
                 localStorage.setItem("userId", uid);
+                setUserID(uid);
             } else {
                 console.log("Password incorrect");
             }
@@ -275,10 +283,13 @@ function Home() {
             className="bg-cover bg-center bg-no-repeat bg-orange-200"
         >
             <div id="homeSearch">
-                <h1 className="capitalize text-amber-900 font-mono font-bold text-3xl h-max w-4/5 pt-2 rounded-full pl-28">
+                <h1
+                    id="homeTopTitle"
+                    className="capitalize text-amber-900 font-mono font-bold text-3xl h-max w-4/5 pt-2 rounded-full pl-28"
+                >
                     Search for Movies. i got you
                 </h1>
-                <h4 className="capitalize font-mono font-bold text-l h-max w-4/5 pt-2 rounded-full pl-28">
+                <h4 id="homeBottomTitle" className="capitalize font-mono font-bold text-l h-max w-4/5 pt-2 rounded-full pl-28">
                     Millions of movies, TV shows and people to discover. Explore
                     now.
                 </h4>
@@ -336,6 +347,16 @@ function Home() {
                         onClick={() => setModalState(true)}
                     >
                         Log In or Register
+                    </button>
+                    <button
+                        id="logout"
+                        className="homeMenuLinks"
+                        onClick={() => {
+                            setUserID(false);
+                            localStorage.setItem("userId", false);
+                        }}
+                    >
+                        Log Out
                     </button>
                 </div>
             </div>
@@ -496,7 +517,7 @@ function Home() {
             >
                 <div id="mustLoginCont">
                     <h4 className="py-2 text-xl font-extrabold">
-                        You must login to use this fucking feature!
+                        You must login to use this feature!
                     </h4>
                     <div id="mustLoginButtons">
                         <input
