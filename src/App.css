@@ -984,8 +984,26 @@ span {
       font-size: 0.7rem;
    }
 
+   #features {
+      min-height: 285px;
+      height: 80%;
+   }
+
    #homeFeatured {
+      background-color: #fae9d7e8;
       width: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 7px;
+      padding-right: 7px;
+      min-height: 365px;
+      justify-content: space-evenly;
+   }
+
+
+   #loginContent {
+      width: 85% !important;
+      height: 75% !important;
    }
 
    #homeFeatures {
@@ -998,8 +1016,80 @@ span {
       font-size: 0.643rem;
    }
 
+   .homePosters {
+      min-width: 80%;
+      width: 9rem;
+   }
+
    .homePostersInfo {
       margin-top: 0.5rem;
       height: 3rem;
+   }
+
+   .input-group {
+      width: 90%;
+
+   }
+
+   #search-button {
+      padding-right: 0;
+   }
+
+   #contFavorite {
+      width: 90vw;
+   }
+
+   .favoriteItem {
+      height: 10rem;
+      margin: 1rem 0;
+   }
+
+   .favoriteItem>img {
+      width: 8rem;
+      min-width: 7rem;
+   }
+
+   .favoriteItemTitle>h1,
+   .favoriteItemTitle>a {
+      font-size: 1rem !important;
+   }
+
+   .favoriteItemTitle {
+      width: 98%;
+   }
+
+   .favoriteItemTitle2 {
+      font-size: 0.7rem;
+   }
+
+   .favoriteItemDetails {
+      padding-right: 0;
+   }
+
+   .favoriteItemDetails>div {
+      font-size: 0.5rem;
+   }
+
+   .favoriteItemDetail>span {
+      display: none;
+   }
+
+   .favoriteItemDetail {
+      margin-top: 0.5rem !important;
+      font-size: 0.5rem;
+   }
+
+   .stars {
+      gap: 0;
+   }
+
+   svg {
+      width: 20px;
+      height: 20px;
+   }
+
+   span {
+      margin-left: 0;
+      padding-left: 0.4rem;
    }
 }

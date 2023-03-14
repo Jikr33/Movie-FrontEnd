@@ -318,7 +318,7 @@ function RenderFavoritePosters(props) {
                                         {item.imdbRating}/10
                                     </a>
                                 </span>
-                                <span className="w-full text-sm">
+                                <span className="favoriteItemTitle2 w-full text-sm">
                                     {item.Rated} | {item.Genre} | {item.Runtime}
                                 </span>
                                 <div className="favoriteItemDetail w-full px-2 mt-3">

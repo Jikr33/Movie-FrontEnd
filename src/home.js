@@ -289,7 +289,10 @@ function Home() {
                 >
                     Search for Movies. i got you
                 </h1>
-                <h4 id="homeBottomTitle" className="capitalize font-mono font-bold text-l h-max w-4/5 pt-2 rounded-full pl-28">
+                <h4
+                    id="homeBottomTitle"
+                    className="capitalize font-mono font-bold text-l h-max w-4/5 pt-2 rounded-full pl-28"
+                >
                     Millions of movies, TV shows and people to discover. Explore
                     now.
                 </h4>
@@ -396,7 +399,7 @@ function Home() {
                         >
                             Upcoming
                         </button>
-                        <button
+                        {/* <button
                             onClick={() => {
                                 console.log(current);
                             }}
@@ -404,7 +407,7 @@ function Home() {
                             class="homeFeatureButton w-fit h-full text-center"
                         >
                             ssss
-                        </button>
+                        </button> */}
                     </span>
                 </div>
                 <div id="features">
