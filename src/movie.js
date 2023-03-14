@@ -10,7 +10,6 @@ import { SupabaseUnsaveMovie } from "./supas/supabaseUnsaveMovie";
 import { Link } from "react-router-dom";
 import { SupabaseFavorite } from "./supas/supabaseFavorite";
 import RatingStars from "./RatingStars";
-import Modal from "react-modal";
 
 function Movie() {
     // var id = props.location.state
@@ -19,9 +18,25 @@ function Movie() {
     const [id, setID] = useState(location.state.id);
     //
     // ^tt\d{8}$/gi
-
+    if (!/^tt[0-9]{6,8}$/gi.test(location.state.id)) {
+        console.log("id not goood", id);
+        async function regexx(s) {
+            await axios
+                .get(
+                    `https://api.themoviedb.org/3/movie/${s}?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US`
+                )
+                .then((response) => {
+                    setID(response.data["imdb_id"]);
+                    console.log(response.data["imdb_id"]);
+                })
+                .catch((err) => {
+                    console.log(err, "its for regexx");
+                });
+        }
+        regexx(location.state.id);
+    }
     const userID = localStorage.getItem("userId");
-    const [details, setDetails] = useState([]);
+    const [details, setDetails] = useState({});
 
     const [backupPoster, setBackupPoster] = useState("");
     const [posterUrls, setPosterUrls] = useState([]);
@@ -47,8 +62,16 @@ function Movie() {
 
     const [myRating, setMyRating] = useState(0);
 
-    const [mustLoginModal, setMustLoginModal] = useState(false);
-
+    const options = {
+        method: "GET",
+        url: "https://movie-database-alternative.p.rapidapi.com/",
+        params: { r: "json", i: id },
+        headers: {
+            "X-RapidAPI-Key":
+                "676d565cf9msh03913601fbc68d3p181769jsnc91829350ae4",
+            "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+        },
+    };
     var uselessDatas = [
         "Year",
         "Language",
@@ -64,89 +87,60 @@ function Movie() {
         "Response",
         "DVD",
     ];
-    useEffect(() => {
-        // // isSaved();
 
-        // isSaved();
-        // /^tt[0-9]{6,8}$/gi
-        if (!/^tt[0-9]{5,9}/gi.test(location.state.id)) {
-            console.log("id not goood", id);
-            async function regexx(s) {
-                await axios
-                    .get(
-                        `https://api.themoviedb.org/3/movie/${s}?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US`
-                    )
-                    .then(async (response) => {
-                        setID(response.data["imdb_id"]);
-                        console.log(response.data["imdb_id"]);
-                        fetch(response.data["imdb_id"]);
-                        const saveed = isSaved(response.data["imdb_id"]);
-                    })
-                    .catch((err) => {
-                        console.log(err, "its for regexx");
-                    });
-            }
-            regexx(location.state.id);
-        }
-        console.log("used effecto");
-    }, []);
-    const fetch = async (id) => {
-        const options = {
-            method: "GET",
-            url: "https://movie-database-alternative.p.rapidapi.com/",
-            params: { r: "json", i: id },
-            headers: {
-                "X-RapidAPI-Key":
-                    "676d565cf9msh03913601fbc68d3p181769jsnc91829350ae4",
-                "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
-            },
-        };
-        console.log(id);
+    const fetch = async () => {
         await axios
             .request(options)
             .then(function (response) {
                 let newDetails = [];
 
-                newDetails = response.data;
                 console.log(response.data);
                 if (!response.data) {
                     console.warn("no movie found -> ", response.data);
                 }
                 for (const key in response.data) {
+                    // if (!uselessDatas.includes(key)) {
+                    //     let newObj = response.data[key];
+                    //     // setDetails([...details, newObj])
+                    //     newDetails.push(newObj);
+                    //     console.log(newDetails);
+                    // }
                     if (uselessDatas.includes(key)) {
-                        delete newDetails[key];
+                        delete response.data[key];
+                        // setDetails([...details, newObj])
+                        // newDetails.push(newObj);
+                        // console.log(newDetails);
                     }
                 }
-                setDetails(newDetails);
-                setInfos(newDetails);
+                newDetails = response.data;
+                // setDetails(newDetails);
+                setDetails(response.data);
+                setPosterUrls([newDetails.Poster]);
+                setTitle(newDetails.Title);
+                setSearchTitle(newDetails.Title.replace(" ", "+"));
+                setReleased(newDetails.Released);
+                setRating(newDetails.Rated);
+                setGenres(newDetails.Genre);
+                setPlot(newDetails.Plot);
+                setTime(newDetails.Runtime);
+                setImdb(newDetails.imdbRating);
 
-                // setDetails(response.data);
-                // setPosterUrls([newDetails.Poster]);
-                // setTitle(newDetails.Title);
-                // setSearchTitle(newDetails.Title.replace(" ", "+"));
-                // setReleased(newDetails.Released);
-                // setRating(newDetails.Rated);
-                // setGenres(newDetails.Genre);
-                // setPlot(newDetails.Plot);
-                // setTime(newDetails.Runtime);
-                // setImdb(newDetails.imdbRating);
+                setActors(newDetails.Actors);
+                setAwards(newDetails.Awards);
+                setDirectors(newDetails.Director);
+                setWriters(newDetails.Writer);
 
-                // setActors(newDetails.Actors);
-                // setAwards(newDetails.Awards);
-                // setDirectors(newDetails.Director);
-                // setWriters(newDetails.Writer);
+                setBoxOffice(newDetails.BoxOffice);
 
-                // setBoxOffice(newDetails.BoxOffice);
-
-                // var newCasts = [];
-                // newCasts = newCasts.concat(newDetails.Director.split(","));
-                // newCasts = newCasts.concat(newDetails.Writer.split(","));
-                // newCasts = newCasts.concat(newDetails.Actors.split(","));
-                // var r = [];
-                // newCasts.forEach((x) => {
-                //     r.push(x.trim());
-                // });
-                // setCasts(r);
+                var newCasts = [];
+                newCasts = newCasts.concat(newDetails.Director.split(","));
+                newCasts = newCasts.concat(newDetails.Writer.split(","));
+                newCasts = newCasts.concat(newDetails.Actors.split(","));
+                var r = [];
+                newCasts.forEach((x) => {
+                    r.push(x.trim());
+                });
+                setCasts(r);
             })
             .catch(function (error) {
                 console.error(error, id);
@@ -172,37 +166,7 @@ function Movie() {
             .catch(function (err) {
                 console.log("problem with poster", err);
             });
-        // const savedd = await isSaved();
-    };
-    const setInfos = (data) => {
-        console.log(data);
-        setDetails(data);
-        setPosterUrls([data.Poster]);
-        setTitle(data.Title);
-        setSearchTitle(data.Title.replace(" ", "+"));
-        setReleased(data.Released);
-        setRating(data.Rated);
-        setGenres(data.Genre);
-        setPlot(data.Plot);
-        setTime(data.Runtime);
-        setImdb(data.imdbRating);
-
-        setActors(data.Actors);
-        setAwards(data.Awards);
-        setDirectors(data.Director);
-        setWriters(data.Writer);
-
-        setBoxOffice(data.BoxOffice);
-
-        var newCasts = [];
-        newCasts = newCasts.concat(data.Director.split(","));
-        newCasts = newCasts.concat(data.Writer.split(","));
-        newCasts = newCasts.concat(data.Actors.split(","));
-        var r = [];
-        newCasts.forEach((x) => {
-            r.push(x.trim());
-        });
-        setCasts(r);
+        const savedd = await isSaved();
     };
 
     const show = () => {
@@ -251,13 +215,13 @@ function Movie() {
     //         saved2.style.display = "none";
     //     }
     // });
-    const isSaved = async (id) => {
+    const isSaved = async () => {
         const saveds = await SupabaseFavorite(userID);
         const saved = document.querySelector("#saved");
         const unsaved = document.querySelector("#unsaved");
         // console.log(saveds);
         Object.keys(saveds).forEach((x) => {
-            console.log(x);
+            // console.log(x);
             if (x === id) {
                 console.log(saveds, id);
                 localStorage.setItem(id, true);
@@ -270,10 +234,16 @@ function Movie() {
         });
     };
 
+    useEffect(() => {
+        fetch();
+        // // isSaved();
+
+        // isSaved();
+        console.log("used effecto");
+    }, [id]);
     const saveMovie = async () => {
         if (!userID) {
-            // alert("You must login to use this feature...");
-            setMustLoginModal(true);
+            alert("You must login to use this feature...");
             return false;
         }
         console.log("saved this movie", id, "user", userID);
@@ -448,7 +418,6 @@ function Movie() {
                                 userId={userID}
                                 id={id}
                                 rating={myRating}
-                                setMustLoginModal={setMustLoginModal}
                             ></RatingStars>
                         </div>
                     </div>
@@ -470,38 +439,6 @@ function Movie() {
                     </div>
                 </div>
             </div>
-            <Modal
-                id="mustLoginModal"
-                isOpen={mustLoginModal}
-                onRequestClose={() => setMustLoginModal(false)}
-                ariaHideApp={false}
-                shouldCloseOnOverlayClick={true}
-            >
-                <div id="mustLoginCont">
-                    <h4 className="py-2 text-xl font-extrabold">
-                        You must login to use this feature!
-                    </h4>
-                    <div id="mustLoginButtons">
-                        <Link
-                            id="mustLoginButton"
-                            onClick={() => {
-                                setMustLoginModal(false);
-                            }}
-                            className="bg-green-500"
-                            to={"/"}
-                        >
-                            Login Now
-                        </Link>
-                        <input
-                            id="mustLoginButton"
-                            type="button"
-                            value="Close"
-                            onClick={() => setMustLoginModal(false)}
-                            className="bg-red-600"
-                        />
-                    </div>
-                </div>
-            </Modal>
             {/* <div
                                     id="carouselExampleCrossfade"
                                     class="carousel slide carousel-fade"

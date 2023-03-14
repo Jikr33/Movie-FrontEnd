@@ -5,6 +5,7 @@ import { SupabaseUsername } from "./supas/supabaseUsername";
 import { Link } from "react-router-dom";
 import RatingStars from "./RatingStars";
 import RenderFavoritePosters from "./renderFavoritePosters";
+import fetchAll from "./supas/fetchAll";
 
 function Favorite() {
     const userId = localStorage.getItem("userId");
@@ -228,45 +229,17 @@ function Favorite() {
         fetchName();
     }, []);
 
-    // useEffect(() => {
-    //     fetchAllInitiator();
-    // }, [ratings]);
-
     const fetchName = async () => {
         var s = await SupabaseUsername(userId, setUsername);
-    };
-
-    const fetchAll = async (s) => {
-        if (s.length <= 0) {
-            return false;
-        }
-        var respo = [];
-        Object.keys(s).forEach(async (id) => {
-            const options = {
-                method: "GET",
-                url: `https://www.omdbapi.com/?apikey=c7326058&&i=${id}&plot=full`,
-            };
-            await axios
-                .request(options)
-                .then(function (response) {
-                    console.log("this is fetchall", response.data);
-                    respo.push(response.data);
-                })
-                .catch(function (error) {
-                    console.error("fetchall err", error);
-                });
-        });
-        return respo;
     };
 
     const fetch = async () => {
         const s = await SupabaseFavorite(userId);
         setRatings(s);
-    };
-    const fetchAllInitiator = async () => {
-        const ss = await fetchAll(ratings);
-        console.log(ss);
-        setFaves(ss);
+        if (s) {
+            const fetched = await fetchAll(s);
+            setFaves(fetched);
+        }
     };
 
     return (
