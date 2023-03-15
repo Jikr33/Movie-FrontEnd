@@ -334,7 +334,10 @@
 }
 
 .homePoster {
-   border-radius: 10px;
+   border-radius: 1rem;
+}
+.homePoster > img {
+   border-radius: 1rem;
 }
 
 .homePosterTitle {

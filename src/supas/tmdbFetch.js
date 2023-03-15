@@ -5,7 +5,7 @@ export async function tmdb(x, setFeat) {
     if (x === "theatres") {
         await axios
             .get(
-                "https://api.themoviedb.org/3/movie/now_playing?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=3"
+                "https://api.themoviedb.org/3/movie/now_playing?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=1"
             )
             .then((response) => {
                 console.log(response.data.results);
@@ -19,7 +19,7 @@ export async function tmdb(x, setFeat) {
     } else if (x === "popular") {
         await axios
             .get(
-                "https://api.themoviedb.org/3/movie/popular?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=3"
+                "https://api.themoviedb.org/3/movie/popular?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=1"
             )
             .then((response) => {
                 console.log(response.data.results);
@@ -32,7 +32,7 @@ export async function tmdb(x, setFeat) {
     } else if (x === "top rated") {
         await axios
             .get(
-                "https://api.themoviedb.org/3/movie/top_rated?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=3"
+                "https://api.themoviedb.org/3/movie/top_rated?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=1"
             )
             .then((response) => {
                 console.log(response.data.results);
@@ -45,7 +45,7 @@ export async function tmdb(x, setFeat) {
     } else if (x === "upcoming") {
         await axios
             .get(
-                "https://api.themoviedb.org/3/movie/upcoming?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=3"
+                "https://api.themoviedb.org/3/movie/upcoming?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=1"
             )
             .then((response) => {
                 console.log(response.data.results);
