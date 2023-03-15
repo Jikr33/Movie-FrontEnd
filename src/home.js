@@ -19,6 +19,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
+import { SupabaseFavorite } from "./supas/supabaseFavorite";
 
 function Home() {
     localStorage.setItem("name", "");
@@ -31,7 +32,7 @@ function Home() {
     const [button, setButton] = useState("Log In");
     const [userID, setUserID] = useState(localStorage.getItem("userId"));
     const [features, setFeatures] = useState([]);
-    const [current, setCurrent] = useState("");
+    const [current, setCurrent] = useState("popular");
 
     const [mustLoginModal, setMustLoginModal] = useState(false);
 
@@ -42,6 +43,11 @@ function Home() {
             t.backgroundColor = "rgb(2, 78, 255)";
             t.color = "white";
             setList("popular");
+        } else if (current === "popular") {
+            let t = document.getElementById(current);
+            t.backgroundColor = "rgb(2, 78, 255)";
+            t.color = "white";
+            setList(current);
         }
     }, []);
 
@@ -180,7 +186,7 @@ function Home() {
             t.style.backgroundColor = "blue";
             t.style.color = "white";
             setCurrent("toprated");
-            console.log(t);
+            // console.log(t);
         } else if (x === "upcoming") {
             let f = document.getElementById(current);
             if (f) {
@@ -193,6 +199,12 @@ function Home() {
             setCurrent("upcoming");
         }
         // return tmdb(x);
+    };
+    const fetchGlobalRatings = async (id) => {
+        const ratings = await SupabaseFavorite(id);
+        if (ratings) {
+            localStorage.setItem("ratings", JSON.stringify(ratings));
+        }
     };
 
     const loginHandler = async (e) => {
@@ -238,6 +250,7 @@ function Home() {
                 setModalState(false);
                 localStorage.setItem("userId", uid);
                 setUserID(uid);
+                fetchGlobalRatings(uid);
             } else {
                 console.log("Password incorrect");
             }
@@ -357,6 +370,7 @@ function Home() {
                         onClick={() => {
                             setUserID(false);
                             localStorage.setItem("userId", false);
+                            localStorage.setItem("ratings", null);
                         }}
                     >
                         Log Out
@@ -371,7 +385,7 @@ function Home() {
                             onClick={() => setList("popular")}
                             id="popular"
                             type="button"
-                            class="homeFeatureButton w-fit h-full text-center"
+                            className="homeFeatureButton w-fit h-full text-center"
                         >
                             Popular
                         </button>
@@ -379,7 +393,7 @@ function Home() {
                             onClick={() => setList("top rated")}
                             id="toprated"
                             type="button"
-                            class="homeFeatureButton w-fit h-full text-center"
+                            className="homeFeatureButton w-fit h-full text-center"
                         >
                             Top Rated
                         </button>
@@ -387,7 +401,7 @@ function Home() {
                             onClick={() => setList("theatres")}
                             id="theatres"
                             type="button"
-                            class="homeFeatureButton w-fit h-full text-center"
+                            className="homeFeatureButton w-fit h-full text-center"
                         >
                             In Theatres
                         </button>
@@ -395,7 +409,7 @@ function Home() {
                             onClick={() => setList("upcoming")}
                             id="upcoming"
                             type="button"
-                            class="homeFeatureButton w-fit h-full text-center"
+                            className="homeFeatureButton w-fit h-full text-center"
                         >
                             Upcoming
                         </button>

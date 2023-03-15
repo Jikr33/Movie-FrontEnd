@@ -1,13 +1,17 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import RatingStars from "./RatingStars";
+import RenderFavoritePoster from "./renderFavoritePoster";
+import fetchAll from "./supas/fetchAll";
 
 function RenderFavoritePosters(props) {
     const userId = localStorage.getItem("userId");
-    // const [faves, setFaves] = useState([]);
-    const [ratings, setRatings] = useState(props.ratings);
-    // const [faves, setFaves] = useState([
+    const [faves, setFaves] = useState([]);
+    const [ratings, setRatings] = useState(
+        JSON.parse(localStorage.getItem("ratings"))
+    );
 
+    // const [faves, setFaves] = useState([
     //     {
     //         Title: "Prey for the Devil",
     //         Year: "2022",
@@ -284,19 +288,37 @@ function RenderFavoritePosters(props) {
     //     },
     // ]);
 
+    const fetch = async () => {
+        if (ratings) {
+            var fetched = await fetchAll(ratings);
+            console.log(fetched.length, "fetched");
+            var fet = fetched.sort(
+                (a, b) => parseInt(a.Year) + parseInt(b.Year)
+            );
+            setFaves(fet);
+            console.log(fet);
+        }
+    };
+    useEffect(() => {
+        if (ratings) {
+            fetch();
+            console.log("ratings is eligible", ratings);
+        }
+    }, []);
+
     // var faves = []
     // useEffect(() => {
     //     setFaves(props.faves);
     //     console.log("props faves changed.", props.faves);
     // }, [props.faves]);
-    const [faves, setFaves] = useState(props.faves);
-    useEffect(() => {
-        setRatings(props.ratings);
-        console.log(props.ratings);
-    }, [props.ratings]);
-    useEffect(() => {
-        setFaves(props.faves);
-    }, [props.faves, faves]);
+    // const [faves, setFaves] = useState(props.faves);
+    // useEffect(() => {
+    //     setRatings(props.ratings);
+    //     console.log(props.ratings);
+    // }, [props.ratings]);
+    // useEffect(() => {
+    //     setFaves(props.faves);
+    // }, [props.faves, faves]);
 
     return (
         <div id="favorite">
@@ -304,49 +326,54 @@ function RenderFavoritePosters(props) {
                 faves.length > 0 &&
                 faves.map((item, i) => {
                     return (
-                        <div className="favoriteItem" key={item.imdbID}>
-                            <img src={item.Poster} alt="." />
-                            <div className="favoriteItemDetails">
-                                <span className="favoriteItemTitle">
-                                    <h1 className="text-xl font-medium flex w-4/5 h-full items-center justify-between">
-                                        <Link
-                                            className="hover:text-yellow-400"
-                                            to={"/movie"}
-                                            state={{ id: item.imdbID }}
-                                        >
-                                            {item.Title} ({item.Released})
-                                        </Link>
-                                    </h1>
-                                    <a
-                                        className="text-xl hover:text-yellow-300"
-                                        href={`https://www.imdb.com/title/${item.imdbID}/`}
-                                    >
-                                        {item.imdbRating}/10
-                                    </a>
-                                </span>
-                                <span className="favoriteItemTitle2 w-full text-sm">
-                                    {item.Rated} | {item.Genre} | {item.Runtime}
-                                </span>
-                                <div className="favoriteItemDetail w-full px-2 mt-3">
-                                    <h1 className="font-normal text-m line-clamp-3">
-                                        {item.Plot}
-                                    </h1>
-                                    <span className="flex flex-col justify-evenly w-full ml-0 mt-1 text-sm h-16">
-                                        <h1>Director: {item.Director}</h1>
-                                        <h1>Writer: {item.Writer}</h1>
-                                        <h1>Actors: {item.Actors}</h1>
-                                    </span>
-                                </div>
-                                <div className="flex w-full h-1/6 items-center w-full px-2">
-                                    <h1>Rate this movie : </h1>
-                                    <RatingStars
-                                        userId={userId}
-                                        id={item.imdbID}
-                                        rating={ratings[item.imdbID]}
-                                    ></RatingStars>
-                                </div>
-                            </div>
-                        </div>
+                        // <div className="favoriteItem" key={item.imdbID}>
+                        //     <img src={item.Poster} alt="." />
+                        //     <div className="favoriteItemDetails">
+                        //         <span className="favoriteItemTitle">
+                        //             <h1 className="text-xl font-medium flex w-4/5 h-full items-center justify-between">
+                        //                 <Link
+                        //                     className="hover:text-yellow-400"
+                        //                     to={"/movie"}
+                        //                     state={{ id: item.imdbID }}
+                        //                 >
+                        //                     {item.Title} ({item.Released})
+                        //                 </Link>
+                        //             </h1>
+                        //             <a
+                        //                 className="text-xl hover:text-yellow-300"
+                        //                 href={`https://www.imdb.com/title/${item.imdbID}/`}
+                        //             >
+                        //                 {item.imdbRating}/10
+                        //             </a>
+                        //         </span>
+                        //         <span className="favoriteItemTitle2 w-full text-sm">
+                        //             {item.Rated} | {item.Genre} | {item.Runtime}
+                        //         </span>
+                        //         <div className="favoriteItemDetail w-full px-2 mt-3">
+                        //             <h1 className="font-normal text-m line-clamp-3">
+                        //                 {item.Plot}
+                        //             </h1>
+                        //             <span className="flex flex-col justify-evenly w-full ml-0 mt-1 text-sm h-16">
+                        //                 <h1>Director: {item.Director}</h1>
+                        //                 <h1>Writer: {item.Writer}</h1>
+                        //                 <h1>Actors: {item.Actors}</h1>
+                        //             </span>
+                        //         </div>
+                        //         <div className="flex w-full h-1/6 items-center w-full px-2">
+                        //             <h1>Rate this movie : </h1>
+                        //             <RatingStars
+                        //                 userId={userId}
+                        //                 id={item.imdbID}
+                        //                 rating={ratings[item.imdbID]}
+                        //             ></RatingStars>
+                        //         </div>
+                        //     </div>
+                        // </div>
+                        <RenderFavoritePoster
+                            movie={item}
+                            ratings={ratings}
+                            userId={userId}
+                        ></RenderFavoritePoster>
                     );
                 })}
             <button

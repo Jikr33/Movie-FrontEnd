@@ -215,6 +215,12 @@ function Movie() {
     //         saved2.style.display = "none";
     //     }
     // });
+    const fetchGlobalRatings = async (id) => {
+        const ratings = await SupabaseFavorite(id);
+        if (ratings) {
+            localStorage.setItem("ratings", JSON.stringify(ratings));
+        }
+    };
     const isSaved = async () => {
         const saveds = await SupabaseFavorite(userID);
         const saved = document.querySelector("#saved");
@@ -227,8 +233,9 @@ function Movie() {
                 localStorage.setItem(id, true);
                 unsaved.style.display = "none";
                 saved.style.display = "block";
-                if (saveds[x] !== false) {
+                if (saveds[x]) {
                     setMyRating(saveds[x]);
+                    console.log(saveds[x], "saveds[x]");
                 }
             }
         });
@@ -256,6 +263,7 @@ function Movie() {
             localStorage.setItem(id, true);
             unsaved.style.display = "none";
             saved.style.display = "block";
+            let r = await fetchGlobalRatings(userID);
             // alert("This movie was saved to your favourites list... +", id);
         } else {
             alert(`${id} this movie was already saved...!`);
@@ -263,11 +271,14 @@ function Movie() {
     };
     const unsaveMovie = async () => {
         const ss = await SupabaseUnsaveMovie(userID, id);
-        localStorage.setItem(id, false);
-        const saved = document.querySelector("#saved");
-        const unsaved = document.querySelector("#unsaved");
-        unsaved.style.display = "block";
-        saved.style.display = "none";
+        if (ss) {
+            localStorage.setItem(id, false);
+            const saved = document.querySelector("#saved");
+            const unsaved = document.querySelector("#unsaved");
+            unsaved.style.display = "block";
+            saved.style.display = "none";
+            let r = await fetchGlobalRatings(userID);
+        }
         console.log(ss);
         // alert("This movie was removed from your favourites list... -", id);
     };
@@ -415,6 +426,7 @@ function Movie() {
                         <div className="flex w-full h-1/6 items-center w-full px-2">
                             <h1>Rate this movie : </h1>
                             <RatingStars
+                            fetchGlobalRatings={fetchGlobalRatings}
                                 userId={userID}
                                 id={id}
                                 rating={myRating}

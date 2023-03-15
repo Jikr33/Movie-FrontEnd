@@ -17,6 +17,7 @@ export async function supabaseRate(user, id, index) {
 
     if (!error) {
         console.log(data);
+        return true
     } else {
         console.log(
             error.message,

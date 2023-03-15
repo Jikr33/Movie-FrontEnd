@@ -12,7 +12,9 @@ const Star = (props) => {
                 props.id,
                 parseInt(e.target.value)
             );
-            console.log(e.target.value);
+            const r = props.fetchGlobalRatings(props.userId);
+
+            console.log(e.target.value, s, "STAR");
         }
     };
 
