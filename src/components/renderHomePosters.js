@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import Result from "./result";
-import { Link, redirect } from "react-router-dom";
-import { tmdb } from "./supas/tmdbFetch";
+import { Link } from "react-router-dom";
 
 function RenderHomePosters(props) {
     const [features, setFeatures] = useState(props.features);
@@ -11,7 +9,12 @@ function RenderHomePosters(props) {
     }, [props.features]);
 
     return (
-        <div id="homeCarousel">
+        <div
+            id="homeCarousel"
+            onScroll={props.handleScroll}
+            onWheel={props.handleHorizontalScroll}
+            ref={props.scrollRef}
+        >
             {features &&
                 features.map((x) => {
                     return (

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { React, useState, useEffect, Component } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { Supabase } from "./supas/supabase";
-import { SupabaseInsert } from "./supas/supabaseInsert";
+import { Supabase } from "../supas/supabase";
+import { SupabaseInsert } from "../supas/supabaseInsert";
 import Modal from "react-modal";
 
 function Memes() {

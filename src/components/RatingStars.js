@@ -25,7 +25,7 @@ function RatingStars(props) {
         <div className="stars">
             {GRADES.map((grade, index) => (
                 <Star
-                    fetchGlobalRatings={props.fetchGlobalRatings}
+                    // fetchGlobalRatings={props.fetchGlobalRatings}
                     index={index}
                     key={grade}
                     style={gradeIndex >= index ? activeStar : {}}

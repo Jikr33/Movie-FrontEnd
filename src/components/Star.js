@@ -1,5 +1,6 @@
 import React from "react";
-import { supabaseRate } from "./supas/supabaseRate";
+import { supabaseRate } from "../supas/supabaseRate";
+import fetchGlobalRatings from "../supas/fetchGlobalRatings";
 const Star = (props) => {
     const changeGrade = async (e) => {
         if (!props.userId) {
@@ -12,7 +13,8 @@ const Star = (props) => {
                 props.id,
                 parseInt(e.target.value)
             );
-            const r = props.fetchGlobalRatings(props.userId);
+            console.log(fetchGlobalRatings, s);
+            const r = fetchGlobalRatings(props.userId);
 
             console.log(e.target.value, s, "STAR");
         }

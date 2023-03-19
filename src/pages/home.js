@@ -1,25 +1,14 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import Result from "./result";
-import { Link, redirect } from "react-router-dom";
-import Modal from "react-modal";
+import { React, useState, useEffect, useRef, lazy, Suspense } from "react";
+import { Link } from "react-router-dom";
 import CryptoJS from "crypto-js";
-import { SupabaseRegister } from "./supas/supabaseRegister";
-import { SupabaseLogin } from "./supas/supabaseLogin";
-import { SupabaseUser } from "./supas/supabaseUser";
-import { SupabaseForgotPass } from "./supas/supabaseForgotPass";
-import { tmdb } from "./supas/tmdbFetch";
-import RenderHomePosters from "./renderHomePosters";
-
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
-// import Swiper JS
-import { Swiper, SwiperSlide } from "swiper/react";
-// import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination } from "swiper";
-import { SupabaseFavorite } from "./supas/supabaseFavorite";
+// import { SupabaseRegister } from "../supas/supabaseRegister";
+// import { SupabaseLogin } from "../supas/supabaseLogin";
+// import { SupabaseUser } from "../supas/supabaseUser";
+// import { SupabaseForgotPass } from "../supas/supabaseForgotPass";
+// import { SupabaseFavorite } from "../supas/supabaseFavorite";
+import { tmdb } from "../supas/tmdbFetch";
+import Modal from "react-modal";
+import RenderHomePosters from "../components/renderHomePosters";
 
 function Home() {
     localStorage.setItem("name", "");
@@ -34,7 +23,10 @@ function Home() {
     const [features, setFeatures] = useState([]);
     const [current, setCurrent] = useState("popular");
 
+    const [tmdbPage, setTmdbPage] = useState(1);
     const [mustLoginModal, setMustLoginModal] = useState(false);
+
+    const scrollRef = useRef();
 
     useEffect(() => {
         if (current === "") {
@@ -58,6 +50,7 @@ function Home() {
             loginButtonDiv.style.display = "none";
             console.log("User has already logged in - ", userID);
             logoutButtonDiv.style.display = "block";
+            fetchGlobalRatings(userID);
         } else {
             const loginButtonDiv = document.getElementById("login");
             loginButtonDiv.style.display = "block";
@@ -79,6 +72,9 @@ function Home() {
     useEffect(() => {
         setButton("Log In");
     }, [modalState]);
+    useEffect(() => {
+        setTmdbPage(1);
+    }, [current]);
 
     const invalidInput = () => {
         var input = document.getElementById("searchInput");
@@ -201,10 +197,13 @@ function Home() {
         // return tmdb(x);
     };
     const fetchGlobalRatings = async (id) => {
-        const ratings = await SupabaseFavorite(id);
-        if (ratings) {
-            localStorage.setItem("ratings", JSON.stringify(ratings));
-        }
+        // const ratings = await SupabaseFavorite(id);
+        import("../supas/supabaseFavorite").then(async (module) => {
+            const ratings = await module.SupabaseFavorite(id);
+            if (ratings) {
+                localStorage.setItem("ratings", JSON.stringify(ratings));
+            }
+        });
     };
 
     const loginHandler = async (e) => {
@@ -221,7 +220,13 @@ function Home() {
                 if (confirmPass === password) {
                     var hashedPass = hashPassword(password);
                     console.log(hashedPass);
-                    var success = await SupabaseRegister(username, hashedPass);
+                    // dynamically importing a function, only when it is needed.
+                    var success = await import(
+                        "../supas/supabaseRegister"
+                    ).then((module) => {
+                        module.SupabaseRegister(username, hashedPass);
+                    });
+                    // var success = await SupabaseRegister(username, hashedPass);
                     if (success) {
                         console.log("Successfully registered.");
                         toLogin();
@@ -239,20 +244,29 @@ function Home() {
             }
         } else if (v === "Log In") {
             var hashedPassLogin = hashPassword(password);
-            var successLogin = await SupabaseLogin(username, hashedPassLogin);
+            // var successLogin = await SupabaseLogin(username, hashedPassLogin);
+            // when dynamically importing functions, await did not work, but worked fine without using it.
+            var successLogin = import("../supas/supabaseLogin").then(
+                (module) => {
+                    module.SupabaseLogin(username, hashedPassLogin);
+                }
+            );
             if (successLogin) {
                 const loginButtonDiv = document.getElementById("login");
                 loginButtonDiv.style.display = "none";
                 const logoutButtonDiv = document.getElementById("logout");
                 logoutButtonDiv.style.display = "block";
                 console.log("Successfully logged in");
-                const uid = await SupabaseUser(username);
+                // const uid = await SupabaseUser(username);
+                import("../supas/supabaseUser").then(async (module) => {
+                    const uid = await module.SupabaseUser(username);
+                    localStorage.setItem("userId", uid);
+                    setUserID(uid);
+                    fetchGlobalRatings(uid);
+                });
                 setModalState(false);
-                localStorage.setItem("userId", uid);
-                setUserID(uid);
-                fetchGlobalRatings(uid);
             } else {
-                console.log("Password incorrect");
+                console.log("Password incorrect", successLogin);
             }
         } else if (v === "Confirm New Password") {
             confirm = document.getElementById("confirmPass");
@@ -264,23 +278,32 @@ function Home() {
                 if (password === confirmPass) {
                     console.log("password ok");
                     var changeTo = hashPassword(password);
-                    var passChanged = await SupabaseForgotPass(
-                        username,
-                        changeTo
+
+                    // var passChanged = await SupabaseForgotPass(
+                    //     username,
+                    //     changeTo
+                    // );
+                    import("../supas/supabaseForgotPass").then(
+                        async (module) => {
+                            var passChanged = await module.SupabaseForgotPass(
+                                username,
+                                changeTo
+                            );
+                            if (passChanged) {
+                                console.log(passChanged);
+                                alert(
+                                    "Your password was successfully changed... " +
+                                        username
+                                );
+                                toLogin();
+                            } else {
+                                user.style.border = "2px red solid";
+                                pass.style.border = "none";
+                                confirm.style.border = "none";
+                                alert("User does not exist...");
+                            }
+                        }
                     );
-                    if (passChanged) {
-                        console.log(passChanged);
-                        alert(
-                            "Your password was successfully changed... " +
-                                username
-                        );
-                        toLogin();
-                    } else {
-                        user.style.border = "2px red solid";
-                        pass.style.border = "none";
-                        confirm.style.border = "none";
-                        alert("User does not exist...");
-                    }
                 } else {
                     confirm.style.border = "3px red solid";
                     pass.style.border = "3px red solid";
@@ -289,6 +312,25 @@ function Home() {
                 user.style.border = "2px red solid";
             }
         }
+    };
+    const handleScroll = async (e) => {
+        const scrollEnd =
+            e.target.scrollWidth - e.target.scrollLeft === e.target.clientWidth;
+        if (scrollEnd) {
+            console.log(scrollEnd, "scrolled to the end");
+            const g = await tmdb(current, setFeatures, features, tmdbPage + 1);
+            setTmdbPage(tmdbPage + 1);
+        }
+    };
+    const handleHorizontalScroll = (event) => {
+        // Prevent default scroll behavior
+        event.preventDefault();
+
+        // Calculate the amount to scroll horizontally
+        const scrollAmount = event.deltaY;
+
+        // Adjust the scrollLeft property of the div
+        scrollRef.current.scrollLeft += scrollAmount;
     };
     return (
         <div
@@ -413,53 +455,15 @@ function Home() {
                         >
                             Upcoming
                         </button>
-                        {/* <button
-                            onClick={() => {
-                                console.log(current);
-                            }}
-                            type="button"
-                            class="homeFeatureButton w-fit h-full text-center"
-                        >
-                            ssss
-                        </button> */}
                     </span>
                 </div>
                 <div id="features">
-                    <RenderHomePosters features={features}></RenderHomePosters>
-                    {/* <div id="homeCarousel">
-                        {current.map((x) => {
-                            return (
-                                <div className="homePosters">
-                                    <Link
-                                        className="homePoster"
-                                        to={"/movie"}
-                                        state={{ id: x.id }}
-                                    >
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${x.poster_path}`}
-                                            alt=""
-                                        />
-                                    </Link>
-
-                                    <div className="homePostersInfo">
-                                        <Link
-                                            to={"/movie"}
-                                            state={{ id: x.id }}
-                                            className="homePosterTitle"
-                                        >
-                                            <h1 className="line-clamp-2">
-                                                {x["original_title"]}
-                                            </h1>
-                                            <h1 className="text-yellow-500">
-                                                {x["vote_average"]}
-                                            </h1>
-                                        </Link>
-                                        {x["release_date"]}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div> */}
+                    <RenderHomePosters
+                        features={features}
+                        handleScroll={handleScroll}
+                        handleHorizontalScroll={handleHorizontalScroll}
+                        ref={scrollRef}
+                    ></RenderHomePosters>
                 </div>
             </div>
 

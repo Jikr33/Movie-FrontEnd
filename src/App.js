@@ -1,41 +1,60 @@
 import "./App.css";
-import Home from "./home";
-import Result from "./result";
-import Movie from "./movie";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import { Redirect, Switch } from "react";
-import Memes from "./memes";
-import Favorite from "./favorite";
-import RenderFavoritePosters from "./renderFavoritePosters";
-// require('dotenv').config()
+import Home from "./pages/home";
+// import Result from "./pages/result";
+// import Movie from "./pages/movie";
+// import Memes from "./pages/memes";
+// import Favorite from "./pages/favorite";
+import { Routes, Route } from "react-router-dom";
+import React, { Suspense, lazy } from "react";
+
+const Favorite = lazy(() => import("./pages/favorite"));
+const Result = lazy(() => import("./pages/result"));
+const Movie = lazy(() => import("./pages/movie"));
+const Memes = lazy(() => import("./pages/memes"));
 
 function App() {
     return (
-            <Routes>
-                <Route path="/" component={Home} element={<Home />}></Route>
-                <Route
-                    path="result"
-                    component={Result}
-                    element={<Result />}
-                ></Route>
-                <Route
-                    path="movie"
-                    component={Movie}
-                    element={<Movie />}
-                ></Route>
-                <Route
-                    path="memes"
-                    component={Memes}
-                    element={<Memes />}
-                ></Route>
-                <Route
-                    path="posters"
-                    component={RenderFavoritePosters}
-                    element={<RenderFavoritePosters />}
-                ></Route>
-                <Route path="favorites" element={<Favorite />}></Route>
-                {/* <Route path='/guide' element={<Guide/>}></Route> */}
-            </Routes>
+        <Routes>
+            <Route path="/" component={Home} element={<Home />}></Route>
+
+            <Route
+                path="result"
+                component={Result}
+                element={
+                    <Suspense fallback={<h1>Loading Watchlist...</h1>}>
+                        <Result />
+                    </Suspense>
+                }
+            ></Route>
+
+            <Route
+                path="movie"
+                component={Movie}
+                element={
+                    <Suspense fallback={<h1>Loading Watchlist...</h1>}>
+                        <Movie />
+                    </Suspense>
+                }
+            ></Route>
+            <Route
+                path="memes"
+                component={Memes}
+                element={
+                    <Suspense fallback={<h1>Loading Watchlist...</h1>}>
+                        <Memes />
+                    </Suspense>
+                }
+            ></Route>
+            <Route
+                path="favorites"
+                component={Favorite}
+                element={
+                    <Suspense fallback={<h1>Loading Watchlist...</h1>}>
+                        <Favorite />
+                    </Suspense>
+                }
+            ></Route>
+        </Routes>
     );
 }
 

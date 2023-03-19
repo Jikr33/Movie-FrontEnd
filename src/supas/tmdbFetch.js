@@ -1,15 +1,16 @@
 import axios from "axios";
 
-export async function tmdb(x, setFeat) {
+export async function tmdb(x, setFeat, features = [], page = 1) {
     // top rated, upcoming, theatres, popular
     if (x === "theatres") {
         await axios
             .get(
-                "https://api.themoviedb.org/3/movie/now_playing?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=1"
+                `https://api.themoviedb.org/3/movie/now_playing?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
             )
             .then((response) => {
-                console.log(response.data.results);
-                setFeat(response.data.results);
+                console.log(response.data.results, "page number -", page);
+                // setFeat(response.data.results);
+                setFeat(features.concat(response.data.results));
                 return response.data.results;
             })
             .catch((err) => {
@@ -19,11 +20,13 @@ export async function tmdb(x, setFeat) {
     } else if (x === "popular") {
         await axios
             .get(
-                "https://api.themoviedb.org/3/movie/popular?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=1"
+                `https://api.themoviedb.org/3/movie/popular?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
             )
             .then((response) => {
                 console.log(response.data.results);
-                setFeat(response.data.results);
+                // setFeat(response.data.results);
+                setFeat(features.concat(response.data.results));
+
                 return response.data.results;
             })
             .catch((err) => {
@@ -32,11 +35,13 @@ export async function tmdb(x, setFeat) {
     } else if (x === "top rated") {
         await axios
             .get(
-                "https://api.themoviedb.org/3/movie/top_rated?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=1"
+                `https://api.themoviedb.org/3/movie/top_rated?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
             )
             .then((response) => {
                 console.log(response.data.results);
-                setFeat(response.data.results);
+                // setFeat(response.data.results);
+                setFeat(features.concat(response.data.results));
+
                 return response.data.results;
             })
             .catch((err) => {
@@ -45,11 +50,11 @@ export async function tmdb(x, setFeat) {
     } else if (x === "upcoming") {
         await axios
             .get(
-                "https://api.themoviedb.org/3/movie/upcoming?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=1"
+                `https://api.themoviedb.org/3/movie/upcoming?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
             )
             .then((response) => {
                 console.log(response.data.results);
-                setFeat(response.data.results);
+                setFeat(features.concat(response.data.results));
                 return response.data.results;
             })
             .catch((err) => {
