@@ -59,6 +59,7 @@ function Movie() {
     // const [posterCounter, setPosterCounter] = useState(1);
 
     const [myRating, setMyRating] = useState(0);
+    const [saved, setSaved] = useState(false);
 
     // useEffect(() => {
     //     fetch();
@@ -166,7 +167,7 @@ function Movie() {
             .catch(function (err) {
                 console.log("problem with poster", err);
             });
-        const savedd = await isSaved();
+        const savedd = await isSaved(newId);
     };
 
     // const nextPoster = (x) => {
@@ -185,18 +186,19 @@ function Movie() {
     //         localStorage.setItem("ratings", JSON.stringify(ratings));
     //     }
     // };
-    const isSaved = async () => {
+    const isSaved = async (id) => {
         const saveds = await SupabaseFavorite(userID);
         const saved = document.querySelector("#saved");
         const unsaved = document.querySelector("#unsaved");
         Object.keys(saveds).forEach((x) => {
             if (x === id) {
-                console.log(saveds, id);
+                console.log(saveds, id, "this movie is saved");
                 localStorage.setItem(id, true);
                 unsaved.style.display = "none";
                 saved.style.display = "block";
                 if (saveds[x]) {
                     setMyRating(saveds[x]);
+                    setSaved(true);
                     console.log(saveds[x], "saveds[x]");
                 }
             }
@@ -322,6 +324,7 @@ function Movie() {
                             <RatingStars
                                 // fetchGlobalRatings={fetchGlobalRatings}
                                 userId={userID}
+                                saved={saved}
                                 id={id}
                                 rating={myRating}
                             ></RatingStars>

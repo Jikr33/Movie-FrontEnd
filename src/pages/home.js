@@ -6,9 +6,13 @@ import CryptoJS from "crypto-js";
 // import { SupabaseUser } from "../supas/supabaseUser";
 // import { SupabaseForgotPass } from "../supas/supabaseForgotPass";
 // import { SupabaseFavorite } from "../supas/supabaseFavorite";
+
 import { tmdb } from "../supas/tmdbFetch";
 import Modal from "react-modal";
 import RenderHomePosters from "../components/renderHomePosters";
+import axios from "axios";
+import search from "../supas/homeSearch";
+const RenderResults = lazy(() => import("../components/RenderResults"));
 
 function Home() {
     localStorage.setItem("name", "");
@@ -25,6 +29,8 @@ function Home() {
 
     const [tmdbPage, setTmdbPage] = useState(1);
     const [mustLoginModal, setMustLoginModal] = useState(false);
+
+    const [movies, setMovies] = useState([]);
 
     const scrollRef = useRef();
 
@@ -59,9 +65,41 @@ function Home() {
             logoutButtonDiv.style.display = "none";
         }
     }, [userID]);
+    // const search = async (name, setMovies, page = 1) => {
+    //     // var uname = encodeURIComponent(name);
+    //     const options = {
+    //         method: "GET",
+    //         url: `https://api.themoviedb.org/3/search/movie?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&query=${name}&page=${page}&include_adult=true`,
+    //     };
+    //     await axios
+    //         .request(options)
+    //         .then((response) => {
+    //             var res = response.data.results;
+    //             // sorting the result
+    //             res.sort((a, b) => {
+    //                 return b.release_date - a.release_date;
+    //             });
+    //             console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
+    //             setMovies(res);
+    //             // setMovies(movies.concat(res));
+    //             if (res.length < 1) {
+    //                 console.warn("no movies");
+    //                 const warning = document.getElementById("warning");
+    //                 warning.style.display = "flex";
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.log("Гарсан алдаа______", error);
+    //             console.warn("no movies");
+    //             const warning = document.getElementById("warning");
+    //             warning.style.display = "flex";
+    //         });
+    // };
+
     useEffect(() => {
         localStorage.setItem("name", name);
         console.log("set local - ", localStorage.getItem("name"));
+        search(name, setMovies);
     }, [name]);
     const setValue = (s) => {
         setName(s.target.value);
@@ -351,36 +389,50 @@ function Home() {
                     Millions of movies, TV shows and people to discover. Explore
                     now.
                 </h4>
-                <div className="input-group">
-                    <div className="homeSearchInput">
-                        <input
-                            autoFocus
-                            type="search"
-                            id="searchInput"
-                            //  className="form-control"
-                            onChange={(e) => setValue(e)}
-                            placeholder="Search for a movie or tv show"
-                        />
+                <span>
+                    <div className="input-group">
+                        {name.length > 0 ? (
+                            <button
+                                id="homeSearchButtonClear"
+                                onClick={() => setName("")}
+                            ></button>
+                        ) : (
+                            <button id="homeSearchButtonIcon"></button>
+                        )}
+                        <div className="homeSearchInput">
+                            <input
+                                autoFocus
+                                type="search"
+                                id="searchInput"
+                                //  className="form-control"
+                                onChange={(e) => setValue(e)}
+                                value={name}
+                                placeholder="Search for a movie or tv show"
+                            />
+                        </div>
+                        {valid ? (
+                            <Link
+                                id="search-button"
+                                className="btn btn-primary text-center text-xl shadow-5"
+                                to="result"
+                            >
+                                Search
+                            </Link>
+                        ) : (
+                            <Link
+                                id="search-button"
+                                className="btn btn-primary text-center text-xl shadow-5"
+                                to=""
+                                onClick={() => invalidInput()}
+                            >
+                                Search
+                            </Link>
+                        )}
                     </div>
-                    {valid ? (
-                        <Link
-                            id="search-button"
-                            className="btn btn-primary text-center text-xl shadow-5"
-                            to="result"
-                        >
-                            Search
-                        </Link>
-                    ) : (
-                        <Link
-                            id="search-button"
-                            className="btn btn-primary text-center text-xl shadow-5"
-                            to=""
-                            onClick={() => invalidInput()}
-                        >
-                            Search
-                        </Link>
-                    )}
-                </div>
+                    {movies.length != 0 ? (
+                        <RenderResults movies={movies}></RenderResults>
+                    ) : null}
+                </span>
                 <div id="homeMenu">
                     <Link className="homeMenuLinks" to={"memes"}>
                         memes

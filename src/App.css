@@ -37,6 +37,16 @@
 
 }
 
+#homeSearch>span {
+   height: 2.5rem;
+   width: 80%;
+   margin: 0 10%;
+   background-color: white;
+   border-radius: 30px;
+   padding: 0 1rem;
+   position: relative;
+}
+
 #homeTitle {
    margin: 30px;
    font-size: 45px;
@@ -152,6 +162,13 @@
    background-color: #c88c01;
 }
 
+#resultTitle>h1 {
+   position: absolute;
+   top: 4rem;
+   left: 0;
+   font-size: 1.5rem;
+}
+
 #resultTitle>div {
    padding-left: 2rem;
    width: fit-content;
@@ -176,9 +193,10 @@
    width: 100%;
    /* margin: 10px; */
    /* padding: 10px; */
-   height: 11rem;
+   height: 8rem;
    display: flex;
    justify-content: space-between;
+   margin-bottom: 0.8rem;
 }
 
 .items>h1 {
@@ -191,23 +209,37 @@
    font-size: 1.5rem;
 }
 
-#itemsResult {
+/* #itemsResult {
    width: 55vw;
    height: 100%;
    display: flex;
    align-items: center;
    justify-content: center;
    background-color: #fbc352d7;
-   margin-top: 100px;
+   margin-top: 115px;
+   margin-bottom: 20px;
+   position: relative;
+   border-radius: 20px;
+} */
+#itemsResult {
+   width: 100%;
+   min-height: 200px;
+   height: 25rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: #fbc352d7;
    margin-bottom: 20px;
    position: relative;
    border-radius: 20px;
 }
 
+
+
 #itemsResult>ul {
    position: absolute;
    top: 0;
-   width: 80%;
+   width: 95%;
    padding-top: 25px;
    padding-bottom: 40px;
    color: white;
@@ -215,17 +247,41 @@
 }
 
 .resultPosters {
-   width: 60%;
-   height: 9rem;
+   width: 75%;
+   /* height: 9rem; */
+   height: 100%;
    display: flex;
-   margin-bottom: 2rem;
+   /* margin-bottom: 2rem; */
 
 }
 
 .resultPoster {
-   width: 7rem;
+   /* width: 7rem; */
+   min-width: 7rem;
    height: 100%;
 
+}
+
+.homeResultsInfos {
+   display: flex;
+   flex-direction: column;
+   align-items: start;
+   justify-content: space-between;
+}
+
+.homeResultsInfos>h1 {
+   height: fit-content;
+   min-height: 2rem;
+   padding-bottom: 1rem;
+}
+
+.homeResultsInfos>h5 {
+   font-size: 0.8rem;
+   height: 60%;
+   display: flex;
+   align-items: start;
+   justify-content: center;
+   padding-left: 1.5rem;
 }
 
 
@@ -241,7 +297,7 @@
 
 .item {
    margin-left: 1.5rem;
-   text-align: center;
+   text-align: start;
 }
 
 .scrollbar {
@@ -331,11 +387,12 @@
 
 .input-group {
    height: 2.5rem;
-   width: 80%;
-   margin: 0 10%;
+   width: 100%;
+   /* margin: 0 10%; */
    background-color: white;
    border-radius: 30px;
    padding: 0 1rem;
+   padding-right: 0;
 }
 
 #searchInput {
@@ -363,6 +420,29 @@
    border: none !important;
    outline: none;
    background-color: transparent;
+   padding-left: 1.3rem;
+}
+
+#homeSearchButtonIcon,
+#homeSearchButtonClear {
+   width: 2.5rem;
+   height: 75%;
+   position: absolute;
+   left: -0.7rem;
+   top: 12.5%;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: contain;
+}
+
+#homeSearchButtonIcon {
+   background-image: url(./assets/search.png);
+   z-index: 3;
+}
+
+#homeSearchButtonClear {
+   background-image: url(./assets/exit.png);
+   z-index: 3;
 }
 
 .homePosters {
@@ -971,6 +1051,14 @@ span {
    width: 1px;
    height: 1px;
    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.line-clamp-4 {
+   overflow: hidden;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   /* truncate to 5 lines */
+   -webkit-line-clamp: 4;
 }
 
 .line-clamp-3 {

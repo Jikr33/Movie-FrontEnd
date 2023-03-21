@@ -32,6 +32,7 @@ function RatingStars(props) {
                     changeGrade={changeGradeIndex}
                     userId={props.userId}
                     id={props.id}
+                    saved={props.saved}
                     setMustLoginModal={props.setMustLoginModal}
                 />
             ))}

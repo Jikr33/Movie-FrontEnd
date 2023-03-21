@@ -2,43 +2,45 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ResultsPageSwitcher from "../components/ResultsPageSwitcher";
+import search from "../supas/homeSearch";
 
 function Result() {
     var [name, setName] = useState(localStorage.getItem("name"));
+    const [valid, setValid] = useState(false);
 
     const [movies, setMovies] = useState([]);
-    const search = async (page = 1) => {
-        var uname = encodeURIComponent(name);
-        const options = {
-            method: "GET",
-            url: `https://api.themoviedb.org/3/search/movie?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&query=${name}&page=${page}&include_adult=true`,
-        };
-        await axios
-            .request(options)
-            .then((response) => {
-                var res = response.data.results;
-                // sorting the result
-                res.sort((a, b) => {
-                    return b.release_date - a.release_date;
-                });
-                console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
-                setMovies(res);
-                // setMovies(movies.concat(res));
-                if (res.length < 1) {
-                    console.warn("no movies");
-                    const warning = document.getElementById("warning");
-                    warning.style.display = "flex";
-                }
-            })
-            .catch((error) => {
-                console.log("Гарсан алдаа______", error);
-                console.warn("no movies");
-                const warning = document.getElementById("warning");
-                warning.style.display = "flex";
-            });
-    };
+    // const search = async (page = 1) => {
+    //     // var uname = encodeURIComponent(name);
+    //     const options = {
+    //         method: "GET",
+    //         url: `https://api.themoviedb.org/3/search/movie?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&query=${name}&page=${page}&include_adult=true`,
+    //     };
+    //     await axios
+    //         .request(options)
+    //         .then((response) => {
+    //             var res = response.data.results;
+    //             // sorting the result
+    //             res.sort((a, b) => {
+    //                 return b.release_date - a.release_date;
+    //             });
+    //             console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
+    //             setMovies(res);
+    //             // setMovies(movies.concat(res));
+    //             if (res.length < 1) {
+    //                 console.warn("no movies");
+    //                 const warning = document.getElementById("warning");
+    //                 warning.style.display = "flex";
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.log("Гарсан алдаа______", error);
+    //             console.warn("no movies");
+    //             const warning = document.getElementById("warning");
+    //             warning.style.display = "flex";
+    //         });
+    // };
     useEffect(() => {
-        search();
+        search(name, setMovies);
     }, [name]);
 
     const poster = (x) => {
@@ -55,20 +57,52 @@ function Result() {
             <div id="resultTitle">
                 <div>
                     <Link to={"/"}>{`<-`}</Link>
-                    <h1>Search results for "{name}"</h1>
                 </div>
+                {/* <div className="input-group">
+                    <div className="homeSearchInput">
+                        <input
+                            autoFocus
+                            type="search"
+                            id="searchInput"
+                            onChange={(e) => setValue(e)}
+                            placeholder="Search for a movie or tv show"
+                        />
+                    </div>
+                    {valid ? (
+                        <Link
+                            id="search-button"
+                            className="btn btn-primary text-center text-xl shadow-5"
+                            to="result"
+                        >
+                            Search
+                        </Link>
+                    ) : (
+                        <Link
+                            id="search-button"
+                            className="btn btn-primary text-center text-xl shadow-5"
+                            to=""
+                            onClick={() => invalidInput()}
+                        >
+                            Search
+                        </Link>
+                    )}
+                </div> */}
 
                 <ResultsPageSwitcher
                     search={search}
                     setMovies={setMovies}
                 ></ResultsPageSwitcher>
+                <h1>Search results for "{name}"</h1>
             </div>
             <div id="itemsResult" className="scrollbar">
                 {movies.length > 0 && (
                     <ul>
                         {movies.map((x) => {
-                            if (x.release_date) {
-                                console.log(x.id);
+                            if (
+                                x.release_date &&
+                                x.adult ^ (x.original_language == "ja")
+                            ) {
+                                console.log(x.adult != x.original_language);
                                 return x.id ? (
                                     <Link
                                         to={"/movie"}
