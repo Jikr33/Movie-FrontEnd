@@ -1,12 +1,13 @@
 import { React, useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import CryptoJS from "crypto-js";
+import "../App.css";
 // import { SupabaseRegister } from "../supas/supabaseRegister";
 // import { SupabaseLogin } from "../supas/supabaseLogin";
 // import { SupabaseUser } from "../supas/supabaseUser";
 // import { SupabaseForgotPass } from "../supas/supabaseForgotPass";
 // import { SupabaseFavorite } from "../supas/supabaseFavorite";
-
+import { SupabaseLog } from "../supas/supabaseLog";
 import { tmdb } from "../supas/tmdbFetch";
 import Modal from "react-modal";
 import RenderHomePosters from "../components/renderHomePosters";
@@ -28,6 +29,7 @@ function Home() {
     const [current, setCurrent] = useState("popular");
 
     const [tmdbPage, setTmdbPage] = useState(1);
+    const [searchPage, setSearchPage] = useState(1);
     const [mustLoginModal, setMustLoginModal] = useState(false);
 
     const [movies, setMovies] = useState([]);
@@ -56,6 +58,7 @@ function Home() {
             loginButtonDiv.style.display = "none";
             console.log("User has already logged in - ", userID);
             logoutButtonDiv.style.display = "block";
+            // SupabaseLog(userID);
             fetchGlobalRatings(userID);
         } else {
             const loginButtonDiv = document.getElementById("login");
@@ -63,6 +66,7 @@ function Home() {
             const logoutButtonDiv = document.getElementById("logout");
             console.log("User has already logged out - ", userID);
             logoutButtonDiv.style.display = "none";
+            // SupabaseLog(0);
         }
     }, [userID]);
     // const search = async (name, setMovies, page = 1) => {
@@ -99,7 +103,7 @@ function Home() {
     useEffect(() => {
         localStorage.setItem("name", name);
         console.log("set local - ", localStorage.getItem("name"));
-        search(name, setMovies);
+        search(name, setMovies, searchPage, movies);
     }, [name]);
     const setValue = (s) => {
         setName(s.target.value);
@@ -360,6 +364,16 @@ function Home() {
             setTmdbPage(tmdbPage + 1);
         }
     };
+    const handleSearchScroll = async (e) => {
+        const scrollEnd =
+            e.target.scrollHeight - e.target.scrollTop ===
+            e.target.clientHeight;
+        if (scrollEnd) {
+            console.log(scrollEnd, "scrolled to the end, the search result");
+            search(name, setMovies, searchPage + 1, movies);
+            setSearchPage(searchPage + 1);
+        }
+    };
     const handleHorizontalScroll = (event) => {
         // Prevent default scroll behavior
         event.preventDefault();
@@ -394,7 +408,10 @@ function Home() {
                         {name.length > 0 ? (
                             <button
                                 id="homeSearchButtonClear"
-                                onClick={() => setName("")}
+                                onClick={() => {
+                                    setName("");
+                                    setMovies([]);
+                                }}
                             ></button>
                         ) : (
                             <button id="homeSearchButtonIcon"></button>
@@ -430,7 +447,10 @@ function Home() {
                         )}
                     </div>
                     {movies.length != 0 ? (
-                        <RenderResults movies={movies}></RenderResults>
+                        <RenderResults
+                            movies={movies}
+                            handleSearchScroll={handleSearchScroll}
+                        ></RenderResults>
                     ) : null}
                 </span>
                 <div id="homeMenu">
@@ -465,6 +485,7 @@ function Home() {
                             setUserID(false);
                             localStorage.setItem("userId", false);
                             localStorage.setItem("ratings", null);
+                            localStorage.setItem("logged", false);
                         }}
                     >
                         Log Out

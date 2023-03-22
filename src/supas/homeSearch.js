@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function search(name, setMovies, page = 1) {
+export default async function search(name, setMovies, page = 1, movies) {
     // var uname = encodeURIComponent(name);
     const options = {
         method: "GET",
@@ -11,11 +11,19 @@ export default async function search(name, setMovies, page = 1) {
         .then((response) => {
             var res = response.data.results;
             // sorting the result
-            res.sort((a, b) => {
-                return b.release_date - a.release_date;
-            });
+            // res.sort((a, b) => {
+            //     return b.release_date - a.release_date;
+            // });
             console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
-            setMovies(res);
+            res.sort(
+                (a, b) => new Date(b.release_date) - new Date(a.release_date)
+            );
+            if (page > 1) {
+                setMovies((movies) => [...movies, ...res]);
+                console.log(movies);
+            } else {
+                setMovies(res);
+            }
             // setMovies(movies.concat(res));
             if (res.length < 1) {
                 console.warn("no movies");

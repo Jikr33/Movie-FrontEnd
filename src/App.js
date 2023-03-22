@@ -1,11 +1,12 @@
-import "./App.css";
+// import "./App.css";
 import Home from "./pages/home";
 // import Result from "./pages/result";
 // import Movie from "./pages/movie";
 // import Memes from "./pages/memes";
 // import Favorite from "./pages/favorite";
 import { Routes, Route } from "react-router-dom";
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useState, useEffect } from "react";
+import { SupabaseLog } from "./supas/supabaseLog";
 
 const Favorite = lazy(() => import("./pages/favorite"));
 const Result = lazy(() => import("./pages/result"));
@@ -13,6 +14,15 @@ const Movie = lazy(() => import("./pages/movie"));
 const Memes = lazy(() => import("./pages/memes"));
 
 function App() {
+    const [userID, setUserID] = useState(localStorage.getItem("userId"));
+    const tokenSupabase = localStorage.getItem("logged");
+    useEffect(() => {
+        if (userID != null && !tokenSupabase) {
+            SupabaseLog(userID);
+            localStorage.setItem("logged", true);
+        }
+    }, [userID]);
+
     return (
         <Routes>
             <Route path="/" component={Home} element={<Home />}></Route>
