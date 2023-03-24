@@ -1269,8 +1269,8 @@ span {
    }
 
    #moviePoster {
-      height: 80%;
-      margin-bottom: 1rem;
+      height: 85%;
+      /* margin-bottom: 1rem; */
       position: fixed;
    }
 
@@ -1285,13 +1285,17 @@ span {
 
    #movieDetail {
       align-items: center;
+      height: 100%;
+      min-height: auto;
    }
 
    #movieTitles {
-      height: 20%;
+      height: 15vh;
       width: 100vw;
       flex-direction: row-reverse;
       padding: 0 1rem;
+      top: -15vh;
+      background-color: white;
    }
 
    #movieTitle {
@@ -1312,13 +1316,14 @@ span {
    }
 
    #movieDetailes {
-      margin-top: 25vh;
-      height: 75%;
+      height: 85%;
+      margin-top: 0;
    }
 
    #movieDetails {
       position: absolute;
-      top: 82vh;
+      top: 100vh;
+      height: 85vh;
       background-color: white;
    }
 
@@ -1330,9 +1335,14 @@ span {
       margin-top: 0.35rem;
    }
 
+   #movieRatingStars {
+      height: 10%;
+   }
+
    #links {
-      margin-top: 1rem;
-      margin-bottom: 4rem;
+      height: 10%;
+      margin-top: 0;
+      margin-bottom: 0;
       justify-content: space-evenly;
    }
 

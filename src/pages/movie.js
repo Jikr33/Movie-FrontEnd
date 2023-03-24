@@ -324,7 +324,7 @@ function Movie() {
                                 Actors: <span>{actors}</span>
                             </h1>
                         </div>
-                        <div className="flex w-full h-1/6 items-center w-full px-2">
+                        <div className="flex h-1/6 items-center w-full px-2" id="movieRatingStars">
                             <h1>Rate this movie : </h1>
                             <RatingStars
                                 // fetchGlobalRatings={fetchGlobalRatings}
