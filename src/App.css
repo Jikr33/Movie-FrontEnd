@@ -1216,6 +1216,7 @@ span {
 
    #itemsResult {
       width: 110%;
+      min-height: 23rem;
    }
 
    #homeSearch>span {
@@ -1281,6 +1282,10 @@ span {
 
    #posterCounter {
       bottom: 0;
+   }
+
+   #posterCounter>div {
+      width: 55%;
    }
 
    #movieDetail {
@@ -1381,14 +1386,21 @@ span {
 
    .favoriteItemTitle {
       width: 98%;
+      padding-left: 0.4rem;
+   }
+
+   .favoriteItemTitle>h1>a {
+      line-height: 1;
    }
 
    .favoriteItemTitle2 {
       font-size: 0.7rem;
+      padding-left: 0.4rem;
    }
 
    .favoriteItemDetails {
       padding-right: 0;
+      position: relative;
    }
 
    .favoriteItemDetails>div {
@@ -1404,8 +1416,21 @@ span {
       font-size: 0.5rem;
    }
 
+   #favoritePostersRating {
+      /* margin-top: 1.3rem;
+       */
+      position: absolute;
+      bottom: 0.7rem;
+      font-size: 0.7rem;
+   }
+
    .stars {
       gap: 0;
+   }
+
+   #favoritePostersRating>.stars>.star>svg {
+      width: 25px;
+      height: 25px;
    }
 
    svg {

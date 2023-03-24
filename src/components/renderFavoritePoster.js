@@ -38,7 +38,7 @@ export default function RenderFavoritePoster({ movie, ratings, userId }) {
                             <h1>Actors: {movie.Actors}</h1>
                         </span>
                     </div>
-                    <div className="flex w-full h-1/6 items-center w-full px-2">
+                    <div className="flex w-full h-1/6 items-center px-2" id="favoritePostersRating">
                         <h1>Rate this movie : </h1>
                         <RatingStars
                             userId={userId}
