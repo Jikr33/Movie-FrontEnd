@@ -18,7 +18,6 @@ const RenderResults = lazy(() => import("../components/RenderResults"));
 function Home() {
     localStorage.setItem("name", "");
     const [name, setName] = useState("");
-    const [valid, setValid] = useState(false);
     const [modalState, setModalState] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -101,14 +100,12 @@ function Home() {
     // };
 
     useEffect(() => {
-        localStorage.setItem("name", name);
-        console.log("set local - ", localStorage.getItem("name"));
         search(name, setMovies, searchPage, movies);
     }, [name]);
     const setValue = (s) => {
         setName(s.target.value);
-        setValid(() => (s.target.value.length <= 1 ? false : true));
-        console.log(s);
+        localStorage.setItem("name", s.target.value);
+        console.log("set local - ", s.target.value);
     };
     // if modal is closed, button will be Log in
     useEffect(() => {
@@ -427,7 +424,7 @@ function Home() {
                                 placeholder="Search for a movie or tv show"
                             />
                         </div>
-                        {valid ? (
+                        {name.length > 1 ? (
                             <Link
                                 id="search-button"
                                 className="btn btn-primary text-center text-xl shadow-5"

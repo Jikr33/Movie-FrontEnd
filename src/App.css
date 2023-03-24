@@ -423,11 +423,11 @@
 
 #homeSearchButtonIcon,
 #homeSearchButtonClear {
-   width: 2.5rem;
-   height: 75%;
+   width: 1.5rem;
+   height: 60%;
    position: absolute;
-   left: -0.7rem;
-   top: 12.5%;
+   left: 0;
+   top: 20%;
    background-position: center;
    background-repeat: no-repeat;
    background-size: contain;
@@ -1121,6 +1121,22 @@ span {
       min-height: 240px;
    }
 
+   #homeSearch>span {
+      width: 85%;
+      padding-left: 0.5rem;
+      padding-right: 0;
+   }
+
+   .homeSearchInput {
+      padding-left: 1rem;
+   }
+
+
+   #homeSearchButtonIcon,
+   #homeSearchButtonClear {
+      width: 1.3rem;
+   }
+
    #homeTopTitle {
       width: 90%;
       padding: 0;
@@ -1141,8 +1157,9 @@ span {
    }
 
    #features {
-      min-height: 285px;
+      /* min-height: 285px; */
       height: 80%;
+      min-height: 16rem;
    }
 
    #homeFeatured {
@@ -1165,10 +1182,11 @@ span {
    #homeFeatures {
       width: 100%;
       margin: 0;
+      justify-content: center;
    }
 
    #homeFeatures>span {
-      width: 95%;
+      width: 90%;
       font-size: 0.643rem;
    }
 
@@ -1183,12 +1201,17 @@ span {
    }
 
    .input-group {
-      width: 90%;
+      width: 95%;
 
    }
 
    #search-button {
       padding-right: 0;
+      padding-left: 1rem;
+   }
+
+   #searchInput {
+      font-size: 0.8rem;
    }
 
    #contFavorite {
@@ -1246,6 +1269,6 @@ span {
 
    span {
       margin-left: 0;
-      padding-left: 0.4rem;
+      /* padding-left: 0.4rem; */
    }
 }
