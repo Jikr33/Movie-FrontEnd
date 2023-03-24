@@ -1214,6 +1214,142 @@ span {
       font-size: 0.8rem;
    }
 
+   #itemsResult {
+      width: 110%;
+   }
+
+   #homeSearch>span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+   }
+
+   .items {
+      height: 5rem;
+   }
+
+   .items>div {
+      font-size: 0.8rem;
+   }
+
+   .item {
+      margin-left: 0;
+   }
+
+   #itemsResult>img,
+   video {
+      max-width: none;
+   }
+
+   .resultPoster {
+      width: 4rem;
+      max-width: 4rem;
+      min-width: 4rem
+   }
+
+   .homeResultsInfos {
+      width: 12rem;
+   }
+
+   .homeResultsInfos>h1 {
+      font-size: 1rem;
+      margin-left: 1rem;
+   }
+
+   .homeResultsInfos>h5 {
+      overflow: scroll;
+      text-align: start;
+      font-size: 0.6rem;
+   }
+
+   #movieCont {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+   }
+
+   #moviePoster {
+      height: 80%;
+      margin-bottom: 1rem;
+      position: fixed;
+   }
+
+   .carousel {
+      width: 100% !important;
+      height: 100%;
+   }
+
+   #posterCounter {
+      bottom: 0;
+   }
+
+   #movieDetail {
+      align-items: center;
+   }
+
+   #movieTitles {
+      height: 20%;
+      width: 100vw;
+      flex-direction: row-reverse;
+      padding: 0 1rem;
+   }
+
+   #movieTitle {
+      align-items: flex-start;
+      width: 130%;
+   }
+
+   #movieRating {
+      width: 90%;
+   }
+
+   #movieImdb {
+      height: 50%;
+      background-position: top;
+      flex-direction: column;
+      width: 4rem;
+      font-size: 0.9rem;
+   }
+
+   #movieDetailes {
+      margin-top: 25vh;
+      height: 75%;
+   }
+
+   #movieDetails {
+      position: absolute;
+      top: 82vh;
+      background-color: white;
+   }
+
+   .plot {
+      font-size: 0.9rem;
+   }
+
+   .movieFlexDiv {
+      margin-top: 0.35rem;
+   }
+
+   #links {
+      margin-top: 1rem;
+      margin-bottom: 4rem;
+      justify-content: space-evenly;
+   }
+
+   #trailer {
+      width: 40%;
+   }
+
+   #watchLink {
+      width: 32.5%;
+      margin: 0;
+   }
+
+   #trailer>h1,
+   #watchLink>h1 {
+      font-size: 0.8rem;
+   }
+
    #contFavorite {
       width: 90vw;
    }
@@ -1265,6 +1401,15 @@ span {
    svg {
       width: 20px;
       height: 20px;
+   }
+
+   .star>svg {
+      width: 35px;
+      height: 40px;
+   }
+
+   .stars {
+      margin: 0.5rem;
    }
 
    span {

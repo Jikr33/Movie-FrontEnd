@@ -6,6 +6,11 @@ export default async function search(name, setMovies, page = 1, movies) {
         method: "GET",
         url: `https://api.themoviedb.org/3/search/movie?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&query=${name}&page=${page}&include_adult=true`,
     };
+    if (name === "" || name.length <= 1) {
+        setMovies([]);
+        console.log("avoided one api req");
+        return true;
+    }
     await axios
         .request(options)
         .then((response) => {

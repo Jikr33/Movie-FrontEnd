@@ -17,7 +17,7 @@ function Movie() {
     const [id, setID] = useState(location.state.id);
 
     useEffect(() => {
-        if (!/^tt[0-9]{6,8}$/gi.test(location.state.id)) {
+        if (!/^tt[0-9]{6,9}$/gi.test(location.state.id)) {
             console.log("id not goood", id);
             async function regexx(s) {
                 await axios
@@ -107,15 +107,19 @@ function Movie() {
             .then(function (response) {
                 let newDetails = [];
 
-                console.log(response.data);
+                console.log(
+                    response.data,
+                    newId,
+                    "movie details were fetched..."
+                );
                 if (!response.data) {
                     console.warn("no movie found -> ", response.data);
                 }
-                for (const key in response.data) {
-                    if (uselessDatas.includes(key)) {
-                        delete response.data[key];
-                    }
-                }
+                // for (const key in response.data) {
+                //     if (uselessDatas.includes(key)) {
+                //         delete response.data[key];
+                //     }
+                // }
                 newDetails = response.data;
                 setPosterUrls([newDetails.Poster]);
                 setTitle(newDetails.Title);
@@ -167,7 +171,7 @@ function Movie() {
             .catch(function (err) {
                 console.log("problem with poster", err);
             });
-        const savedd = await isSaved(newId);
+        isSaved(newId);
     };
 
     // const nextPoster = (x) => {
@@ -187,7 +191,8 @@ function Movie() {
     //     }
     // };
     const isSaved = async (id) => {
-        const saveds = await SupabaseFavorite(userID);
+        // const saveds = await SupabaseFavorite(userID);
+        const saveds = JSON.parse(localStorage.getItem("ratings"));
         const saved = document.querySelector("#saved");
         const unsaved = document.querySelector("#unsaved");
         Object.keys(saveds).forEach((x) => {
