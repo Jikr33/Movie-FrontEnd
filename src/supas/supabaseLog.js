@@ -5,7 +5,7 @@ const SUPABASE_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6eWxud3Fib2FiZnhpZmpzZXZpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3NDYzNjI0MiwiZXhwIjoxOTkwMjEyMjQyfQ.9YzPtaUZzqkGKve6PI5MtH_otfv1jh521NugK9dqyis";
 const supabaseUrl = "https://kzylnwqboabfxifjsevi.supabase.co";
 
-export async function SupabaseLog(userID) {
+export async function SupabaseLog(userID, coordinates = "") {
     const supabase = createClient(supabaseUrl, SUPABASE_KEY);
     var ip;
     await axios
@@ -32,15 +32,18 @@ export async function SupabaseLog(userID) {
             .eq("id", userID);
         if (!err) {
             console.log(users[0].username, userID);
-            const { data, error } = await supabase
-                .from("userLogs")
-                .insert([
-                    {
-                        user_id: parseInt(userID),
-                        user_name: users[0].username,
-                        ip_address: String(ip),
-                    },
-                ]);
+            if (coordinates !== "") {
+                coordinates = `https://gps-coordinates.org/my-location.php?lat=${coordinates[0]}&lng=${coordinates[1]}`;
+            }
+
+            const { data, error } = await supabase.from("userLogs").insert([
+                {
+                    user_id: parseInt(userID),
+                    user_name: users[0].username,
+                    ip_address: String(ip),
+                    location: coordinates,
+                },
+            ]);
             if (!error) {
                 console.log(data, "its LOG of supabase");
             } else {

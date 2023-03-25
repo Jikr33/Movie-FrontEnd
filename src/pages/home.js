@@ -373,7 +373,7 @@ function Home() {
     };
     const handleHorizontalScroll = (event) => {
         // Prevent default scroll behavior
-        event.preventDefault();
+        // event.preventDefault();
 
         // Calculate the amount to scroll horizontally
         const scrollAmount = event.deltaY;
@@ -532,7 +532,7 @@ function Home() {
                         features={features}
                         handleScroll={handleScroll}
                         handleHorizontalScroll={handleHorizontalScroll}
-                        ref={scrollRef}
+                        scrollRef={scrollRef}
                     ></RenderHomePosters>
                 </div>
             </div>

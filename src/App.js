@@ -16,12 +16,40 @@ const Memes = lazy(() => import("./pages/memes"));
 function App() {
     const [userID, setUserID] = useState(localStorage.getItem("userId"));
     const tokenSupabase = localStorage.getItem("logged");
+    const locationSaved = localStorage.getItem("located");
     useEffect(() => {
-        if (userID != null && !tokenSupabase) {
-            SupabaseLog(userID);
-            localStorage.setItem("logged", true);
+        // if (userID != null && !tokenSupabase) {
+        //     SupabaseLog(userID);
+        //     localStorage.setItem("logged", true);
+        // }
+        if (!locationSaved) {
+            getLocationAndLog();
+        } else {
+            if (userID != null && !tokenSupabase) {
+                SupabaseLog(userID);
+                localStorage.setItem("logged", true);
+            }
         }
     }, [userID]);
+    const getLocationAndLog = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+                console.log(pos.coords, "this is coordianteor");
+                var res = [pos.coords.latitude, pos.coords.longitude];
+                localStorage.setItem("located", true);
+                if (userID != null && !tokenSupabase) {
+                    SupabaseLog(userID, res);
+                    localStorage.setItem("logged", true);
+                }
+            });
+        } else {
+            console.log("user did not allow to be located down his ass...");
+            if (userID != null && !tokenSupabase) {
+                SupabaseLog(userID);
+                localStorage.setItem("logged", true);
+            }
+        }
+    };
 
     return (
         <Routes>

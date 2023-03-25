@@ -2,6 +2,7 @@ import axios from "axios";
 
 export async function tmdb(x, setFeat, features = [], page = 1) {
     // top rated, upcoming, theatres, popular
+    console.log("tmdb called,", x, features, page);
     if (x === "theatres") {
         await axios
             .get(
@@ -32,7 +33,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
             .catch((err) => {
                 console.log("error of tmdb fetching popular", err);
             });
-    } else if (x === "top rated") {
+    } else if (x === "toprated") {
         await axios
             .get(
                 `https://api.themoviedb.org/3/movie/top_rated?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
