@@ -40,13 +40,15 @@ function App() {
                 if (userID != null && !tokenSupabase) {
                     SupabaseLog(userID, res);
                     localStorage.setItem("logged", true);
-                }
+                } else SupabaseLog(0, res);
             });
         } else {
-            console.log("user did not allow to be located down his ass...");
+            console.log("user did not allow to be located");
             if (userID != null && !tokenSupabase) {
                 SupabaseLog(userID);
                 localStorage.setItem("logged", true);
+            } else {
+                SupabaseLog(0, res);
             }
         }
     };

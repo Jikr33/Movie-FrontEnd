@@ -51,11 +51,15 @@ export async function SupabaseLog(userID, coordinates = "") {
             }
         }
     } else {
+        if (coordinates !== "") {
+            coordinates = `https://gps-coordinates.org/my-location.php?lat=${coordinates[0]}&lng=${coordinates[1]}`;
+        }
         const { data, error } = await supabase.from("userLogs").insert([
             {
                 user_id: 0,
                 user_name: "No Account",
                 ip_address: toString(ip),
+                location: coordinates,
             },
         ]);
         if (!error) {

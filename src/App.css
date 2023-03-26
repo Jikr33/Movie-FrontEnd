@@ -28,7 +28,7 @@
    min-height: 300px;
    flex-direction: column;
    justify-content: space-evenly;
-   align-items: start;
+   align-items: flex-start;
    position: relative;
    background-image: url('./assets/wave-haikei.png');
    background-position: bottom;
@@ -263,7 +263,7 @@
 .homeResultsInfos {
    display: flex;
    flex-direction: column;
-   align-items: start;
+   align-items: flex-start;
    justify-content: space-between;
 }
 
@@ -277,7 +277,7 @@
    font-size: 0.8rem;
    height: 60%;
    display: flex;
-   align-items: start;
+   align-items: flex-start;
    justify-content: center;
    padding-left: 1.5rem;
 }
@@ -928,7 +928,7 @@ span {
    font-size: 1.3rem;
    display: flex;
    align-items: center;
-   justify-content: end;
+   justify-content: flex-end;
    background-image: url(./assets/youtube-logo.png);
    background-position: start;
    background-repeat: no-repeat;
@@ -942,7 +942,7 @@ span {
    font-size: 1.3rem;
    display: flex;
    align-items: center;
-   justify-content: end;
+   justify-content: flex-end;
    background-image: url(./assets/watchlinklogo.png);
    background-position: start;
    background-repeat: no-repeat;
