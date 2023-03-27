@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import ResultsPageSwitcher from "../components/ResultsPageSwitcher";
 import search from "../supas/homeSearch";
 
 function Result() {
     var [name, setName] = useState(localStorage.getItem("name"));
-    const [valid, setValid] = useState(false);
+    // const [valid, setValid] = useState(false);
 
     const [movies, setMovies] = useState([]);
     // const search = async (page = 1) => {
@@ -100,9 +99,9 @@ function Result() {
                         {movies.map((x) => {
                             if (
                                 x.release_date &&
-                                x.adult ^ (x.original_language == "ja")
+                                x.adult ^ (x.original_language === "ja")
                             ) {
-                                console.log(x.adult != x.original_language);
+                                console.log(x.adult !== x.original_language);
                                 return x.id ? (
                                     <Link
                                         to={"/movie"}
@@ -147,6 +146,7 @@ function Result() {
                                     </div>
                                 );
                             }
+                            return true
                         })}
                     </ul>
                 )}

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { React, useState, useEffect, Component } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import {  Link } from "react-router-dom";
 import { Supabase } from "../supas/supabase";
 import { SupabaseInsert } from "../supas/supabaseInsert";
 import Modal from "react-modal";
@@ -65,7 +65,7 @@ function Memes() {
             return false;
         }
         const alerts = document.getElementById("memeSaved");
-        const Meme = document.getElementById("meme");
+        // const Meme = document.getElementById("meme");
         const saved = await SupabaseInsert(userId, x);
         console.log(saved);
         if (saved) {
@@ -95,6 +95,7 @@ function Memes() {
         var tempSaved = [];
         saved.map((x) => {
             tempSaved.push([x["created_at"].slice(0, 19), x["link"]]);
+            return true
         });
         setSaved(tempSaved);
         console.log(tempSaved);

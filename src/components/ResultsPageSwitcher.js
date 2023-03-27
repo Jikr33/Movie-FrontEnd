@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const ResultsPageSwitcher = ({ search, setMovies }) => {
     const [currentPage, setCurrentPage] = useState(1);

@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef, lazy, Suspense } from "react";
+import { React, useState, useEffect, useRef, lazy } from "react";
 import { Link } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import "../App.css";
@@ -7,11 +7,10 @@ import "../App.css";
 // import { SupabaseUser } from "../supas/supabaseUser";
 // import { SupabaseForgotPass } from "../supas/supabaseForgotPass";
 // import { SupabaseFavorite } from "../supas/supabaseFavorite";
-import { SupabaseLog } from "../supas/supabaseLog";
+// import { SupabaseLog } from "../supas/supabaseLog";
 import { tmdb } from "../supas/tmdbFetch";
 import Modal from "react-modal";
 import RenderHomePosters from "../components/renderHomePosters";
-import axios from "axios";
 import search from "../supas/homeSearch";
 const RenderResults = lazy(() => import("../components/RenderResults"));
 
@@ -58,7 +57,7 @@ function Home() {
             console.log("User has already logged in - ", userID);
             logoutButtonDiv.style.display = "block";
             // SupabaseLog(userID);
-            fetchGlobalRatings(userID);
+            const r = fetchGlobalRatings(userID);
         } else {
             const loginButtonDiv = document.getElementById("login");
             loginButtonDiv.style.display = "block";
@@ -190,7 +189,7 @@ function Home() {
     const setList = async (x) => {
         // popular, toprated, theatres, upcoming
         console.log(x);
-        const g = await tmdb(x, setFeatures);
+        const  r = await tmdb(x, setFeatures);
         if (x === "theatres") {
             let f = document.getElementById(current);
             if (f) {
@@ -357,7 +356,7 @@ function Home() {
             e.target.scrollWidth - e.target.scrollLeft === e.target.clientWidth;
         if (scrollEnd) {
             console.log(scrollEnd, "scrolled to the end");
-            const g = await tmdb(current, setFeatures, features, tmdbPage + 1);
+            const r = await tmdb(current, setFeatures, features, tmdbPage + 1);
             setTmdbPage(tmdbPage + 1);
         }
     };
@@ -443,7 +442,7 @@ function Home() {
                             </Link>
                         )}
                     </div>
-                    {movies.length != 0 ? (
+                    {movies.length !== 0 ? (
                         <RenderResults
                             movies={movies}
                             handleSearchScroll={handleSearchScroll}

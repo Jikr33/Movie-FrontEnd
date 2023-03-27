@@ -20,7 +20,7 @@ export default function RenderResults({ movies, handleSearchScroll }) {
                     {movies.map((x) => {
                         if (
                             x.release_date ^
-                            !(x.adult && x.original_language == "ja")
+                            !(x.adult && x.original_language === "ja")
                         ) {
                             //  console.log(x.id);
                             return x.id ? (

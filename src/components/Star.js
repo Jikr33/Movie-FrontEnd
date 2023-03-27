@@ -14,7 +14,7 @@ const Star = (props) => {
                 parseInt(e.target.value)
             );
             console.log(fetchGlobalRatings, s);
-            const r = fetchGlobalRatings(props.userId);
+            const r = await fetchGlobalRatings(props.userId);
 
             console.log(e.target.value, s, "STAR");
         }

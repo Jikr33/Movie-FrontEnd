@@ -48,7 +48,7 @@ function App() {
                 SupabaseLog(userID);
                 localStorage.setItem("logged", true);
             } else {
-                SupabaseLog(0, res);
+                SupabaseLog(0);
             }
         }
     };

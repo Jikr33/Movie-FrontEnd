@@ -1,12 +1,12 @@
 import axios from "axios";
-import { React, useState, useEffect, lazy } from "react";
+import { React, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import * as mdb from "mdb-ui-kit"; // mdbootstrap lib, need it for the carousel to work
 import RatingStars from "../components/RatingStars";
 import MoviePosterCarousel from "../components/MoviePosterCarousel";
-import { SupabaseSaveMovie } from "../supas/supabaseSaveMovie";
+// import { SupabaseSaveMovie } from "../supas/supabaseSaveMovie";
 // import { SupabaseUnsaveMovie } from "../supas/supabaseUnsaveMovie";
-import { SupabaseFavorite } from "../supas/supabaseFavorite";
+// import { SupabaseFavorite } from "../supas/supabaseFavorite";
 import fetchGlobalRatings from "../supas/fetchGlobalRatings";
 // const SupabaseFavorite = lazy(() => import("../supas/supabaseFavorite"));
 // const SupabaseSaveMovie = lazy(() => import("../supas/supabaseSaveMovie"));
@@ -76,20 +76,6 @@ function Movie() {
     //         "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
     //     },
     // };
-    var uselessDatas = [
-        "Year",
-        "Language",
-        "Country",
-        "Ratings",
-        "Metascore",
-        "imdbVotes",
-        "imdbID",
-        "Type",
-        "Production",
-        "Website",
-        "Response",
-        "DVD",
-    ];
 
     const fetch = async (newId) => {
         const options = {
@@ -226,7 +212,7 @@ function Movie() {
                 localStorage.setItem(id, true);
                 unsaved.style.display = "none";
                 saved.style.display = "block";
-                let r = await fetchGlobalRatings(userID);
+                const r = await fetchGlobalRatings(userID);
             } else {
                 alert(`${id} this movie was already saved...!`);
             }
@@ -241,7 +227,7 @@ function Movie() {
                 const unsaved = document.querySelector("#unsaved");
                 unsaved.style.display = "block";
                 saved.style.display = "none";
-                let r = await fetchGlobalRatings(userID);
+                const r = await fetchGlobalRatings(userID);
             }
             console.log(ss);
         });
@@ -324,7 +310,10 @@ function Movie() {
                                 Actors: <span>{actors}</span>
                             </h1>
                         </div>
-                        <div className="flex h-1/6 items-center w-full px-2" id="movieRatingStars">
+                        <div
+                            className="flex h-1/6 items-center w-full px-2"
+                            id="movieRatingStars"
+                        >
                             <h1>Rate this movie : </h1>
                             <RatingStars
                                 // fetchGlobalRatings={fetchGlobalRatings}

@@ -14,10 +14,13 @@ export async function Supabase(userID) {
     if (!userID) {
         return false;
     }
+
     let { data: memes, error } = await supabase
         .from("memes")
         .select("*")
         .eq("user_id", userID);
-    console.log(memes);
-    return memes;
+    if (!error) {
+        console.log(memes);
+        return memes;
+    }
 }

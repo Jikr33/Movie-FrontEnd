@@ -23,6 +23,7 @@ export async function SupabaseFavorite(id) {
             var res = {};
             favorites.map((x) => {
                 res[x["movie_id"]] = x["rating"];
+                return true
             });
             console.log(res);
             return res;
