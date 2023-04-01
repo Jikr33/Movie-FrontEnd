@@ -435,12 +435,12 @@
 
 #homeSearchButtonIcon {
    background-image: url(./assets/search.png);
-   z-index: 3;
+   /* z-index: 31; */
 }
 
 #homeSearchButtonClear {
    background-image: url(./assets/exit.png);
-   z-index: 3;
+   /* z-index: 1; */
 }
 
 .homePosters {
@@ -702,7 +702,6 @@
 
 #loginContent {
    min-height: 600px;
-
 }
 
 #confirmPass {
@@ -947,6 +946,24 @@ span {
    background-position: start;
    background-repeat: no-repeat;
    background-size: contain;
+}
+
+#watchLink2 {
+   margin-left: 2rem;
+   width: 10rem;
+   height: 3rem;
+   font-size: 1.3rem;
+   display: flex;
+   align-items: center;
+   justify-content: flex-end;
+   background-image: url(./assets/123movies.png);
+   background-position: start;
+   background-repeat: no-repeat;
+   background-size: contain;
+}
+
+#watchLink2:hover {
+   color: green;
 }
 
 #trailer:hover {
@@ -1270,7 +1287,7 @@ span {
    }
 
    #moviePoster {
-      height: 85%;
+      height: 80%;
       /* margin-bottom: 1rem; */
       position: fixed;
    }
@@ -1295,11 +1312,11 @@ span {
    }
 
    #movieTitles {
-      height: 15vh;
+      height: 20vh;
       width: 100vw;
       flex-direction: row-reverse;
       padding: 0 1rem;
-      top: -15vh;
+      top: -20vh;
       background-color: white;
    }
 
@@ -1328,7 +1345,7 @@ span {
    #movieDetails {
       position: absolute;
       top: 100vh;
-      height: 85vh;
+      height: 80vh;
       background-color: white;
    }
 
@@ -1352,17 +1369,57 @@ span {
    }
 
    #trailer {
-      width: 42%;
+      width: 30%;
+      height: 75%;
+      align-items: end;
+      justify-content: center;
+      background-position: top;
+      background-size: contain;
+      position: relative;
    }
 
    #watchLink {
-      width: 35%;
+      /* width: 35%; */
       margin: 0;
+
+      width: 30%;
+      height: 75%;
+      align-items: end;
+      justify-content: center;
+      background-position: top;
+      background-size: contain;
+      position: relative;
    }
 
+   #watchLink2 {
+      width: 30%;
+      margin: 0;
+      height: 75%;
+      background-position: top;
+      background-size: contain;
+      align-items: end;
+      justify-content: center;
+      position: relative;
+   }
+
+
    #trailer>h1,
-   #watchLink>h1 {
+   #watchLink>h1,
+   #watchLink2>h1 {
       font-size: 0.8rem;
+      position: absolute;
+      bottom: -1.2rem;
+   }
+
+   #mustLoginModal {
+      width: 65%;
+      height: 30%;
+      left: 17.5% !important;
+      top: 35% !important;
+   }
+
+   #mustLoginButton {
+      width: 40%;
    }
 
    #contFavorite {

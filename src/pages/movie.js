@@ -1,6 +1,7 @@
 import axios from "axios";
 import { React, useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
+import Modal from "react-modal";
 import * as mdb from "mdb-ui-kit"; // mdbootstrap lib, need it for the carousel to work
 import RatingStars from "../components/RatingStars";
 import MoviePosterCarousel from "../components/MoviePosterCarousel";
@@ -61,6 +62,7 @@ function Movie() {
     const [myRating, setMyRating] = useState(0);
     const [saved, setSaved] = useState(false);
 
+    const [mustLoginModal, setMustLoginModal] = useState(false);
     // useEffect(() => {
     //     fetch();
     //     console.log("used effecto");
@@ -321,6 +323,7 @@ function Movie() {
                                 saved={saved}
                                 id={id}
                                 rating={myRating}
+                                setMustLoginModal={setMustLoginModal}
                             ></RatingStars>
                         </div>
                     </div>
@@ -341,9 +344,47 @@ function Movie() {
                         >
                             <h1>Watch here</h1>
                         </a>
+                        <a
+                            id="watchLink2"
+                            href={`https://ww8.0123movie.net/search.html?q=${
+                                title ? title.replace(" ", "+") : ""
+                            }`}
+                            target="_"
+                        >
+                            <h1>Watch here</h1>
+                        </a>
                     </div>
                 </div>
             </div>
+            <Modal
+                id="mustLoginModal"
+                isOpen={mustLoginModal}
+                onRequestClose={() => setMustLoginModal(false)}
+                ariaHideApp={false}
+                shouldCloseOnOverlayClick={true}
+            >
+                <div id="mustLoginCont">
+                    <h4 className="py-2 text-xl font-extrabold">
+                        You must login to use this feature!
+                    </h4>
+                    <div id="mustLoginButtons">
+                        <Link
+                            id="mustLoginButton"
+                            to={"/"}
+                            className="bg-green-500"
+                        >
+                            Login Now
+                        </Link>
+                        <input
+                            id="mustLoginButton"
+                            type="button"
+                            value="Close"
+                            onClick={() => setMustLoginModal(false)}
+                            className="bg-red-600"
+                        />
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }

@@ -189,7 +189,7 @@ function Home() {
     const setList = async (x) => {
         // popular, toprated, theatres, upcoming
         console.log(x);
-        const  r = await tmdb(x, setFeatures);
+        const r = await tmdb(x, setFeatures);
         if (x === "theatres") {
             let f = document.getElementById(current);
             if (f) {
@@ -479,7 +479,7 @@ function Home() {
                         className="homeMenuLinks"
                         onClick={() => {
                             setUserID(false);
-                            localStorage.setItem("userId", false);
+                            localStorage.removeItem("userId");
                             localStorage.setItem("ratings", null);
                             localStorage.setItem("logged", false);
                         }}
