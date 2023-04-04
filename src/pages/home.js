@@ -210,7 +210,7 @@ function Home() {
             t.style.backgroundColor = "rgb(2, 78, 255)";
             t.style.color = "white";
             setCurrent("popular");
-        } else if (x === "top rated") {
+        } else if (x === "toprated") {
             let f = document.getElementById(current);
             if (f) {
                 f.style.backgroundColor = "transparent";
@@ -501,7 +501,7 @@ function Home() {
                             Popular
                         </button>
                         <button
-                            onClick={() => setList("top rated")}
+                            onClick={() => setList("toprated")}
                             id="toprated"
                             type="button"
                             className="homeFeatureButton w-fit h-full text-center"
