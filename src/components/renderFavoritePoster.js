@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import RatingStars from "./RatingStars";
 import { Link } from "react-router-dom";
 
 export default function RenderFavoritePoster({ movie, ratings, userId }) {
+    const [language, setLanguage] = useState(
+        localStorage.getItem("lang") || "eng"
+    );
     return (
         <>
             <div className="favoriteItem" key={movie.imdbID}>
@@ -33,13 +36,30 @@ export default function RenderFavoritePoster({ movie, ratings, userId }) {
                             {movie.Plot}
                         </h1>
                         <span className="flex flex-col justify-evenly w-full ml-0 mt-1 text-sm h-16">
-                            <h1>Director: {movie.Director}</h1>
-                            <h1>Writer: {movie.Writer}</h1>
-                            <h1>Actors: {movie.Actors}</h1>
+                            <h1>
+                                {language === "eng" ? "Director" : "Найруулагч"}
+                                : {movie.Director}
+                            </h1>
+                            <h1>
+                                {language === "eng" ? "Writer" : "Зохиолч"}:{" "}
+                                {movie.Writer}
+                            </h1>
+                            <h1>
+                                {language === "eng" ? "Actors" : "Жүжигчид"}:{" "}
+                                {movie.Actors}
+                            </h1>
                         </span>
                     </div>
-                    <div className="flex w-full h-1/6 items-center px-2" id="favoritePostersRating">
-                        <h1>Rate this movie : </h1>
+                    <div
+                        className="flex w-full h-1/6 items-center px-2"
+                        id="favoritePostersRating"
+                    >
+                        <h1>
+                            {language === "eng"
+                                ? "Rate this movie"
+                                : "Энэ киног үнэлэх"}{" "}
+                            :{" "}
+                        </h1>
                         <RatingStars
                             userId={userId}
                             id={movie.imdbID}

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export async function tmdb(x, setFeat, features = [], page = 1) {
     // top rated, upcoming, theatres, popular
     console.log("tmdb called,", x, features, page);

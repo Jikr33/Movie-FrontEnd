@@ -8,6 +8,9 @@ function MoviePosterCarousel({
     // nextPoster,
     // posterCounter,
 }) {
+    const [language, setLanguage] = useState(
+        localStorage.getItem("lang") || "eng"
+    );
     const [currentPoster, setCurrentPoster] = useState(1);
     const nextPoster = (x) => {
         if (currentPoster + x > posterUrls.length) {
@@ -54,10 +57,10 @@ function MoviePosterCarousel({
 
                 <div className="w-2/4 flex justify-between">
                     <Link id="movieToFavorites" to={"/favorites"}>
-                        Watchlist
+                        {language === "eng" ? "Watchlist" : "Жагсаалт"}
                     </Link>
                     <Link id="movieToHome" to={"/"}>
-                        Go back to home
+                        {language === "eng" ? "Go back to home" : "Буцах"}
                     </Link>
                 </div>
             </div>

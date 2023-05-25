@@ -1,6 +1,6 @@
 import axios from "axios";
 import { React, useState, useEffect } from "react";
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Supabase } from "../supas/supabase";
 import { SupabaseInsert } from "../supas/supabaseInsert";
 import Modal from "react-modal";
@@ -95,7 +95,7 @@ function Memes() {
         var tempSaved = [];
         saved.map((x) => {
             tempSaved.push([x["created_at"].slice(0, 19), x["link"]]);
-            return true
+            return true;
         });
         setSaved(tempSaved);
         console.log(tempSaved);
@@ -180,7 +180,10 @@ function Memes() {
                     <div id="grid">
                         {saved.map((x) => {
                             return (
-                                <div style={customStyles.imageDiv}>
+                                <div
+                                    style={customStyles.imageDiv}
+                                    key={"memesGrid"}
+                                >
                                     <img
                                         style={customStyles.image}
                                         src={x[1]}

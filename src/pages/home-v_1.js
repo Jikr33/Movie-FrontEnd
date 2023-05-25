@@ -120,7 +120,7 @@ function Home() {
             var confirm = document.getElementById("confirmPass");
             var pass = document.getElementById("password");
             var user = document.getElementById("username");
-            console.log(username, password, confirmPass);
+            // console.log(username, password, confirmPass);
             if (!username) {
                 user.style.borderColor = "red";
                 user.style.borderWidth = "1px";
@@ -161,7 +161,7 @@ function Home() {
             confirm = document.getElementById("confirmPass");
             pass = document.getElementById("password");
             user = document.getElementById("username");
-            console.log(username, password, confirmPass);
+            // console.log(username, password, confirmPass);
             if (username) {
                 console.log("username ok");
                 if (password === confirmPass) {

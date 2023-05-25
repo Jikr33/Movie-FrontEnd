@@ -32,6 +32,10 @@ function Home() {
 
     const [movies, setMovies] = useState([]);
 
+    const [language, setLanguage] = useState(
+        localStorage.getItem("lang") || "eng"
+    );
+
     const scrollRef = useRef();
 
     useEffect(() => {
@@ -250,7 +254,7 @@ function Home() {
             var confirm = document.getElementById("confirmPass");
             var pass = document.getElementById("password");
             var user = document.getElementById("username");
-            console.log(username, password, confirmPass);
+            // console.log(username, password, confirmPass);
             if (!username) {
                 user.style.borderColor = "red";
                 user.style.borderWidth = "1px";
@@ -310,7 +314,7 @@ function Home() {
             confirm = document.getElementById("confirmPass");
             pass = document.getElementById("password");
             user = document.getElementById("username");
-            console.log(username, password, confirmPass);
+            // console.log(username, password, confirmPass);
             if (username) {
                 console.log("username ok");
                 if (password === confirmPass) {
@@ -378,7 +382,7 @@ function Home() {
         const scrollAmount = event.deltaY;
 
         // Adjust the scrollLeft property of the div
-        scrollRef.current.scrollLeft += scrollAmount;
+        scrollRef.current.scrollLeft += scrollAmount * 1.7;
     };
     return (
         <div
@@ -386,19 +390,39 @@ function Home() {
             className="bg-cover bg-center bg-no-repeat bg-orange-200"
         >
             <div id="homeSearch">
-                <h1
-                    id="homeTopTitle"
-                    className="capitalize text-amber-900 font-mono font-bold text-3xl h-max w-4/5 pt-2 rounded-full pl-28"
-                >
-                    Search for Movies. i got you
-                </h1>
-                <h4
-                    id="homeBottomTitle"
-                    className="capitalize font-mono font-bold text-l h-max w-4/5 pt-2 rounded-full pl-28"
-                >
-                    Millions of movies, TV shows and people to discover. Explore
-                    now.
-                </h4>
+                {language === "eng" ? (
+                    <h1
+                        id="homeTopTitle"
+                        className="capitalize text-amber-900 font-mono font-bold text-3xl h-max w-4/5 pt-2 rounded-full pl-28"
+                    >
+                        Search for Movies. i got you
+                    </h1>
+                ) : (
+                    <h1
+                        id="homeTopTitle"
+                        className="capitalize text-amber-900 font-mono font-bold text-3xl h-max w-4/5 pt-2 rounded-full pl-28"
+                    >
+                        Дуртай киногоо хай.
+                    </h1>
+                )}
+
+                {language === "eng" ? (
+                    <h4
+                        id="homeBottomTitle"
+                        className="capitalize font-mono font-bold text-l h-max w-4/5 pt-2 rounded-full pl-28"
+                    >
+                        Millions of movies, TV shows and people to discover.
+                        Explore now.
+                    </h4>
+                ) : (
+                    <h4
+                        id="homeBottomTitle"
+                        className="capitalize font-mono font-bold text-l h-max w-4/5 pt-2 rounded-full pl-28"
+                    >
+                        Сая сая кино болон телевизийн шоунуудаас хайлт хийх
+                        боломжтой.
+                    </h4>
+                )}
                 <span>
                     <div className="input-group">
                         {name.length > 0 ? (
@@ -420,7 +444,11 @@ function Home() {
                                 //  className="form-control"
                                 onChange={(e) => setValue(e)}
                                 value={name}
-                                placeholder="Search for a movie or tv show"
+                                placeholder={
+                                    language === "eng"
+                                        ? "Search for a movie or tv show"
+                                        : "Киноны нэрийг оруулна уу"
+                                }
                             />
                         </div>
                         {name.length > 1 ? (
@@ -429,7 +457,7 @@ function Home() {
                                 className="btn btn-primary text-center text-xl shadow-5"
                                 to="result"
                             >
-                                Search
+                                {language === "eng" ? "Search" : "Хайх"}
                             </Link>
                         ) : (
                             <Link
@@ -438,7 +466,7 @@ function Home() {
                                 to=""
                                 onClick={() => invalidInput()}
                             >
-                                Search
+                                {language === "eng" ? "Search" : "Хайх"}
                             </Link>
                         )}
                     </div>
@@ -450,12 +478,43 @@ function Home() {
                     ) : null}
                 </span>
                 <div id="homeMenu">
-                    <Link className="homeMenuLinks" to={"memes"}>
+                    <span className="w-fit h-fit bg-white flex items-center justify-between rounded-3xl border-solid border-2 border-amber-400">
+                        <h1
+                            className={`w-10 h-full text-sm font-thin hover:bg-amber-100 text-black p-1 rounded-3xl text-center  m-0 ${
+                                language === "eng"
+                                    ? "bg-amber-400"
+                                    : "bg-slate-50"
+                            }`}
+                            onClick={() => {
+                                localStorage.setItem("lang", "eng");
+                                setLanguage("eng");
+                            }}
+                        >
+                            eng
+                        </h1>
+                        <h1
+                            className={`w-10 h-full text-sm font-thin hover:bg-amber-100 text-black p-1 rounded-3xl text-center  m-0 ${
+                                language === "mon"
+                                    ? "bg-amber-400"
+                                    : "bg-slate-50"
+                            }`}
+                            onClick={() => {
+                                localStorage.setItem("lang", "mon");
+                                setLanguage("mon");
+                            }}
+                        >
+                            мон
+                        </h1>
+                    </span>
+
+                    {/* <Link className="homeMenuLinks" to={"memes"}>
                         memes
-                    </Link>
+                    </Link> */}
                     {userID ? (
                         <Link className="homeMenuLinks" to={"favorites"}>
-                            My Watchlist
+                            {language === "eng"
+                                ? "My Watchlist"
+                                : "Миний жагсаалт"}
                         </Link>
                     ) : (
                         <Link
@@ -463,7 +522,9 @@ function Home() {
                             onClick={() => setMustLoginModal(true)}
                             to={""}
                         >
-                            My Watchlist
+                            {language === "eng"
+                                ? "My Watchlist"
+                                : "Миний жагсаалт"}
                         </Link>
                     )}
 
@@ -472,7 +533,7 @@ function Home() {
                         className="homeMenuLinks"
                         onClick={() => setModalState(true)}
                     >
-                        Log In or Register
+                        {language === "eng" ? "Log In or Register" : "Нэвтрэх"}
                     </button>
                     <button
                         id="logout"
@@ -484,7 +545,7 @@ function Home() {
                             localStorage.setItem("logged", false);
                         }}
                     >
-                        Log Out
+                        {language === "eng" ? "Log Out" : "Гарах"}
                     </button>
                 </div>
             </div>
@@ -498,7 +559,7 @@ function Home() {
                             type="button"
                             className="homeFeatureButton w-fit h-full text-center"
                         >
-                            Popular
+                            {language === "eng" ? "Popular" : "Түгээмэл"}
                         </button>
                         <button
                             onClick={() => setList("toprated")}
@@ -506,7 +567,7 @@ function Home() {
                             type="button"
                             className="homeFeatureButton w-fit h-full text-center"
                         >
-                            Top Rated
+                            {language === "eng" ? "Top Rated" : "Үнэлгээ"}
                         </button>
                         <button
                             onClick={() => setList("theatres")}
@@ -514,7 +575,7 @@ function Home() {
                             type="button"
                             className="homeFeatureButton w-fit h-full text-center"
                         >
-                            In Theatres
+                            {language === "eng" ? "In Theatres" : "Театруудад"}
                         </button>
                         <button
                             onClick={() => setList("upcoming")}
@@ -522,7 +583,7 @@ function Home() {
                             type="button"
                             className="homeFeatureButton w-fit h-full text-center"
                         >
-                            Upcoming
+                            {language === "eng" ? "Upcoming" : "Удахгуй..."}
                         </button>
                     </span>
                 </div>
@@ -552,21 +613,29 @@ function Home() {
                             id="username"
                             style={customStyles.inputs}
                             type="text"
-                            placeholder="username"
+                            placeholder={
+                                language === "eng" ? "username" : "нэвтрэх нэр"
+                            }
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <input
                             style={customStyles.inputs}
                             type="password"
                             id="password"
-                            placeholder="enter password"
+                            placeholder={
+                                language === "eng" ? "password" : "нууц үг"
+                            }
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <input
                             id="confirmPass"
                             style={customStyles.inputs}
                             type="password"
-                            placeholder="confirm password"
+                            placeholder={
+                                language === "eng"
+                                    ? "confirm Password"
+                                    : "нууц үг дахин оруулах"
+                            }
                             onChange={(e) => setConfirmPass(e.target.value)}
                         />
 
@@ -575,16 +644,20 @@ function Home() {
                                 className="forgotInputs"
                                 onClick={() => forgotPass()}
                             >
-                                forgot password
+                                {language === "eng"
+                                    ? "Forgot Password"
+                                    : "Нууц үг мартсан"}
                             </button>
                             <button
                                 className="forgotInputs"
                                 onClick={() => register()}
                             >
-                                register now
+                                {language === "eng" ? "Register" : "Бүртгүүлэх"}
                             </button>
                             <button id="backToLogin" onClick={() => toLogin()}>
-                                back to login
+                                {language === "eng"
+                                    ? "Back to login"
+                                    : "Нэвтрэх"}
                             </button>
                         </div>
 

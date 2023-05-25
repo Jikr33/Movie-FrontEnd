@@ -17,6 +17,9 @@ function Movie() {
     const location = useLocation();
     const [id, setID] = useState(location.state.id);
 
+    const [language, setLanguage] = useState(
+        localStorage.getItem("lang") || "eng"
+    );
     useEffect(() => {
         if (!/^tt[0-9]{6,9}$/gi.test(location.state.id)) {
             console.log("id not goood", id);
@@ -268,55 +271,69 @@ function Movie() {
 
                         <div className="movieFlexDiv">
                             <h1>
-                                Directed by: <span>{directors}</span>
+                                {language === "eng"
+                                    ? "Directed by"
+                                    : "Найруулагч"}
+                                : <span>{directors}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                                Written by: <span>{writers}</span>
+                                {language === "eng" ? "Written by" : "Зохиолч"}:{" "}
+                                <span>{writers}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                                Rated: <span>{rating}</span>
+                                {language === "eng" ? "Rated" : "Үнэлгээ"}:{" "}
+                                <span>{rating}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                                Running time: <span>{time}</span>
+                                {language === "eng"
+                                    ? "Running Time"
+                                    : "Үргэлжлэх хугацаа"}
+                                : <span>{time}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                                Release date: <span>{released}</span>
+                                {language === "eng"
+                                    ? "Release Date"
+                                    : "Нээлт хийсэн"}
+                                : <span>{released}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                                Gross Box Office: <span>{boxOffice}</span>
+                                {language === "eng"
+                                    ? "Gross Box Office"
+                                    : "Нийт орлого"}
+                                : <span>{boxOffice}</span>
                             </h1>
                         </div>
 
                         <div className="movieFlexDiv">
                             <h1>
-                                Awards and Nominations: <span>{awards}</span>
+                            {language === 'eng' ? 'Awards and Nominations' : 'Шагнал болон Нэр дэвшсэн'}: <span>{awards}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                                Genre: <span>{genres}</span>
+                            {language === 'eng' ? 'Genre' : 'Төрөл'}: <span>{genres}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                                Actors: <span>{actors}</span>
+                            {language === 'eng' ? 'Actors' : 'Жүжигчид'}: <span>{actors}</span>
                             </h1>
                         </div>
                         <div
                             className="flex h-1/6 items-center w-full px-2"
                             id="movieRatingStars"
                         >
-                            <h1>Rate this movie : </h1>
+                            <h1>{language === 'eng' ? 'Rate this movie' : 'Энэ киног үнэлэх'} : </h1>
                             <RatingStars
                                 // fetchGlobalRatings={fetchGlobalRatings}
                                 userId={userID}
