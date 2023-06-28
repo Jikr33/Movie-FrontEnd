@@ -129,6 +129,7 @@ function Result() {
                                         onClick={alert(
                                             "This movie does not have proper ID"
                                         )}
+                                        key={x.id}
                                     >
                                         <div className="resultPosters">
                                             <img
@@ -146,7 +147,7 @@ function Result() {
                                     </div>
                                 );
                             }
-                            return true
+                            return true;
                         })}
                     </ul>
                 )}

@@ -23,6 +23,7 @@ function Movie() {
     useEffect(() => {
         if (!/^tt[0-9]{6,9}$/gi.test(location.state.id)) {
             console.log("id not goood", id);
+            // file deepcode ignore FunctionDeclarationInBlock: <please specify a reason of ignoring this>
             async function regexx(s) {
                 await axios
                     .get(
@@ -316,24 +317,34 @@ function Movie() {
 
                         <div className="movieFlexDiv">
                             <h1>
-                            {language === 'eng' ? 'Awards and Nominations' : 'Шагнал болон Нэр дэвшсэн'}: <span>{awards}</span>
+                                {language === "eng"
+                                    ? "Awards and Nominations"
+                                    : "Шагнал болон Нэр дэвшсэн"}
+                                : <span>{awards}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                            {language === 'eng' ? 'Genre' : 'Төрөл'}: <span>{genres}</span>
+                                {language === "eng" ? "Genre" : "Төрөл"}:{" "}
+                                <span>{genres}</span>
                             </h1>
                         </div>
                         <div className="movieFlexDiv">
                             <h1>
-                            {language === 'eng' ? 'Actors' : 'Жүжигчид'}: <span>{actors}</span>
+                                {language === "eng" ? "Actors" : "Жүжигчид"}:{" "}
+                                <span>{actors}</span>
                             </h1>
                         </div>
                         <div
                             className="flex h-1/6 items-center w-full px-2"
                             id="movieRatingStars"
                         >
-                            <h1>{language === 'eng' ? 'Rate this movie' : 'Энэ киног үнэлэх'} : </h1>
+                            <h1>
+                                {language === "eng"
+                                    ? "Rate this movie"
+                                    : "Энэ киног үнэлэх"}{" "}
+                                :{" "}
+                            </h1>
                             <RatingStars
                                 // fetchGlobalRatings={fetchGlobalRatings}
                                 userId={userID}
@@ -355,6 +366,7 @@ function Movie() {
                         <a
                             id="watchLink"
                             href={`https://www1.123movies.co/search/?s=${
+                                // file deepcode ignore GlobalReplacementRegex: <please specify a reason of ignoring this>
                                 title ? title.replace(" ", "+") : ""
                             }`}
                             target="_"
