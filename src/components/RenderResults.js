@@ -59,6 +59,7 @@ export default function RenderResults({ movies, handleSearchScroll }) {
                                     onClick={alert(
                                         "This movie does not have proper ID"
                                     )}
+                                    key="resultPageNoID"
                                 >
                                     <div className="resultPosters">
                                         <img

@@ -35,6 +35,7 @@ function RenderFavoritePosters(props) {
                             movie={item}
                             ratings={ratings}
                             userId={userId}
+                            key="renderFavoritePosterComponent"
                         ></RenderFavoritePoster>
                     );
                 })}

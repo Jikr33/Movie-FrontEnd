@@ -583,7 +583,7 @@ function Home() {
                             type="button"
                             className="homeFeatureButton w-fit h-full text-center"
                         >
-                            {language === "eng" ? "Upcoming" : "Удахгуй..."}
+                            {language === "eng" ? "Upcoming" : "Удахгүй..."}
                         </button>
                     </span>
                 </div>

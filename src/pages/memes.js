@@ -62,7 +62,6 @@ function Memes() {
         if (!userId) {
             // alert("You must login to use this feature...");
             setMustLoginModal(true);
-            return false;
         }
         const alerts = document.getElementById("memeSaved");
         // const Meme = document.getElementById("meme");
@@ -88,7 +87,6 @@ function Memes() {
         if (!userId) {
             // alert("You must login to use this feature...");
             setMustLoginModal(true);
-            return false;
         }
         setModalState(true);
         const saved = await Supabase(userId);

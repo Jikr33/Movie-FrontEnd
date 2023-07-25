@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const tmdb_api = process.env.REACT_APP_TMDB_API
 
 export async function tmdb(x, setFeat, features = [], page = 1) {
     // top rated, upcoming, theatres, popular
@@ -7,7 +8,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
     if (x === "theatres") {
         await axios
             .get(
-                `https://api.themoviedb.org/3/movie/now_playing?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
+                `https://api.themoviedb.org/3/movie/now_playing?api_key=${tmdb_api}&language=en-US&page=${page}`
             )
             .then((response) => {
                 console.log(response.data.results, "page number -", page);
@@ -22,7 +23,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
     } else if (x === "popular") {
         await axios
             .get(
-                `https://api.themoviedb.org/3/movie/popular?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
+                `https://api.themoviedb.org/3/movie/popular?api_key=${tmdb_api}&language=en-US&page=${page}`
             )
             .then((response) => {
                 console.log(response.data.results);
@@ -37,7 +38,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
     } else if (x === "toprated") {
         await axios
             .get(
-                `https://api.themoviedb.org/3/movie/top_rated?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
+                `https://api.themoviedb.org/3/movie/top_rated?api_key=${tmdb_api}&language=en-US&page=${page}`
             )
             .then((response) => {
                 console.log(response.data.results);
@@ -52,7 +53,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
     } else if (x === "upcoming") {
         await axios
             .get(
-                `https://api.themoviedb.org/3/movie/upcoming?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&page=${page}`
+                `https://api.themoviedb.org/3/movie/upcoming?api_key=${tmdb_api}&language=en-US&page=${page}`
             )
             .then((response) => {
                 console.log(response.data.results);

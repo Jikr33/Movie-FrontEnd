@@ -1,4 +1,5 @@
 import axios from "axios";
+const omdb_api = process.env.REACT_APP_OMDB_API
 
 async function fetchAll(s) {
     if (s.length <= 0) {
@@ -8,7 +9,7 @@ async function fetchAll(s) {
     Object.keys(s).forEach(async (id) => {
         const options = {
             method: "GET",
-            url: `https://www.omdbapi.com/?apikey=c7326058&&i=${id}&plot=full`,
+            url: `https://www.omdbapi.com/?apikey=${omdb_api}&i=${id}&plot=full`,
         };
         await axios
             .request(options)

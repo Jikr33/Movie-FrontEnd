@@ -1,14 +1,15 @@
 import axios from "axios";
+const tmdb_api = process.env.REACT_APP_TMDB_API
 
 export default async function search(name, setMovies, page = 1, movies) {
     // var uname = encodeURIComponent(name);
     const options = {
         method: "GET",
-        url: `https://api.themoviedb.org/3/search/movie?api_key=c4aa72a3b011582e85cbcc03fe277717&language=en-US&query=${name}&page=${page}&include_adult=true`,
+        url: `https://api.themoviedb.org/3/search/movie?api_key=${tmdb_api}&language=en-US&query=${name}&page=${page}&include_adult=true`,
     };
     if (name === "" || name.length <= 1) {
         setMovies([]);
-        console.log("avoided one api req");
+        console.log("avoided one api req", tmdb_api);
         return true;
     }
     await axios
