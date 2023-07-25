@@ -34,7 +34,7 @@ function App() {
     const getLocationAndLog = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((pos) => {
-                console.log(pos.coords, "this is coordianteor");
+                // console.log(pos.coords, "this is coordianteor");
                 var res = [pos.coords.latitude, pos.coords.longitude];
                 localStorage.setItem("located", true);
                 if (userID != null && !tokenSupabase) {
@@ -43,7 +43,7 @@ function App() {
                 } else SupabaseLog(0, res);
             });
         } else {
-            console.log("user did not allow to be located");
+            // console.log("user did not allow to be located");
             if (userID != null && !tokenSupabase) {
                 SupabaseLog(userID);
                 localStorage.setItem("logged", true);

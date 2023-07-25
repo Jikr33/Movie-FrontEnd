@@ -58,7 +58,7 @@ function Home() {
             const loginButtonDiv = document.getElementById("login");
             const logoutButtonDiv = document.getElementById("logout");
             loginButtonDiv.style.display = "none";
-            console.log("User has already logged in - ", userID);
+            // console.log("User has already logged in - ", userID);
             logoutButtonDiv.style.display = "block";
             // SupabaseLog(userID);
             const r = fetchGlobalRatings(userID);
@@ -66,7 +66,7 @@ function Home() {
             const loginButtonDiv = document.getElementById("login");
             loginButtonDiv.style.display = "block";
             const logoutButtonDiv = document.getElementById("logout");
-            console.log("User has already logged out - ", userID);
+            // console.log("User has already logged out - ", userID);
             logoutButtonDiv.style.display = "none";
             // SupabaseLog(0);
         }
@@ -108,7 +108,7 @@ function Home() {
     const setValue = (s) => {
         setName(s.target.value);
         localStorage.setItem("name", s.target.value);
-        console.log("set local - ", s.target.value);
+        // console.log("set local - ", s.target.value);
     };
     // if modal is closed, button will be Log in
     useEffect(() => {
@@ -192,7 +192,7 @@ function Home() {
 
     const setList = async (x) => {
         // popular, toprated, theatres, upcoming
-        console.log(x);
+        // console.log(x);
         const r = await tmdb(x, setFeatures);
         if (x === "theatres") {
             let f = document.getElementById(current);
@@ -261,7 +261,7 @@ function Home() {
             } else {
                 if (confirmPass === password) {
                     var hashedPass = hashPassword(password);
-                    console.log(hashedPass);
+                    // console.log(hashedPass);
                     // dynamically importing a function, only when it is needed.
                     var success = await import(
                         "../supas/supabaseRegister"
@@ -270,12 +270,12 @@ function Home() {
                     });
                     // var success = await SupabaseRegister(username, hashedPass);
                     if (success) {
-                        console.log("Successfully registered.");
+                        // console.log("Successfully registered.");
                         toLogin();
                     } else {
                         toLogin();
                         alert("User Already Registered");
-                        console.log("Did not register. error...");
+                        // console.log("Did not register. error...");
                     }
                 } else {
                     confirm.style.borderWidth = "1px";
@@ -298,7 +298,7 @@ function Home() {
                 loginButtonDiv.style.display = "none";
                 const logoutButtonDiv = document.getElementById("logout");
                 logoutButtonDiv.style.display = "block";
-                console.log("Successfully logged in");
+                // console.log("Successfully logged in");
                 // const uid = await SupabaseUser(username);
                 import("../supas/supabaseUser").then(async (module) => {
                     const uid = await module.SupabaseUser(username);
@@ -308,7 +308,7 @@ function Home() {
                 });
                 setModalState(false);
             } else {
-                console.log("Password incorrect", successLogin);
+                // console.log("Password incorrect", successLogin);
             }
         } else if (v === "Confirm New Password") {
             confirm = document.getElementById("confirmPass");
@@ -316,9 +316,9 @@ function Home() {
             user = document.getElementById("username");
             // console.log(username, password, confirmPass);
             if (username) {
-                console.log("username ok");
+                // console.log("username ok");
                 if (password === confirmPass) {
-                    console.log("password ok");
+                    // console.log("password ok");
                     var changeTo = hashPassword(password);
 
                     // var passChanged = await SupabaseForgotPass(
@@ -332,7 +332,7 @@ function Home() {
                                 changeTo
                             );
                             if (passChanged) {
-                                console.log(passChanged);
+                                // console.log(passChanged);
                                 alert(
                                     "Your password was successfully changed... " +
                                         username
@@ -359,7 +359,7 @@ function Home() {
         const scrollEnd =
             e.target.scrollWidth - e.target.scrollLeft === e.target.clientWidth;
         if (scrollEnd) {
-            console.log(scrollEnd, "scrolled to the end");
+            // console.log(scrollEnd, "scrolled to the end");
             const r = await tmdb(current, setFeatures, features, tmdbPage + 1);
             setTmdbPage(tmdbPage + 1);
         }
@@ -369,7 +369,7 @@ function Home() {
             e.target.scrollHeight - e.target.scrollTop ===
             e.target.clientHeight;
         if (scrollEnd) {
-            console.log(scrollEnd, "scrolled to the end, the search result");
+            // console.log(scrollEnd, "scrolled to the end, the search result");
             search(name, setMovies, searchPage + 1, movies);
             setSearchPage(searchPage + 1);
         }

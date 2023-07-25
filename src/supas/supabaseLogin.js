@@ -18,18 +18,18 @@ export async function SupabaseLogin(user, hash) {
             pass = users[0].password;
         }
         if (pass) {
-            console.log(hash === users[0].password);
+            // console.log(hash === users[0].password);
             if (pass === hash) {
                 return true;
             } else {
                 return false;
             }
         } else {
-            console.log(
-                "User did not found. Whoooo theeee HEeeeeeell AAAARe Yooooouuuuuu",
-                pass,
-                users
-            );
+            // console.log(
+            //     "User did not found. Whoooo theeee HEeeeeeell AAAARe Yooooouuuuuu",
+            //     pass,
+            //     users
+            // );
             alert("User did not found.");
             return false;
         }

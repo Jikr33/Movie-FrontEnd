@@ -14,7 +14,7 @@ export async function SupabaseUser(username) {
         .select("id")
         .eq("username", username);
     if (!error) {
-        console.log(user[0].id);
+        // console.log(user[0].id);
         var res = user[0].id;
         return res;
     } else {

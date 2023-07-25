@@ -14,7 +14,7 @@ export async function SupabaseForgotPass(user, hash) {
         .eq("username", user);
 
     if (!error) {
-      console.log(users)
+    //   console.log(users)
         const { data: changed, err } = await supabase
             .from("users")
             .update({ password: hash })
@@ -23,7 +23,7 @@ export async function SupabaseForgotPass(user, hash) {
 
         if (!err) {
             
-            console.log(changed.length);
+            // console.log(changed.length);
             if (changed.length === 1) {
                return true
             }

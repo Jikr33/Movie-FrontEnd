@@ -9,11 +9,11 @@ export async function SupabaseLog(userID, coordinates = "") {
     await axios
         .get("https://ipv4.icanhazip.com/")
         .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             if (!res.data) {
                 axios.get("https://api.ipify.org/").then((response) => {
                     ip = res.data;
-                    console.log("second ip", response);
+                    // console.log("second ip", response);
                 });
             } else {
                 ip = res.data;
@@ -29,7 +29,7 @@ export async function SupabaseLog(userID, coordinates = "") {
             .select("username")
             .eq("id", userID);
         if (!err) {
-            console.log(users[0].username, userID);
+            // console.log(users[0].username, userID);
             if (coordinates !== "") {
                 coordinates = `https://gps-coordinates.org/my-location.php?lat=${coordinates[0]}&lng=${coordinates[1]}`;
             }
@@ -43,7 +43,7 @@ export async function SupabaseLog(userID, coordinates = "") {
                 },
             ]);
             if (!error) {
-                console.log(data, "its LOG of supabase");
+                // console.log(data, "its LOG of supabase");
             } else {
                 console.log(error, "theres problem with loggin to LOG");
             }
@@ -61,7 +61,7 @@ export async function SupabaseLog(userID, coordinates = "") {
             },
         ]);
         if (!error) {
-            console.log(data, "its LOG of supabas, user without an account");
+            // console.log(data, "its LOG of supabas, user without an account");
         } else {
             console.log(error, "theres problem with loggin to LOG, no account");
         }

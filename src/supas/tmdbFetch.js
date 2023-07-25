@@ -11,7 +11,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
                 `https://api.themoviedb.org/3/movie/now_playing?api_key=${tmdb_api}&language=en-US&page=${page}`
             )
             .then((response) => {
-                console.log(response.data.results, "page number -", page);
+                // console.log(response.data.results, "page number -", page);
                 // setFeat(response.data.results);
                 setFeat(features.concat(response.data.results));
                 return response.data.results;
@@ -26,7 +26,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
                 `https://api.themoviedb.org/3/movie/popular?api_key=${tmdb_api}&language=en-US&page=${page}`
             )
             .then((response) => {
-                console.log(response.data.results);
+                // console.log(response.data.results);
                 // setFeat(response.data.results);
                 setFeat(features.concat(response.data.results));
 
@@ -41,7 +41,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
                 `https://api.themoviedb.org/3/movie/top_rated?api_key=${tmdb_api}&language=en-US&page=${page}`
             )
             .then((response) => {
-                console.log(response.data.results);
+                // console.log(response.data.results);
                 // setFeat(response.data.results);
                 setFeat(features.concat(response.data.results));
 
@@ -56,7 +56,7 @@ export async function tmdb(x, setFeat, features = [], page = 1) {
                 `https://api.themoviedb.org/3/movie/upcoming?api_key=${tmdb_api}&language=en-US&page=${page}`
             )
             .then((response) => {
-                console.log(response.data.results);
+                // console.log(response.data.results);
                 setFeat(features.concat(response.data.results));
                 return response.data.results;
             })

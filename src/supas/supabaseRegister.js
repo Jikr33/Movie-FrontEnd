@@ -15,7 +15,7 @@ export async function SupabaseRegister(user, hash) {
 
 
     if (!error) {
-        console.log(data, "Successfully registered...");
+        // console.log(data, "Successfully registered...");
         return true;
     } else {
         console.log(

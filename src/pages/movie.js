@@ -22,7 +22,7 @@ function Movie() {
     );
     useEffect(() => {
         if (!/^tt[0-9]{6,9}$/gi.test(location.state.id)) {
-            console.log("id not goood", id);
+            // console.log("id not goood", id);
             // file deepcode ignore FunctionDeclarationInBlock: <please specify a reason of ignoring this>
             async function regexx(s) {
                 await axios
@@ -32,7 +32,7 @@ function Movie() {
                     .then((response) => {
                         let thisID = response.data["imdb_id"];
                         setID(thisID);
-                        console.log(thisID);
+                        // console.log(thisID);
                         fetch(thisID);
                     })
                     .catch((err) => {
@@ -99,11 +99,11 @@ function Movie() {
             .then(function (response) {
                 let newDetails = [];
 
-                console.log(
-                    response.data,
-                    newId,
-                    "movie details were fetched..."
-                );
+                // console.log(
+                //     response.data,
+                //     newId,
+                //     "movie details were fetched..."
+                // );
                 if (!response.data) {
                     console.warn("no movie found -> ", response.data);
                 }
@@ -149,7 +149,7 @@ function Movie() {
             )
             .then(function (response) {
                 setPosterUrls([]);
-                console.log(response.data.posters);
+                // console.log(response.data.posters);
                 let posters = response.data.posters;
                 let newPosterUrls = [];
                 for (let i = 0; i < posters.length; i++) {
@@ -189,14 +189,14 @@ function Movie() {
         const unsaved = document.querySelector("#unsaved");
         Object.keys(saveds).forEach((x) => {
             if (x === id) {
-                console.log(saveds, id, "this movie is saved");
+                // console.log(saveds, id, "this movie is saved");
                 localStorage.setItem(id, true);
                 unsaved.style.display = "none";
                 saved.style.display = "block";
                 if (saveds[x]) {
                     setMyRating(saveds[x]);
                     setSaved(true);
-                    console.log(saveds[x], "saveds[x]");
+                    // console.log(saveds[x], "saveds[x]");
                 }
             }
         });
@@ -207,7 +207,7 @@ function Movie() {
             alert("You must login to use this feature...");
             return false;
         }
-        console.log("saved this movie", id, "user", userID);
+        // console.log("saved this movie", id, "user", userID);
         const saved = document.querySelector("#saved");
         const unsaved = document.querySelector("#unsaved");
 
@@ -235,7 +235,7 @@ function Movie() {
                 saved.style.display = "none";
                 const r = await fetchGlobalRatings(userID);
             }
-            console.log(ss);
+            // console.log(ss);
         });
     };
     return (

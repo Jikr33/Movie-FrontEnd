@@ -14,12 +14,12 @@ function RatingStars(props) {
 
     useEffect(() => {
         if (props.rating) {
-            console.log("set gradeindex now");
+            // console.log("set gradeindex now");
             setGradeIndex(props.rating);
         }
     }, [props.rating]);
     useEffect(() => {
-        console.log(gradeIndex);
+        // console.log(gradeIndex);
     }, [gradeIndex]);
     return (
         <div className="stars">

@@ -19,9 +19,9 @@ function Memes() {
     const [mustLoginModal, setMustLoginModal] = useState(false);
 
     useEffect(() => {
-        userId
-            ? console.log(userId, "user has signed in")
-            : console.log(userId, "user has not signed in!!!");
+    //     userId
+    //         ? console.log(userId, "user has signed in")
+    //         : console.log(userId, "user has not signed in!!!");
         Supabase(userId);
         search();
     }, [userId]);
@@ -37,7 +37,7 @@ function Memes() {
                 });
                 // setMemes(res)
                 setMemes(memes.concat(res));
-                console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
+                // console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
                 return res;
             })
             .catch((error) => {
@@ -55,7 +55,7 @@ function Memes() {
         } else {
             setCurrentImage(memes[counter]);
         }
-        console.log(memes);
+        // console.log(memes);
     }, [counter, memes]);
 
     const saveMeme = async (x) => {
@@ -66,7 +66,7 @@ function Memes() {
         const alerts = document.getElementById("memeSaved");
         // const Meme = document.getElementById("meme");
         const saved = await SupabaseInsert(userId, x);
-        console.log(saved);
+        // console.log(saved);
         if (saved) {
             alerts.style.display = "flex";
             setTimeout(() => {
@@ -96,7 +96,7 @@ function Memes() {
             return true;
         });
         setSaved(tempSaved);
-        console.log(tempSaved);
+        // console.log(tempSaved);
     };
 
     return (

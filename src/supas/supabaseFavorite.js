@@ -8,7 +8,7 @@ const supabaseUrl = process.env.REACT_APP_Supabase_URL
 // const supabaseKey = process.env.SUPABASE_KEY;
 
 export async function SupabaseFavorite(id) {
-    console.log(supabaseUrl, SUPABASE_KEY, 'dwadasd')
+    // console.log(supabaseUrl, SUPABASE_KEY, 'dwadasd')
     const supabase = createClient(supabaseUrl, SUPABASE_KEY);
     if (!id) {
         return false;
@@ -26,7 +26,7 @@ export async function SupabaseFavorite(id) {
                 res[x["movie_id"]] = x["rating"];
                 return true
             });
-            console.log(res);
+            // console.log(res);
             return res;
         }
     } else {

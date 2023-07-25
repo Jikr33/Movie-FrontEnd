@@ -14,7 +14,7 @@ async function fetchAll(s) {
         await axios
             .request(options)
             .then(function (response) {
-                console.log("this is fetchall", response.data);
+                // console.log("this is fetchall", response.data);
                 respo.push(response.data);
             })
             .catch(function (error) {

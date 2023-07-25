@@ -14,7 +14,7 @@ export async function supabaseRate(user, id, index) {
         .eq("movie_id", id);
 
     if (!error) {
-        console.log(data);
+        // console.log(data);
         return true
     } else {
         console.log(

@@ -101,7 +101,7 @@ function Result() {
                                 x.release_date &&
                                 x.adult ^ (x.original_language === "ja")
                             ) {
-                                console.log(x.adult !== x.original_language);
+                                // console.log(x.adult !== x.original_language);
                                 return x.id ? (
                                     <Link
                                         to={"/movie"}

@@ -9,7 +9,7 @@ export default async function search(name, setMovies, page = 1, movies) {
     };
     if (name === "" || name.length <= 1) {
         setMovies([]);
-        console.log("avoided one api req", tmdb_api);
+        // console.log("avoided one api req", tmdb_api);
         return true;
     }
     await axios
@@ -20,13 +20,13 @@ export default async function search(name, setMovies, page = 1, movies) {
             // res.sort((a, b) => {
             //     return b.release_date - a.release_date;
             // });
-            console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
+            // console.log("RESPONSE IRSEN SHUUUUU!!!!", res);
             res.sort(
                 (a, b) => new Date(b.release_date) - new Date(a.release_date)
             );
             if (page > 1) {
                 setMovies((movies) => [...movies, ...res]);
-                console.log(movies);
+                // console.log(movies);
             } else {
                 setMovies(res);
             }

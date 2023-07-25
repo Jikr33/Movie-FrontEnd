@@ -7,7 +7,7 @@ const ResultsPageSwitcher = ({ search, setMovies }) => {
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             search(currentPage + 1);
-            console.log(currentPage + 1, currentPage);
+            // console.log(currentPage + 1, currentPage);
             setCurrentPage(currentPage + 1);
         }
     };
@@ -15,7 +15,7 @@ const ResultsPageSwitcher = ({ search, setMovies }) => {
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             search(currentPage - 1);
-            console.log(currentPage - 1, currentPage);
+            // console.log(currentPage - 1, currentPage);
             setCurrentPage(currentPage - 1);
         }
     };

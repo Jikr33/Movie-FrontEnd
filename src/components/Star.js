@@ -4,7 +4,7 @@ import fetchGlobalRatings from "../supas/fetchGlobalRatings";
 const Star = (props) => {
     const changeGrade = async (e) => {
         if (!props.userId) {
-            console.log(props.userId, "user wasnt logged in!@@@");
+            // console.log(props.userId, "user wasnt logged in!@@@");
             props.setMustLoginModal(true);
         } else {
             props.changeGrade(e.target.value);
@@ -13,10 +13,10 @@ const Star = (props) => {
                 props.id,
                 parseInt(e.target.value)
             );
-            console.log(fetchGlobalRatings, s);
+            // console.log(fetchGlobalRatings, s);
             const r = await fetchGlobalRatings(props.userId);
 
-            console.log(e.target.value, s, "STAR");
+            // console.log(e.target.value, s, "STAR");
         }
     };
 

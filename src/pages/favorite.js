@@ -11,10 +11,10 @@ function Favorite() {
     );
 
     useEffect(() => {
-        userId
-            ? console.log(userId, "user has signed in")
-            : console.log(userId, "user has not signed in!!!");
-        console.log(username);
+        // userId
+        //     ? console.log(userId, "user has signed in")
+        //     : console.log(userId, "user has not signed in!!!");
+        // console.log(username);
         fetchName();
     }, []);
 

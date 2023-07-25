@@ -14,7 +14,7 @@ export async function SupabaseUsername(id, setUsername) {
         .select("username")
         .eq("id", id);
     if (!error) {
-        console.log(user[0].username);
+        // console.log(user[0].username);
         var res = user[0].username;
         setUsername(res.toUpperCase())
     } else {

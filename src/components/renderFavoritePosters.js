@@ -11,12 +11,12 @@ function RenderFavoritePosters(props) {
     const fetch = async () => {
         if (ratings) {
             var fetched = await fetchAll(ratings);
-            console.log(fetched.length, "fetched");
+            // console.log(fetched.length, "fetched");
             var fet = fetched.sort(
                 (a, b) => parseInt(a.Year) + parseInt(b.Year)
             );
             setFaves(fet);
-            console.log(fet);
+            // console.log(fet);
         }
     };
     useEffect(() => {

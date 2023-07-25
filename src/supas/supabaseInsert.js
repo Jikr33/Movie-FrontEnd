@@ -10,7 +10,7 @@ export async function SupabaseInsert(id, x) {
     const { data, error } = await supabase.from("memes").insert([{user_id: id, link: x }]);
 
     if (!error) {
-        console.log(data, "Successfully saved this meme...");
+        // console.log(data, "Successfully saved this meme...");
         return true;
     } else {
         console.log(

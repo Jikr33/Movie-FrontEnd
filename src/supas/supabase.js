@@ -19,7 +19,7 @@ export async function Supabase(userID) {
         .select("*")
         .eq("user_id", userID);
     if (!error) {
-        console.log(memes);
+        // console.log(memes);
         return memes;
     }
 }

@@ -15,7 +15,7 @@ export async function SupabaseGetAllSaved(userID, id) {
     if (!error) {
         let re = false;
         ids.map((s) => {
-            console.log(s.movie_id);
+            // console.log(s.movie_id);
             let d = s.movie_id;
             if (d === id) {
                 re = true;
