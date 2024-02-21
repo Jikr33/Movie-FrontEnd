@@ -1,4 +1,16 @@
-# Movie-FrontEnd
+![image](https://github.com/Jikr33/Movie-FrontEnd/assets/54263616/9d1d46f4-c36e-4691-9cab-6cd612456cb0)# Movie-FrontEnd
+
+LINK TO THE APP!
+- - - https://suld.vercel.app/ - - - 
+
+
+
+
+
+
+
+
+
 # 💫 About Me:
 🔭 I'm currently looking for Jr Dev position.<br>🤝 Need help with finding a first job, either Local or Wherever<br>🌱 Learning Front-end, Back-end and JS development.<br>💬 ?<br>⚡ Speaks Mongolian fluently, English second language, currently learning French
 
