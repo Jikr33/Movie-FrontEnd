@@ -1,13 +1,5 @@
-![image](https://github.com/Jikr33/Movie-FrontEnd/assets/54263616/9d1d46f4-c36e-4691-9cab-6cd612456cb0)# Movie-FrontEnd
-
 LINK TO THE APP!
 - - - https://suld.vercel.app/ - - - 
-
-
-
-
-
-
 
 
 
